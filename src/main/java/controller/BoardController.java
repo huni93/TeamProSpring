@@ -285,19 +285,17 @@ public class BoardController  {
 	}
 
 	@RequestMapping("boardCommentPro")
-	public View boardCommentPro(String comment, int boardnum) throws Exception {
-		// TODO Auto-generated method stub
-		/*
-		 * req.setAttribute("comment", req.getParameter("comment"));
-		 * req.setAttribute("boardnum", req.getParameter("boardnum"));
-		 */
-		bd.insertComment(comment, boardnum);
-		Comment c = new Comment();
-		c.setNum(boardnum);
-		c.setContent(comment);
-		req.setAttribute("c", c);
-		req.setAttribute("count", req.getParameter("count"));
-		return new InternalResourceView("/single/boardCommentPro") ;
+	   public View boardCommentPro(String comment, String userid, int boardnum) throws Exception {
+		
+	      bd.insertComment(comment, boardnum);
+	      Comment c = new Comment();
+	      
+	      c.setNum(boardnum);
+	      c.setContent(comment);
+	      req.setAttribute("c", c);
+	      req.setAttribute("userid", req.getParameter("userid"));
+	      req.setAttribute("count", req.getParameter("count"));
+	      return new InternalResourceView("/single/boardCommentPro.jsp");
 	}
 	
 }

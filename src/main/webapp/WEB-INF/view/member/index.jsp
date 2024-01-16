@@ -128,7 +128,7 @@ li {
 						<h6>&nbsp;</h6>
 						<div class="product-content">
 							<h4>${b.pname }</h4>
-							<a href="boardInfo?num=${b.pnum}"> <img
+							<a href="${pageContext.request.contextPath}/board/boardInfo?num=${b.pnum}"> <img
 								src="${pageContext.request.contextPath}/image/board/${b.file1}"
 								style="width: 120px; height: 140px;" alt=""></a>
 

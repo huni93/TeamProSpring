@@ -53,7 +53,7 @@ body {
 						content</a>
 					<div class="menu-menu-1-container">
 						<ul id="menu-menu-1" class="menu">
-						<c:if test="${sessionScope.adminchk==1}">
+						<c:if test="${sessionScope.id!=null}">
                         <li><a href="${pageContext.request.contextPath}/admin/main">관리자페이지</a></li>
                         </c:if>
 							<li><a href="${pageContext.request.contextPath}/member/index">메인</a></li>

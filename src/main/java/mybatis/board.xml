@@ -33,11 +33,11 @@ delete from auction where pnum = #{pnum}
 </delete>
 
 <insert id="insertComment" parameterType="map">
-    insert into boardcomment values (boardcomseq.nextval, #{num}, #{comment}, sysdate)
+    insert into Aboardcomment values (Aboardcomseq.nextval, #{num}, #{comment}, sysdate)
 </insert>
 
 <select id="commentList" parameterType="int" resultType="comment">
-select *   from boardcomment  where num = #{num} order by regdate desc
+select *   from Aboardcomment  where num = #{num} order by regdate desc
 </select>
 
 <select id="mainList" parameterType="map" resultType="Auction">

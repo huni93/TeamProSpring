@@ -16,10 +16,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import model.Comment;
 import mybatis.MybatisConnection;
 import model.Amem;
 import model.Auction;
+import model.Comment;
 
 @Repository
 public class BoardMybatisDao {
