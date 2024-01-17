@@ -45,7 +45,7 @@ ul {
 
 li {
 	margin: 0 0px; /* 상하 0, 좌우 10px 간격 지정 */
-	padding: 0 20px;
+	padding: 0 0px;
 	border-radius: 5px;
 	float: left;
 	position: relative;
@@ -153,12 +153,12 @@ li {
 
 				<li class="page-item <c:if test="${pageInt==p}"> active  </c:if>"><a
 					class="page-link"
-					href="${pageContext.request.contextPath}/board/products?pageNum=${p}">${p}</a></li>
+					href="${pageContext.request.contextPath}/board/products?pagePnum=${p}">${p}</a></li>
 			</c:forEach>
 
 			<li class="page-item <c:if test="${end>=maxPage}"> disabled  </c:if>">
 				<a class="page-link"
-				href="${pageContext.request.contextPath}/board/products?pageNum=${start+bottomLine}">Next</a>
+				href="${pageContext.request.contextPath}/board/products?pagePnum=${start+bottomLine}">Next</a>
 			</li>
 			<li><a class="page-link" href="boardForm">게시판입력</a></li>
 		</ul>

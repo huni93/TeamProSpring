@@ -45,7 +45,7 @@ ul {
 
 li {
 	margin: 0 0px; /* 상하 0, 좌우 10px 간격 지정 */
-	padding: 0 20px;
+	padding: 0 0px;
 	border-radius: 5px;
 	float: left;
 	position: relative;

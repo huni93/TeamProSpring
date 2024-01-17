@@ -60,8 +60,9 @@ body {
 							<li class="menu-item-has-children"><a href="#">게시판</a>
 								<ul class="sub-menu">
 
-									<li><a href="">공지사항</a></li>
-									<li><a href="">자주묻는질문</a></li>
+						   <li><a href="${pageContext.request.contextPath}/notice/noticeList?boardid=1">공지사항</a></li> <!-- 관리자만 글작성 -->
+                           <li><a href="${pageContext.request.contextPath}/notice/noticeList?boardid=2">자주묻는질문</a></li> <!-- 관리자만 글작성 -->
+                           <li><a href="${pageContext.request.contextPath}/notice/noticeList?boardid=3">1:1문의</a></li> <!-- amem에서 ID받아서 작성자뜨게 -->
 
 
 								</ul></li>

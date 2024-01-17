@@ -20,11 +20,11 @@ function commentPro(pnum, userid) {
    xhttp.open("GET",url,true)
    xhttp.send()
    xhttp.onreadystatechange = function() {      
-      if(this.readyState ==4 && this.status==200) {
-     alert("data:"+this.responseText)
+      if(this.readyState ==4 && this.status==200) {  
       
    let commentList = document.querySelector("#commentList")
    commentList.innerHTML = this.responseText + "<br>" + commentList.innerHTML
+   location.reload(true);
    }      
 }
    document.querySelector("#comment").value=""

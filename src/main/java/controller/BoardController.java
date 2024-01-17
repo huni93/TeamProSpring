@@ -148,28 +148,31 @@ public class BoardController  {
 
 		// page 설정
 		if (pagePnum != null) {
-			session.setAttribute("pagePnum", pagePnum);
+		    session.setAttribute("pagePnum", pagePnum);
 		}
 
-		pageNum = (String) session.getAttribute("pageNum");
-		if (pageNum == null)
-			pageNum = "1";
+		pageNum = (String) session.getAttribute("pagePnum"); 
+		if (pagePnum == null) {
+			pagePnum = "1";
+		}
 
-		int limit = 15; // 한페이장 게시글 갯수
-		int pageInt = Integer.parseInt(pageNum); // 페이지 번호
-		int boardCount = bd.boardCount(boardid); // 전체 개시글 갯수
+		int limit = 15; // 한 페이지당 게시글 갯수
+		int pageInt = Integer.parseInt(pagePnum); // 페이지 번호
+		int boardCount = bd.boardCount(boardid); // 전체 게시글 갯수
 
 		int boardNum = boardCount - ((pageInt - 1) * limit);
 
 		List<Auction> li = bd.boardList(pageInt, limit, boardid);
 
-		// pagging
+		// paging
 		int bottomLine = 3;
-		int start = (pageInt - 1) / bottomLine * bottomLine + 1; // 1,2,3->1 ,,4,5,6->4
+		int start = (pageInt - 1) / bottomLine * bottomLine + 1;
 		int end = start + bottomLine - 1;
-		int maxPage = (boardCount / limit) + (boardCount % limit == 0 ? 0 : 1);
-		if (end > maxPage)
-			end = maxPage;
+		int maxPage = (boardCount + limit - 1) / limit;
+
+		if (end > maxPage) {
+		    end = maxPage;
+		}
 
 		req.setAttribute("bottomLine", bottomLine);
 		req.setAttribute("start", start);
@@ -206,8 +209,8 @@ public class BoardController  {
 	}
 
 	@RequestMapping("boardUpdateForm")
-	public String boardUpdateForm(int num) throws Exception {
-		Auction board = bd.oneBoard(num);
+	public String boardUpdateForm(int pnum) throws Exception {
+		Auction board = bd.oneBoard(pnum);
 		req.setAttribute("board", board);
 		return "board/boardUpdateForm";
 	}
@@ -263,13 +266,13 @@ public class BoardController  {
 	}
 
 	@RequestMapping("boardDeletePro")
-	public String boardDeletePro(int num) throws Exception {
+	public String boardDeletePro(int pnum) throws Exception {
 	
-		Auction board = bd.oneBoard(num);
+		Auction board = bd.oneBoard(pnum);
 		String msg = "삭제 불가합니다";
-		String url = "/board/boardDeleteForm?num=" + num;
+		String url = "/board/boardDeleteForm?num=" + pnum;
 		if (board.getPass().equals(req.getParameter("pass"))) {
-			int count = bd.boardDelete(num);
+			int count = bd.boardDelete(pnum);
 			if (count > 0) {
 				msg = "게시글이 삭제 되었습니다";
 				url = "/board/products";
