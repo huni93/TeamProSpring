@@ -33,7 +33,7 @@ delete from auction where pnum = #{pnum}
 </delete>
 
 <insert id="insertComment" parameterType="map">
-    insert into Aboardcomment values (Aboardcomseq.nextval, #{num}, #{comment}, sysdate)
+    insert into Aboardcomment values (Aboardcomseq.nextval, #{num}, #{comment}, sysdate, #{userid})
 </insert>
 
 <select id="commentList" parameterType="int" resultType="comment">
@@ -48,6 +48,13 @@ select * from (
 		where rnum between 0 and 10
 </select>
 
+<delete id="commentDelete"  parameterType="int">
+    delete from Aboardcomment where ser = #{ser}
+</delete>
+
+<select id="oneComment" parameterType="int" resultType="Comment">
+        select * from Aboardcomment where ser = #{ser}
+    </select>
 
 </mapper>
 

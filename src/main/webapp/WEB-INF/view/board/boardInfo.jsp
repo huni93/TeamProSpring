@@ -77,7 +77,7 @@ function commentPro(pnum, userid) {
                      <a class="btn btn-primary"
                      href="${pageContext.request.contextPath}/board/boardDeleteForm?num=${board.pnum}">삭제</a>
                      <a class="btn btn-primary"
-                     href="${pageContext.request.contextPath}/board/boardList">목록</a>
+                     href="${pageContext.request.contextPath}/board/products">목록</a>
                   </td>
                </tr>
             </table>
@@ -94,24 +94,23 @@ function commentPro(pnum, userid) {
 					</div>
 				</div>
 				     <c:set  var="ser"  value="${count }"/>
-				        <div class="row" id="commentList">
-            <c:set var = "ser" value="${count}"/>
-            <c:forEach var ="c" items="${commentLi}">          
-            <div class = "col-sm-1">&nbsp;</div>
-            <div class = "col-sm-1">${ser}</div>
-            <div class = "col-sm-1">${amem.id}</div>
-            <c:set var = "ser" value="${ser-1}"/>
-            <div class = "col-sm-9">${c.content}</div>
-            <div class = "col-sm-1">&nbsp;</div>
-            <button class="btn btn-danger" onclick="commentDeleteForm(${c.num})">삭제</button>
+				          <div class="row" id="commentList">
+    <c:set var="sercount" value="${count}" />
+    <c:forEach var="c" items="${commentLi}">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-10">${sercount}:${amem.id}: ${c.content}</div>
+                <div class="col-sm-2">
+                    <form action="${pageContext.request.contextPath}/board/commentDeleteForm" method="post">
+                        <input type="hidden" name="ser" value="${c.ser}">
+                        <button type="submit">삭제</button>
+                    </form>
+                </div>
             </div>
-            <div class="col-sm-1">&nbsp;</div>
-            <c:set var="ser" value="${ser - 1}" />
-            <button class="btn btn-danger" onclick="deleteComment(${mem.id})">신고</button>
-            </div>
-            <div class="col-sm-1">&nbsp;</div>
-            <c:set var="ser" value="${ser - 1}" />
-            </c:forEach>   
+        </div>
+        <c:set var="sercount" value="${sercount - 1}" />
+    </c:forEach>
+</div>
                </div>   </div>
       </div>   
 </body>

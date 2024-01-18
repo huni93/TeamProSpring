@@ -90,4 +90,13 @@ public class BoardMybatisDao {
 	
 		return sqlSession.selectList(ns + "mainList");
 	}
+	public int commentDelete(int ser) throws UnsupportedEncodingException, SQLException {
+	       return sqlSession.update(ns + "commentDelete", ser);
+	   }
+
+
+
+	   public Comment oneComment(int ser) throws UnsupportedEncodingException, SQLException {
+	       return sqlSession.selectOne(ns + "oneComment", ser);
+	   }
 }

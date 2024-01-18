@@ -1,8 +1,10 @@
 package controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oreilly.servlet.MultipartRequest;
@@ -17,8 +20,7 @@ import com.oreilly.servlet.MultipartRequest;
 
 
 import dao.CartMybatisDao;
-
-
+import model.Auction;
 import model.Cart;
 
 
@@ -28,20 +30,27 @@ public class JumunController {
 		
 	
 	@Autowired
-	CartMybatisDao cd = new CartMybatisDao();
+	CartMybatisDao cd;
 	HttpSession session;
 	HttpServletRequest req;
 	
 	
+	@ModelAttribute
+	protected void service(HttpServletRequest request) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		this.session = request.getSession();
+		this.req=request;
+	}
+	
 	
 	@RequestMapping("jumunAdd") 
-	public String jumunadd(String pnumString) throws Exception {
+	public String jumunadd(int pnum) throws Exception {
         
         
       
         String id = (String) session.getAttribute("id");
        
-        int pnum = Integer.parseInt(pnumString);
+       
         Cart c = new Cart();
         c.setUserid(id);
         c.setItemid(pnum);       
@@ -79,6 +88,8 @@ public class JumunController {
 		
 		return "jumun/myList";
 	}	
+	
+	
 }
 
 

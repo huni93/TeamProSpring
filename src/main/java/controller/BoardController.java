@@ -209,8 +209,8 @@ public class BoardController  {
 	}
 
 	@RequestMapping("boardUpdateForm")
-	public String boardUpdateForm(int pnum) throws Exception {
-		Auction board = bd.oneBoard(pnum);
+	public String boardUpdateForm(int num) throws Exception {
+		Auction board = bd.oneBoard(num);		
 		req.setAttribute("board", board);
 		return "board/boardUpdateForm";
 	}
@@ -300,5 +300,50 @@ public class BoardController  {
 	      req.setAttribute("count", req.getParameter("count"));
 	      return new InternalResourceView("/single/boardCommentPro.jsp");
 	}
+	@RequestMapping("commentDeleteForm")
+	   public String commentDeleteForm(Integer ser) throws Exception {
+	      // TODO Auto-generated method stub
+	      System.out.println(ser+"============");
+	      String login = (String) session.getAttribute("id");
+	      Amem mem = md.oneMember(login);
+	      req.setAttribute("amem", mem);
+	      req.setAttribute("ser", ser);
+	      req.setAttribute("pnum", req.getParameter("pnum"));
+	      return "/board/commentDeleteForm";
+	   }
+	@RequestMapping("commentDeletePro")
+	   public String commentDeletePro(HttpServletRequest req, Integer ser, String pass) throws Exception {
+	       System.out.println(ser);
+	       String login = (String) session.getAttribute("id");
+	       Amem mem = md.oneMember(login);
+	       req.setAttribute("amem", mem);
+
+	       Comment comment = bd.oneComment(ser);
+	       String msg = "삭제 불가합니다";
+	       String url = "/board/commentDeleteForm?ser=" + ser;
+
+	       if (mem.getPass().equals(pass)) {
+	           int count = bd.commentDelete(ser);
+	           System.out.println("Comment Delete Result: " + count);
+	           System.out.println("Login ID: " + login);
+	           System.out.println("User Password: " + mem.getPass());
+	           System.out.println("Entered Password: " + pass);
+	           if (count > 0) {
+	               msg = "댓글이 삭제 되었습니다";
+	               int boardNum = comment.getNum();
+	               url = "/board/boardInfo?num="+ boardNum; 
+	           }
+	       } else {
+	           msg = "비밀번호 확인하세요";
+	       }
+
+	       // 수정 시작
+	       req.setAttribute("msg", msg);
+	       req.setAttribute("url", url);
+	       req.setAttribute("comment", comment);  // comment 정보를 모델에 추가
+
+	       return "alert";
+	   }
+
 	
 }
