@@ -18,14 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oreilly.servlet.MultipartRequest;
 
 import dao.MemberMybatisDao;
 import dao.NoticeMybatisDao;
 import model.Amem;
-import model.Board;
-import model.Comment;
-
 //import dao.BoardMybatisDao;
 
 import model.Notice;

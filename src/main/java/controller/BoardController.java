@@ -20,8 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.InternalResourceView;
 
-import com.oreilly.servlet.MultipartRequest;
-
 import dao.BoardMybatisDao;
 
 import dao.MemberMybatisDao;
@@ -30,7 +28,6 @@ import dao.MemberMybatisDao;
 import model.Comment;
 import model.Amem;
 import model.Auction;
-import model.Board;
 
 
 @Controller
