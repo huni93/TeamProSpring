@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.oreilly.servlet.MultipartRequest;
 
@@ -60,7 +63,7 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("noticePro") 
-	public String noticePro() throws Exception {
+	public String noticePro(@RequestParam("f") MultipartFile multipartFile, Notice notice) throws Exception {
 		
 		
 		String path =
@@ -69,20 +72,20 @@ public class NoticeController {
 		String msg = "게시물 등록 실패";
 		String url = "/notice/noticeForm";
 		
-		MultipartRequest multi = new MultipartRequest
-				(req,path,10*1024*1024,"utf-8");
-		Notice notice = new Notice();
-		
 		String boardid = (String) session.getAttribute("boardid");
-		if(boardid==null) boardid = "1";
-				
-		notice.setBoardid(boardid);		
-		notice.setName(multi.getParameter("name"));
-		notice.setPass(multi.getParameter("pass"));
-		notice.setSubject(multi.getParameter("subject"));
-		notice.setContent(multi.getParameter("content"));
-		notice.setFile1(multi.getFilesystemName("file1"));  //name="file1"
-		System.out.println(notice);
+		if(boardid==null) boardid = "1";			
+		notice.setBoardid(boardid);
+		
+		if(!multipartFile.isEmpty()) {
+			File file = new File(path,multipartFile.getOriginalFilename());
+			filename = multipartFile.getOriginalFilename();
+			try {
+				multipartFile.transferTo(file);
+				notice.setFile1(filename);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
 		int num = nc.insertNotice(notice);
 		if(num>0) {
@@ -187,38 +190,31 @@ public class NoticeController {
 }
 	
 	@RequestMapping("noticeUpdatePro") 
-	public String noticeUpdatePro() throws Exception {
+	public String noticeUpdatePro(@RequestParam("f") MultipartFile multipartFile, Notice notice) throws Exception {
 
 		String path =
 				req.getServletContext().getRealPath("/")+"image/board/";
 		String filename = null;
-
 		
-		MultipartRequest multi = new MultipartRequest
-				(req,path,10*1024*1024,"utf-8");
-		int num = Integer.parseInt(multi.getParameter("num"));
-	
-		Notice originnotice = nc.oneNotice(num);
-		
+        Notice originnotice = nc.oneNotice(notice.getNum());
+			
 		String msg = "게시물 수정 실패";
 		String url = "/notice/noticeForm?num="+originnotice.getNum();
-		if(originnotice.getPass().equals(multi.getParameter("pass"))){
+		if(originnotice.getPass().equals(notice.getPass())){
 			
 		
-		String nfileName = multi.getFilesystemName("file1");
-		Notice notice = new Notice();
-		notice.setBoardid("1");
-		notice.setNum(num);
-		notice.setName(multi.getParameter("name"));
-		notice.setPass(multi.getParameter("pass"));
-		notice.setSubject(multi.getParameter("subject"));
-		notice.setContent(multi.getParameter("content"));
-		
-		if(nfileName==null) {
-			notice.setFile1(multi.getParameter("originfile"));
-		}else {
-			notice.setFile1(nfileName);
-		}
+			if(!multipartFile.isEmpty()) {
+				File file = new File(path,multipartFile.getOriginalFilename());
+				filename = multipartFile.getOriginalFilename();
+				try {
+					multipartFile.transferTo(file);
+					notice.setFile1(filename);
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				notice.setFile1(originnotice.getFile1());
+			}
 		System.out.println(notice);
 		int count = nc.updateNotice(notice);		
 		if (count>0) {

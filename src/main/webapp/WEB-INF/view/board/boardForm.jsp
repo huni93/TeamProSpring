@@ -51,13 +51,13 @@ function previewImage(input) {
       
           <label for="id">미리보기</label> 
           <img src="" width="100px" height="120px" id="pic"> 
-          <input type="file" accept="image/*" onchange="previewImage(this)" name="file1">
+          <input type="file" accept="image/*" onchange="previewImage(this)" name="f">
         </div>
       
 				<div class="form-group">
 				<label for="file">상품사진파일:</label> <input type="file"
 					class="form-control" placeholder="Enter file1" id="file"
-					name="file1">
+					name="f">
 			</div>
 				<div class="form-group">
 				<label for="pname">판매상품:</label> <input type="text"

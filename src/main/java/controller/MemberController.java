@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.InternalResourceView;
 
@@ -163,17 +166,7 @@ public class MemberController {
 	public String memberUpdatePro(Amem mem) throws Exception {
 		
 		String login =  (String) session.getAttribute("id");
-		
-		request.setCharacterEncoding("utf-8");
-		mem.setId(login); //session 저장 logout이면 에러남
-		mem.setPass(request.getParameter("pass"));
-		mem.setName(request.getParameter("name"));
-	
-		mem.setTel(request.getParameter("tel"));
-		mem.setEmail(request.getParameter("email"));
-		
-
-	
+			
 		Amem memdb = md.oneMember(login);  //db에서 넘어온자료
 
 		String msg = "수정 되지 않았습니다.";
@@ -264,23 +257,24 @@ public class MemberController {
 		}
 	
 	@RequestMapping("picturePro")
-	public View picturePro() throws Exception {		
+	public View picturePro(@RequestParam("picture") MultipartFile multipartFile) throws Exception {		
 		String path =request.getServletContext().getRealPath("/")
 				     +"/image/member/picture/";
 		System.out.println(path);
 		String filename=null;
-		try {		
-		MultipartRequest multi = 
-			new MultipartRequest(request, path,10*1024*1024,"utf-8");
-		
-		filename = multi.getFilesystemName("picture");
-		
-		}catch (IOException e) {
-			e.printStackTrace();
+		if(!multipartFile.isEmpty()) {
+			File file = new File(path,multipartFile.getOriginalFilename());
+			filename = multipartFile.getOriginalFilename();
+			try {
+				multipartFile.transferTo(file);
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		request.setAttribute("filename", filename);
-		return new InternalResourceView("/single/picturePro.jsp") ;
-		}
+		return new InternalResourceView("/single/picturePro.jsp");
+	}
 	
 	
 }

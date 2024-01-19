@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.InternalResourceView;
 
@@ -27,6 +30,7 @@ import dao.MemberMybatisDao;
 import model.Comment;
 import model.Amem;
 import model.Auction;
+import model.Board;
 
 
 @Controller
@@ -82,29 +86,27 @@ public class BoardController  {
 	}
 
 	@RequestMapping("boardPro")
-	public String boardPro() throws Exception {
+	public String boardPro(@RequestParam("f") MultipartFile multipartFile, Auction board) throws Exception {
 
 		String path = req.getServletContext().getRealPath("/") + "image/board/";
 		String filename = null;
 		String msg = "게시물 등록 실패";
 		String url = "/board/boardForm";
 
-		MultipartRequest multi = new MultipartRequest(req, path, 10 * 1024 * 1024, "UTF-8");
-		Auction board = new Auction();
-		
 		String boardid = (String) session.getAttribute("boardid");
-			if (boardid == null)				boardid = "1";
-		board.setBoardid(boardid);
+		if (boardid == null)				boardid = "1";
+	    board.setBoardid(boardid);
 		
-		board.setUserid(multi.getParameter("userid"));
-		board.setPname(multi.getParameter("pname"));
-		board.setPass(multi.getParameter("pass"));
-		board.setPicture(multi.getParameter("picture"));
-		board.setPrice(multi.getParameter("price"));
-		board.setSubject(multi.getParameter("subject"));
-		board.setContent(multi.getParameter("content"));
-		board.setFile1(multi.getFilesystemName("file1")); // name="file1"
-		System.out.println(board);
+	    if(!multipartFile.isEmpty()) {
+			File file = new File(path,multipartFile.getOriginalFilename());
+			filename = multipartFile.getOriginalFilename();
+			try {
+				multipartFile.transferTo(file);
+				board.setFile1(filename);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
 		int num = bd.insertBoard(board);
 		if (num > 0) {
@@ -216,32 +218,27 @@ public class BoardController  {
 	}
 
 	@RequestMapping("boardUpdatePro")
-	public String boardUpdatePro() throws Exception {
+	public String boardUpdatePro(@RequestParam("f") MultipartFile multipartFile, Auction board) throws Exception {
 
 		String path = req.getServletContext().getRealPath("/") + "image/board/";
 		String filename = null;
-
-		MultipartRequest multi = new MultipartRequest(req, path, 10 * 1024 * 1024, "utf-8");
-		int pnum = Integer.parseInt(multi.getParameter("pnum"));
-		Auction originboard = bd.oneBoard(pnum);
-
+        Auction originboard = bd.oneBoard(board.getPnum());
+		
 		String msg = "게시물 수정 실패";
 		String url = "/board/boardForm?num=" + originboard.getPnum();
-		if (originboard.getPass().equals(multi.getParameter("pass"))) {
+		if (originboard.getPass().equals(board.getPass())) {
 
-			String nfileName = multi.getFilesystemName("file1");
-			Auction board = new Auction();
-			board.setBoardid("1");
-			board.setPnum(pnum);
-			board.setPname(multi.getParameter("pname"));
-			board.setPass(multi.getParameter("pass"));
-			board.setSubject(multi.getParameter("subject"));
-			board.setContent(multi.getParameter("content"));
-
-			if (nfileName == null) {
-				board.setFile1(multi.getParameter("originfile"));
+			if(!multipartFile.isEmpty()) {
+				File file = new File(path,multipartFile.getOriginalFilename());
+				filename = multipartFile.getOriginalFilename();
+				try {
+					multipartFile.transferTo(file);
+					board.setFile1(filename);
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
 			} else {
-				board.setFile1(nfileName);
+				board.setFile1(originboard.getFile1());
 			}
 			System.out.println(board);
 			int count = bd.updateBoard(board);

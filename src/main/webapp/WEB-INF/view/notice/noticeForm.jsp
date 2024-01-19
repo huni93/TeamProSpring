@@ -31,7 +31,7 @@
 			<div class="form-group">
 				<label for="file">파일:</label> <input type="file"
 					class="form-control" placeholder="Enter file1" id="file"
-					name="file1">
+					name="f">
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
