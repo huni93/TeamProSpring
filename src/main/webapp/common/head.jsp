@@ -95,6 +95,7 @@ body {
 									<ul class="sub-menu">
 
 										<li><a href="${pageContext.request.contextPath}/member/memberinfo">회원정보</li>
+										<li><a href="${pageContext.request.contextPath}/notice/mynotice">나의문의글</li>
 										<li><a
 											href="${pageContext.request.contextPath}/jumun/jumunList">찜한상품</a></li>
 										<li><a

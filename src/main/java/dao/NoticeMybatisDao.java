@@ -41,6 +41,7 @@ public class NoticeMybatisDao {
 		 	map.put("boardid", boardid);
 		 	map.put("start",(pageInt-1)*limit +1);
 		 	map.put("end",pageInt * limit);
+			
 		 	return sqlSession.selectList(NS + "noticeList",map);
          
       
@@ -75,6 +76,18 @@ public int noticeCount(String boardid) throws UnsupportedEncodingException, SQLE
 	
          
        }
+	  
+	  public List<Notice> mynotice(int pageInt, int limit, String boardid, String name) throws UnsupportedEncodingException, SQLException {
+			 
+		 	Map map = new HashMap();
+		 	map.put("boardid", boardid);
+		 	map.put("start",(pageInt-1)*limit +1);
+		 	map.put("end",pageInt * limit);
+			map.put("name","name");
+		 	return sqlSession.selectList(NS + "mynotice",map);
+       
+    
+		}
 	  
 	 
 }

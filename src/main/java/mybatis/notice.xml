@@ -14,7 +14,7 @@ select * from(
                 select rownum rnum, a.* from(
          		 select * from anotice where boardid = #{boardid}
          		order by num desc) a)
-         		 where rnum between #{start} and #{end}
+         		 where rnum between #{start} and #{end} 
 
 </select>
 
@@ -44,6 +44,13 @@ update anotice set name=#{name},subject=#{subject},content=#{content},file1=#{fi
  
  </delete>
  
+<select id = "mynotice" resultType="notice" parameterType="map">
+select * from( 
+                select rownum rnum, a.* from(
+         		 select * from anotice where boardid = #{boardid}
+         		order by num desc) a)
+         		 where rnum between #{start} and #{end} and name = #{name}
 
+</select>
 
 </mapper>

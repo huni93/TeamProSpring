@@ -67,10 +67,13 @@ public class NoticeController {
 		String filename = null;
 		String msg = "게시물 등록 실패";
 		String url = "/notice/noticeForm";
-		
+			
 		String boardid = (String) session.getAttribute("boardid");
-		if(boardid==null) boardid = "1";			
+		String name = (String) session.getAttribute("id");
+		if(boardid==null) boardid = "1";
+		
 		notice.setBoardid(boardid);
+		notice.setName(name);
 		
 		if(!multipartFile.isEmpty()) {
 			File file = new File(path,multipartFile.getOriginalFilename());
@@ -254,5 +257,51 @@ public class NoticeController {
 		
 	}
 	
+	
+	@RequestMapping("mynotice") 
+	public String mynotice(String boardid, String pageNum) throws Exception {
+		// TODO Auto-generated method stub
+		
+		//page 설정
+				if(pageNum!=null) { 
+					session.setAttribute("pageNum", pageNum);}
+				
+				pageNum = (String) session.getAttribute("pageNum");
+				if(pageNum == null) pageNum ="1";
+				
+			
+				
+				int limit = 3; //한페이장 게시글 갯수
+				int pageInt = Integer.parseInt(pageNum); //페이지 번호
+				int noticeCount = nc.noticeCount(boardid); //전체 개시글 갯수
+				
+				int noticeNum = noticeCount -((pageInt-1)*limit);
+				
+				List<Notice> li = nc.noticeList(pageInt,limit,boardid);
+				
+				//pagging
+				int bottomLine =3;
+				int start = (pageInt-1)/bottomLine * bottomLine +1; //1,2,3->1 ,,4,5,6->4
+				int end = start + bottomLine -1;
+				int maxPage = (noticeCount/limit) + (noticeCount % limit ==0?0:1);
+				if (end > maxPage)
+					end = maxPage;
+						
+				req.setAttribute("bottomLine", bottomLine);
+				req.setAttribute("start", start);
+				req.setAttribute("end", end);
+				req.setAttribute("maxPage", maxPage);
+				req.setAttribute("pageInt", pageInt);
+				
+				req.setAttribute("li", li);
+				req.setAttribute("noticeCount", noticeCount);
+				req.setAttribute("noticeNum", noticeNum);
+		
+		String login = (String) session.getAttribute("id");
+		Amem mem = md.oneMember(login);
+		req.setAttribute("amem", mem);
+		
+		return "notice/mynotice";
+}
 }
 

@@ -31,7 +31,7 @@
       <tr>
         <td>${noticeNum}</td>
           <c:set var = "noticeNum" value="${noticeNum-1}"/>
-        <td>${n.name}</td>
+        <td>${amem.id}</td>
         <td><a href="noticeInfo?num=${n.num}">${n.subject}</a></td>
         <td>${n.regdate}</td>
         <td>${n.readcnt}</td>
