@@ -77,16 +77,17 @@ public int noticeCount(String boardid) throws UnsupportedEncodingException, SQLE
          
        }
 	  
-	  public List<Notice> mynotice(int pageInt, int limit, String boardid, String name) throws UnsupportedEncodingException, SQLException {
+	  public List<Notice> mynotice(int pageInt, int limit, String boardid, String id) throws UnsupportedEncodingException, SQLException {
 			 
 		 	Map map = new HashMap();
 		 	map.put("boardid", boardid);
 		 	map.put("start",(pageInt-1)*limit +1);
 		 	map.put("end",pageInt * limit);
-			map.put("name","name");
+			map.put("loggedInUserId",id);
+			System.out.println(map);
 		 	return sqlSession.selectList(NS + "mynotice",map);
-       
-    
+     
+  
 		}
 	  
 	 

@@ -261,23 +261,39 @@ public class NoticeController {
 	@RequestMapping("mynotice") 
 	public String mynotice(String boardid, String pageNum) throws Exception {
 		// TODO Auto-generated method stub
-		
+		//board session 처리한다.		
+				if(boardid!=null) { //? boardid = 3
+					session.setAttribute("boardid", boardid);
+				    session.setAttribute("pageNum", "1");
+				}
+				boardid = (String) session.getAttribute("boardid");
+				if(boardid==null) boardid = "1";
+				String noticeName = "";
+				switch(boardid) {
+				case "1":
+					noticeName = "공지사항";
+					break;
+				case "2":
+					noticeName = "자주묻는질문";
+					break;
+				case "3":
+					noticeName = "1:1문의";
+					break;
+				}
 		//page 설정
 				if(pageNum!=null) { 
 					session.setAttribute("pageNum", pageNum);}
 				
 				pageNum = (String) session.getAttribute("pageNum");
-				if(pageNum == null) pageNum ="1";
-				
-			
+				if(pageNum == null) pageNum ="1";							
 				
 				int limit = 3; //한페이장 게시글 갯수
 				int pageInt = Integer.parseInt(pageNum); //페이지 번호
 				int noticeCount = nc.noticeCount(boardid); //전체 개시글 갯수
-				
+				System.out.println(noticeCount+"======"+boardid);
 				int noticeNum = noticeCount -((pageInt-1)*limit);
 				
-				List<Notice> li = nc.noticeList(pageInt,limit,boardid);
+				List<Notice> li = nc.mynotice(pageInt,limit,boardid, pageNum);
 				
 				//pagging
 				int bottomLine =3;
@@ -294,6 +310,7 @@ public class NoticeController {
 				req.setAttribute("pageInt", pageInt);
 				
 				req.setAttribute("li", li);
+				req.setAttribute("noticeName", noticeName);
 				req.setAttribute("noticeCount", noticeCount);
 				req.setAttribute("noticeNum", noticeNum);
 		
@@ -304,4 +321,6 @@ public class NoticeController {
 		return "notice/mynotice";
 }
 }
+
+
 

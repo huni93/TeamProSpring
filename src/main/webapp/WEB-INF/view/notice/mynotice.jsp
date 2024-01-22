@@ -8,12 +8,12 @@
 </head>
 <body>
 <div class="container">
-  <h2 class ="text-center">${noticeName}[${noticeCount}]</h2>
+  <h2 class ="text-center">내 문의 글</h2>
    <p  class="text-right"> <a class="btn btn-primary"  href="noticeForm">게시판입력</a></p>               
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>번호</th>
+       
         <th>작성자</th>
         <th>제목</th>
         <th>날짜</th>
@@ -22,16 +22,11 @@
       </tr>
     </thead>
     <tbody>
-    <c:set var = "noticeNum" value="${noticeNum}"/>
+   
     
-    
-    
-  
     <c:forEach var="n" items="${li}">  
-      <tr>
-        <td>${noticeNum}</td>
-          <c:set var = "noticeNum" value="${noticeNum-1}"/>
-        <td>${amem.id}</td>
+      <tr>     
+        <td>${n.name}</td>
         <td><a href="noticeInfo?num=${n.num}">${n.subject}</a></td>
         <td>${n.regdate}</td>
         <td>${n.readcnt}</td>
@@ -42,15 +37,15 @@
   </table>
   <ul class="pagination justify-content-center text-center">
   <li class="page-item <c:if test="${start<=bottomLine}"> disabled  </c:if> ">
-    <a class="page-link" href="${pageContext.request.contextPath}/notice/noticeList?pageNum=${start-bottomLine}">Previous</a></li>
+    <a class="page-link" href="${pageContext.request.contextPath}/notice/mynotice?pageNum=${start-bottomLine}">Previous</a></li>
   
   <c:forEach var = "p" begin ="${start}" end="${end}">
  
   <li class="page-item <c:if test="${pageInt==p}"> active  </c:if>"><a class="page-link" 
-       href="${pageContext.request.contextPath}/notice/noticeList?pageNum=${p}">${p}</a></li>
+       href="${pageContext.request.contextPath}/notice/mynotice?pageNum=${p}">${p}</a></li>
   </c:forEach>
  
-  <li class="page-item <c:if test="${end>=maxPage}"> disabled  </c:if>"> <a class="page-link" href="${pageContext.request.contextPath}/notice/noticeList?pageNum=${start+bottomLine}">Next</a></li>
+  <li class="page-item <c:if test="${end>=maxPage}"> disabled  </c:if>"> <a class="page-link" href="${pageContext.request.contextPath}/notice/mynotice?pageNum=${start+bottomLine}">Next</a></li>
 </ul>
 </div>
 </body>

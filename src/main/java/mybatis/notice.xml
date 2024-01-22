@@ -45,12 +45,11 @@ update anotice set name=#{name},subject=#{subject},content=#{content},file1=#{fi
  </delete>
  
 <select id = "mynotice" resultType="notice" parameterType="map">
-select * from( 
-                select rownum rnum, a.* from(
-         		 select * from anotice where boardid = #{boardid}
-         		order by num desc) a)
-         		 where rnum between #{start} and #{end} and name = #{name}
-
+SELECT a.num, a.name, a.subject, a.regdate, a.readcnt, a.file1
+        FROM anotice a
+        JOIN amem m ON a.name = m.id
+        WHERE a.boardid = 3 AND m.id = #{loggedInUserId}
+        ORDER BY a.num DESC 
 </select>
 
 </mapper>
