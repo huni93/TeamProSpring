@@ -292,8 +292,8 @@ public class NoticeController {
 				int noticeCount = nc.noticeCount(boardid); //전체 개시글 갯수
 				System.out.println(noticeCount+"======"+boardid);
 				int noticeNum = noticeCount -((pageInt-1)*limit);
-				
-				List<Notice> li = nc.mynotice(pageInt,limit,boardid, pageNum);
+				String login = (String) session.getAttribute("id");
+				List<Notice> li = nc.mynotice(pageInt,limit,boardid, login);
 				
 				//pagging
 				int bottomLine =3;
@@ -314,7 +314,8 @@ public class NoticeController {
 				req.setAttribute("noticeCount", noticeCount);
 				req.setAttribute("noticeNum", noticeNum);
 		
-		String login = (String) session.getAttribute("id");
+	
+		 
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
 		
@@ -322,5 +323,5 @@ public class NoticeController {
 }
 }
 
-
+  
 

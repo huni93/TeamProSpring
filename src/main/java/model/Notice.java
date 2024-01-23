@@ -14,6 +14,9 @@ public class Notice {
     private int readcnt;
     private String boardid;
     private String id;
+    
+    
+	
 	public int getNum() {
 		return num;
 	}

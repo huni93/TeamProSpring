@@ -83,7 +83,7 @@ public int noticeCount(String boardid) throws UnsupportedEncodingException, SQLE
 		 	map.put("boardid", boardid);
 		 	map.put("start",(pageInt-1)*limit +1);
 		 	map.put("end",pageInt * limit);
-			map.put("loggedInUserId",id);
+			map.put("loggedInUserId", id);
 			System.out.println(map);
 		 	return sqlSession.selectList(NS + "mynotice",map);
      
