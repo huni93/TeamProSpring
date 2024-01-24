@@ -1,6 +1,7 @@
 package dao;
 
 
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
@@ -37,5 +38,11 @@ public class CartMybatisDao {
 
 	}
 	
+	public int jumunDelete(int num) throws UnsupportedEncodingException, SQLException {
+
+
+	      return sqlSession.update(ns + "jumunDelete", num);
+
+	   } 
 	}
 

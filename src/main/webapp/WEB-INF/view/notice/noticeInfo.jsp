@@ -20,7 +20,7 @@
 					</tr>
 					<tr>
 						<td>작성자</td>
-						<td>${amem.id}</td>
+						<td>${notice.name}</td>
 					<tr>
 					<tr>
 						<td>파일</td>

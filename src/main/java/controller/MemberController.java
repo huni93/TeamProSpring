@@ -1,22 +1,24 @@
 package controller;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.InternalResourceView;
+
+
 
 import dao.BoardMybatisDao;
 import dao.MemberMybatisDao;
@@ -40,9 +42,11 @@ public class MemberController {
 	BoardMybatisDao bd;
 	 
 	@RequestMapping("index") //~~/board/index
-	   public String index() throws Exception {
+	   public String index(HttpServletRequest req) throws Exception {
 		      // TODO Auto-generated method stub
-	
+		String login = (String) session.getAttribute("id");
+		Amem mem = md.oneMember(login);
+		req.setAttribute("amem", mem);
 	List<Auction> li = bd.mainList();	
 		
 		
@@ -50,6 +54,8 @@ public class MemberController {
 		
 	    return "member/index";
 		}
+	
+	
 	
 	@ModelAttribute
 	protected void service(HttpServletRequest request) throws ServletException, IOException {
@@ -98,8 +104,8 @@ public class MemberController {
 	   public String loginPro(String id, String pass) throws Exception {
 	    
 	      Amem mem = md.oneMember(id);
-	      
-	      HttpSession session=request.getSession();
+	      session.setAttribute("mem", mem);
+	     
 
 	      String msg = "아이디를 확인하세요";
 	      String url = "/member/loginForm";
@@ -160,7 +166,17 @@ public class MemberController {
 	public String memberUpdatePro(Amem mem) throws Exception {
 		
 		String login =  (String) session.getAttribute("id");
-			
+		
+		request.setCharacterEncoding("utf-8");
+		mem.setId(login); //session 저장 logout이면 에러남
+		mem.setPass(request.getParameter("pass"));
+		mem.setName(request.getParameter("name"));
+	
+		mem.setTel(request.getParameter("tel"));
+		mem.setEmail(request.getParameter("email"));
+		
+
+	
 		Amem memdb = md.oneMember(login);  //db에서 넘어온자료
 
 		String msg = "수정 되지 않았습니다.";
@@ -244,31 +260,7 @@ public class MemberController {
 	return "alert";
 	}
 	
-	@RequestMapping("pictureimgForm")
-	public View pictureimgForm() throws Exception {		
-		
-		return new InternalResourceView("/single/pictureimgForm.jsp") ;
-		}
 	
-	@RequestMapping("picturePro")
-	public View picturePro(@RequestParam("picture") MultipartFile multipartFile) throws Exception {		
-		String path =request.getServletContext().getRealPath("/")
-				     +"/image/member/picture/";
-		System.out.println(path);
-		String filename=null;
-		if(!multipartFile.isEmpty()) {
-			File file = new File(path,multipartFile.getOriginalFilename());
-			filename = multipartFile.getOriginalFilename();
-			try {
-				multipartFile.transferTo(file);
-				
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		request.setAttribute("filename", filename);
-		return new InternalResourceView("/single/picturePro.jsp");
-	}
 	
 	
 }
