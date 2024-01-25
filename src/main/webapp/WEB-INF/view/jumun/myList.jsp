@@ -10,7 +10,7 @@
 <body>
 <main>
     <div class="container">
-    <h2 class="my-4">판매등록 상품</h2>
+    <h2 class="my-4">판매등록 상품 </h2>
     
     <form action="${pageContext.request.contextPath}/jumun/myList" method="post">
         <table class="table table-striped">

@@ -130,6 +130,10 @@ li {
 
 	<div class="container">
 		<h5 class="text-center">[${li.size()}]개의 상품이 있습니다</h5>
+<form action="${pageContext.request.contextPath}/board/searchauction" method="GET">
+    <input type="text"  placeholder="상품 검색"  name="pname">
+    <button type="submit">검색</button>
+</form>
 
 		<c:forEach var="b" items="${li}">
 			<div class="product-item">

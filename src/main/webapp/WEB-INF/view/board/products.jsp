@@ -133,6 +133,7 @@ li {
    <div class="container">
       <h5 class="text-center">카테고리:&nbsp;${boardPname}<br>[${boardCount}]개의 상품이 있습니다</h5>
 
+      
       <c:forEach var="b" items="${li}">
          <div class="product-item">
             <ul class="products">

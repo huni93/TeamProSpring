@@ -25,4 +25,6 @@ public interface AMemberAnno {
    @Update("update amem set pass =#{pass} where id = #{id}")
    int passMember(Map map);
 
+   
+
 }

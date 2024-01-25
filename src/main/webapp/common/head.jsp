@@ -92,7 +92,7 @@ body {
 
 
 
-								<li class="menu-item-has-children"><a href="#">Mypage (${amem.id })님</a>
+								<li class="menu-item-has-children"><a href="#">Mypage (${amem.id })님 </a>${Tier}
 									<ul class="sub-menu">
 
 										<li><a href="${pageContext.request.contextPath}/member/memberinfo">회원정보</li>

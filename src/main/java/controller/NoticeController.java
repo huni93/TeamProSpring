@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import dao.CartMybatisDao;
 import dao.MemberMybatisDao;
 import dao.NoticeMybatisDao;
 import model.Amem;
@@ -35,7 +35,8 @@ public class NoticeController {
 	HttpServletRequest req;
 	@Autowired
 	NoticeMybatisDao nc;
-
+    @Autowired
+    CartMybatisDao cd;
 	
 	@ModelAttribute
 	protected void init(HttpServletRequest request) throws ServletException, IOException {
@@ -156,8 +157,9 @@ public class NoticeController {
 		
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
+		String Tier = cd.tier(login);
 		req.setAttribute("amem", mem);
-		
+		req.setAttribute("Tier", Tier);	
 		return "notice/noticeList";
 }
 	
@@ -260,12 +262,10 @@ public class NoticeController {
 	
 	@RequestMapping("mynotice") 
 	   public String mynotice(String boardid, String pageNum) throws Exception {
-	      // TODO Auto-generated method stub
 	      //board session 처리한다.      
 	            if(boardid!=null) { //? boardid = 3
 	               session.setAttribute("boardid", boardid);
-	                session.setAttribute("pageNum", "1");
-	            }
+	                session.setAttribute("pageNum", "1");}           
 	            boardid = (String) session.getAttribute("boardid");
 	            if(boardid==null) boardid = "1";
 	            String noticeName = "";
@@ -278,8 +278,7 @@ public class NoticeController {
 	               break;
 	            case "3":
 	               noticeName = "1:1문의";
-	               break;
-	            }
+	               break; }          
 	      //page 설정
 	            if(pageNum!=null) { 
 	               session.setAttribute("pageNum", pageNum);}
@@ -293,8 +292,7 @@ public class NoticeController {
 	            System.out.println(noticeCount+"======"+boardid);
 	            int noticeNum = noticeCount -((pageInt-1)*limit);
 	            String login = (String) session.getAttribute("id");
-	            List<Notice> li = nc.mynotice(pageInt,limit,boardid, login);
-	            
+	            List<Notice> li = nc.mynotice(pageInt,limit,boardid, login);         
 	            //pagging
 	            int bottomLine =3;
 	            int start = (pageInt-1)/bottomLine * bottomLine +1; //1,2,3->1 ,,4,5,6->4
@@ -302,7 +300,8 @@ public class NoticeController {
 	            int maxPage = (noticeCount/limit) + (noticeCount % limit ==0?0:1);
 	            if (end > maxPage)
 	               end = maxPage;
-	                  
+	                      
+	            String Tier = cd.tier(login);
 	            req.setAttribute("bottomLine", bottomLine);
 	            req.setAttribute("start", start);
 	            req.setAttribute("end", end);
@@ -313,9 +312,9 @@ public class NoticeController {
 	            req.setAttribute("noticeName", noticeName);
 	            req.setAttribute("noticeCount", noticeCount);
 	            req.setAttribute("noticeNum", noticeNum);
-	      
-	   
-	       
+	           
+	            req.setAttribute("Tier", Tier);
+	        
 	      Amem mem = md.oneMember(login);
 	      req.setAttribute("amem", mem);
 	      

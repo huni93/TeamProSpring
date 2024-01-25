@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import mybatis.MybatisConnection;
 import model.Amem;
 import model.Auction;
+import model.Board;
 import model.Comment;
 
 @Repository
@@ -112,12 +113,16 @@ public int testpro(Auction testpro) throws UnsupportedEncodingException, SQLExce
 	       return sqlSession.update(ns + "commentDelete", ser);
 	   }
 
-
-
 	   public Comment oneComment(int ser) throws UnsupportedEncodingException, SQLException {
 	       return sqlSession.selectOne(ns + "oneComment", ser);
 	   }
 
-
-
+ 
+	   public List<Auction> searchBoards(String pname) throws UnsupportedEncodingException, SQLException {
+	       return sqlSession.selectList(ns + "searchBoards", pname);
+	   }
+	   
+	   public int cntBoard(int pnum) {
+		   return sqlSession.update(ns + "cntBoard", pnum);
+		}
 }

@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,25 +15,28 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.InternalResourceView;
 
 
 
 import dao.BoardMybatisDao;
-
+import dao.CartMybatisDao;
 import dao.MemberMybatisDao;
 
 
 import model.Comment;
 import model.Amem;
 import model.Auction;
+import model.Cart;
 
 
 @Controller
@@ -44,6 +48,8 @@ public class BoardController  {
 	MemberMybatisDao md;
 	HttpSession session;
 	HttpServletRequest req;
+	@Autowired
+    CartMybatisDao cd;
 	
 	
 	@ModelAttribute
@@ -179,7 +185,11 @@ public class BoardController  {
 		if (end > maxPage) {
 		    end = maxPage;
 		}
-
+  
+	
+	    
+		String Tier = cd.tier(login);
+		
 		req.setAttribute("bottomLine", bottomLine);
 		req.setAttribute("start", start);
 		req.setAttribute("end", end);
@@ -190,7 +200,7 @@ public class BoardController  {
 		req.setAttribute("boardPname", boardPname);
 		req.setAttribute("boardCount", boardCount);
 		req.setAttribute("boardNum", boardNum);
-		
+		req.setAttribute("Tier", Tier);	
 		return "board/products";
 
 	}
@@ -199,21 +209,21 @@ public class BoardController  {
 	public String boardInfo(int num) throws Exception {
 		// TODO Auto-generated method stub
 		
-
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
-		
 				
 		Auction board = bd.oneBoard(num);
-		
-		
+	
+		bd.cntBoard(num);
 		
 		List<Comment> commentLi = bd.commentList(num);
 		int count = commentLi.size();
 		req.setAttribute("commentLi", commentLi);
 		req.setAttribute("board", board); 
 		req.setAttribute("count", count);
+		
+		
 
 		return "board/boardInfo";
 	}
@@ -421,6 +431,17 @@ public class BoardController  {
 	   }
 
 
+	@RequestMapping("searchauction")
+	public String searchauction(Model model, String pname) throws Exception {
+		System.out.println("======== searchauction");
+		System.out.println(pname);
+		List<Auction>  li = bd.searchBoards(pname);
+		model.addAttribute("li",li);
+		System.out.println(li);
+	
+		
+		return "member/index";
+	}
 
 
 

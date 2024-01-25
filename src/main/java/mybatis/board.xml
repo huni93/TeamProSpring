@@ -65,8 +65,16 @@ select * from (
         select * from Aboardcomment where ser = #{ser}
     </select>
 
+<select id="searchBoards" parameterType="string" resultType="auction">
+    SELECT * FROM auction
+    WHERE pname LIKE '%${value}%'
+</select>
 
-
+<insert id="cntBoard" parameterType="Auction">
+UPDATE auction 
+        SET readcnt = readcnt + 1 
+        WHERE pnum = #{pnum}
+ </insert>
 
 </mapper>
 

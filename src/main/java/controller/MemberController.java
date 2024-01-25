@@ -21,6 +21,7 @@ import org.springframework.web.servlet.view.InternalResourceView;
 
 
 import dao.BoardMybatisDao;
+import dao.CartMybatisDao;
 import dao.MemberMybatisDao;
 
 import model.Amem;
@@ -40,18 +41,23 @@ public class MemberController {
 	
 	@Autowired
 	BoardMybatisDao bd;
+	@Autowired
+	CartMybatisDao cd;
 	 
 	@RequestMapping("index") //~~/board/index
 	   public String index(HttpServletRequest req) throws Exception {
 		      // TODO Auto-generated method stub
-		String login = (String) session.getAttribute("id");
+	 	String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
-	List<Auction> li = bd.mainList();	
 		
+		
+		
+	    List<Auction> li = bd.mainList();	
+	    String Tier = cd.tier(login);
 		
 		request.setAttribute("li", li);
-		
+		req.setAttribute("Tier", Tier);	
 	    return "member/index";
 		}
 	
@@ -96,7 +102,12 @@ public class MemberController {
 		
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
+		
+		String Tier = cd.tier(login);
+		
 		request.setAttribute("amem", mem);
+		request.setAttribute("Tier", Tier);
+		
 		return "member/memberinfo";
 	}
 	

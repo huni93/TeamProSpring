@@ -265,6 +265,10 @@ function openPurchasePopup() {
 								<th>상세내용</th>
 								<td>${board.content}</td>
 							</tr>
+							<tr>
+								<th>조회수</th>
+								<td>${board.readcnt}</td>
+							</tr>
 							<tr><c:if test = "${sessionScope.id!=null}">
 								<td colspan="2" class="text-right"><a
 									class="btn btn-primary"

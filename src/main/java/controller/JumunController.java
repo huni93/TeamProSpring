@@ -23,6 +23,7 @@ import dao.MemberMybatisDao;
 import model.Amem;
 import model.Auction;
 import model.Cart;
+import mybatis.AMemberAnno;
 
 
 @Controller
@@ -53,11 +54,9 @@ public class JumunController {
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
-		
-      
+		  
         String id = (String) session.getAttribute("id");
-       
-       
+            
         Cart c = new Cart();
         c.setUserid(id);
         c.setItemid(pnum);       
@@ -79,10 +78,10 @@ public class JumunController {
 		
         String id = (String) session.getAttribute("id");
 		List<Cart>  li = cd.jumunList(id);
-
+		String Tier = cd.tier(id);
 		System.out.println(li);
 		req.setAttribute("li", li);
-		
+		req.setAttribute("Tier", Tier);
 		return "jumun/jumunList";
 	}
 
@@ -111,17 +110,21 @@ public class JumunController {
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
-		
-		
+				
         String id = (String) session.getAttribute("id");
 		List<Cart>  li = cd.myList(id);
-
+		
+		String Tier = cd.tier(id);
+		
 		System.out.println(li);
+		
 		req.setAttribute("li", li);
+		req.setAttribute("Tier", Tier);	
 		
 		return "jumun/myList";
 	}	
 	
+
 	@RequestMapping("buyList") //~~/board/index
 	   public String buyList(HttpServletRequest req) throws Exception {
 		      // TODO Auto-generated method stub
@@ -129,10 +132,10 @@ public class JumunController {
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
 	List<Auction> li = bd.mainList();	
-		
+	     String Tier = cd.tier(login);
 		
 		req.setAttribute("li", li);
-		
+		req.setAttribute("Tier", Tier);
 	    return "jumun/buyList";
 		}
 	

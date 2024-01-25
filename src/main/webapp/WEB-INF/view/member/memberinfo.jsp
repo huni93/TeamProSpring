@@ -11,7 +11,7 @@
 <div class="container">
       <div class="input-form-backgroud row">
          <div class="input-form col-md-12 mx-auto">
-            <h4 class="mb-3">회원정보</h4>
+            <h4 class="mb-3">회원정보 ${Tier}</h4>
             <table class="table">
             <tr><th>name</th><th>value</th> </tr>
             <tr><td>사진</td><td><img src ="" width="100px"  height="120px"></td><tr>
