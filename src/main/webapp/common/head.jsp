@@ -80,6 +80,7 @@ body {
 									<li><a
 										href="${pageContext.request.contextPath}/board/products?boardid=4">기타</a></li>
 								</ul></li>
+										
 
 							<c:if test="${sessionScope.id==null}">
 								<li><a href="../member/loginForm">login</a></li>

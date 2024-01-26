@@ -125,4 +125,14 @@ public int testpro(Auction testpro) throws UnsupportedEncodingException, SQLExce
 	   public int cntBoard(int pnum) {
 		   return sqlSession.update(ns + "cntBoard", pnum);
 		}
+	   
+	   public List<Auction> cntList(String pname) throws UnsupportedEncodingException, SQLException {
+	       if (pname.equals("priced")) { pname = "price desc, readcnt desc";
+	   } else {
+		   pname ="readcnt desc"; 
+	   }
+		   return sqlSession.selectList(ns + "cntList", pname);
+	   }
+	   
+	   
 }

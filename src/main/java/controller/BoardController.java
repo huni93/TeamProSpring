@@ -212,11 +212,9 @@ public class BoardController  {
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
-				
-		Auction board = bd.oneBoard(num);
-	
+				  
 		bd.cntBoard(num);
-		
+		Auction board = bd.oneBoard(num);
 		List<Comment> commentLi = bd.commentList(num);
 		int count = commentLi.size();
 		req.setAttribute("commentLi", commentLi);
@@ -432,18 +430,28 @@ public class BoardController  {
 
 
 	@RequestMapping("searchauction")
-	public String searchauction(Model model, String pname) throws Exception {
-		System.out.println("======== searchauction");
+	public String searchauction(Model model, String pname) throws Exception {		
 		System.out.println(pname);
 		List<Auction>  li = bd.searchBoards(pname);
+		
 		model.addAttribute("li",li);
 		System.out.println(li);
-	
-		
+	    	
 		return "member/index";
 	}
 
-
+	@RequestMapping("cntList")
+	public String cntList(Model model, String pname) throws Exception {		
+		System.out.println(pname);
+		
+		
+		List<Auction>  li = bd.cntList(pname);
+		
+		model.addAttribute("li",li);
+		System.out.println(li);
+	    	
+		return "member/index";
+	}
 
 	
 }

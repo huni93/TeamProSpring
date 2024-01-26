@@ -76,6 +76,10 @@ UPDATE auction
         WHERE pnum = #{pnum}
  </insert>
 
+<select id="cntList" parameterType="string" resultType="auction">
+   SELECT * FROM auction ORDER BY ${value} 
+</select>
+
 </mapper>
 
 
