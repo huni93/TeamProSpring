@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,11 +14,47 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/admin/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <style>
+        .content-preview {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .expanded {
+            white-space: normal;
+            overflow: visible;
+            text-overflow: unset;
+        }
+    </style>
+      <script>
+    function checkFile(fileId, fileName) {
+        // fileId와 fileName을 사용하여 서버에 파일 다운로드 요청
+       
+        window.open('${pageContext.request.contextPath}/single/temp.jsp?filename='+fileName, '', 'left=100,top=100,width=320,height=320')
+    }
+    
+    
+    
+</script>
+
+<script>
+    function AnswerForm(num) {
+        // AnswerForm 함수 내에서 팝업을 띄우는 로직을 추가
+        var contextPath = '${pageContext.request.contextPath}';
+        window.open(contextPath + '/admin/AnswerForm?num=' + num ,"_blank", "width=400, height=400");
+    }
+</script>
+
+
+        
+        
+        
+        
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="${pageContext.request.contextPath}/admin/main">Auction Admin Page</a>
+            <a class="navbar-brand ps-3" href="${pageContext.request.contextPath}/admin/main">관리자 페이지</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -52,11 +89,11 @@
                             </a>
                             <a class="nav-link" href="${pageContext.request.contextPath}/admin/MemberList">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                회원 관리
+                                회원관리
                             </a>
-                              <a class="nav-link" href="${pageContext.request.contextPath}/admin/Question">
+                             <a class="nav-link" href="${pageContext.request.contextPath}/admin/Question">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                1대1상담
+                                1대1 문의
                             </a>
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -88,7 +125,7 @@
                                             <a class="nav-link" href="password.html">Forgot Password</a>
                                         </nav>
                                     </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" d ata-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
                                         Error
                                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                     </a>
@@ -129,32 +166,43 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                신고처리테이블
+                                1대1문의
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>아이디:</th>
+                                            <th>제목:</th>
+                                            <th>1대1문의내용:</th>
+                                            <th>파일:</th>
+                                            <th>문의날짜:</th>
+                                            
                                         </tr>
                                     </thead>
-                                
+                               
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
+            <c:forEach var="q" items="${QuestionList}">
+        <tr>
+            <td>${q.name}</td>
+            <td>${q.subject}</td>
+           <td class="content-preview" id="contentPreview_${q.content}">
+             ${q.content}
+            <td><a href="#" 
+            onclick="checkFile('${q.id}', '${q.file1}')">${q.file1}</a></td>
+            <td>${q.regdate}</td> 
+            <td>
+     <form action="${pageContext.request.contextPath}/admin/AnswerForm" method="post">
+    <input type="hidden" name="answer" value="${q.num}">
+    <button class="btn btn-danger" type="button" onclick="AnswerForm('${q.num}')">답변</button>
+</form>
+
+</td>
+        </tr>
+    </c:forEach>
+            </tbody>
                                     
-                                    </tbody>
+                                    
                                 </table>
                             </div>
                         </div>
@@ -178,5 +226,6 @@
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+    
     </body>
 </html>

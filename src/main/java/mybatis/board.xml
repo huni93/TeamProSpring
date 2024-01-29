@@ -11,12 +11,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <update id="updateBuy" parameterType="Auction">
     update auction set buy=#{buy},buyid=#{buyid} where pnum=#{pnum}
 </update>
+
+<insert id="insertBuy" parameterType="Auction">
+    insert auction set buy=#{buy},buyid=#{buyid} where pnum=#{pnum}
+</insert>
 <!-- AuctionMapper.xml -->
 <update id="buyNow" parameterType="map">
     update auction set regdate = null, buyid = #{userid},buy = #{prompt}  where pnum = #{pnum}
 </update>
+<select id="cntList" parameterType="string" resultType="auction">
+   SELECT * FROM auction ORDER BY ${value} 
+</select>
+<update id="upcnt" parameterType="int">
+    UPDATE Aboardcomment
+    SET upcnt = upcnt + 1
+    WHERE ser = #{value}
+</update>
 
-
+<select id="getupcnt" parameterType="int" resultType="int">
+   SELECT upcnt FROM Aboardcomment where ser = #{ser}
+</select>
+<insert id="cntBoard" parameterType="Auction">
+UPDATE auction 
+        SET readcnt = readcnt + 1 
+        WHERE pnum = #{pnum}
+ </insert>
+<select id="searchBoards" parameterType="string" resultType="auction">
+    SELECT * FROM auction
+    WHERE pname LIKE '%${value}%'
+</select>
 <select id="boardList" parameterType="map" resultType="Auction">
 select * from (
 		select rownum rnum,a.*  from (
@@ -42,7 +65,7 @@ delete from auction where pnum = #{pnum}
 </delete>
 
 <insert id="insertComment" parameterType="map">
-    insert into Aboardcomment values (Aboardcomseq.nextval, #{num}, #{comment}, sysdate,#{userid})
+    insert into Aboardcomment values (Aboardcomseq.nextval, #{num}, #{comment}, sysdate, #{userid}, 0)
 </insert>
 
 <select id="commentList" parameterType="int" resultType="comment">
@@ -65,20 +88,14 @@ select * from (
         select * from Aboardcomment where ser = #{ser}
     </select>
 
-<select id="searchBoards" parameterType="string" resultType="auction">
-    SELECT * FROM auction
-    WHERE pname LIKE '%${value}%'
-</select>
 
-<insert id="cntBoard" parameterType="Auction">
-UPDATE auction 
-        SET readcnt = readcnt + 1 
-        WHERE pnum = #{pnum}
- </insert>
-
-<select id="cntList" parameterType="string" resultType="auction">
-   SELECT * FROM auction ORDER BY ${value} 
-</select>
+	<select id="buyList" parameterType="string" resultType="Auction">
+		SELECT a.*
+		FROM auction a
+		INNER JOIN amem m ON a.buyid = m.id
+		WHERE a.buyid IS NOT NULL
+		AND m.id = #{loggedInUserId}
+	</select>
 
 </mapper>
 

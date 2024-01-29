@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import model.Auction;
 import model.Cart;
 import mybatis.MybatisConnection;
 
@@ -27,27 +28,34 @@ public class CartMybatisDao {
 		return sqlSession.insert(ns+"addToAproducts", cart);
 	}
 
-	public List<Cart> jumunList(String userid) throws SQLException {
+	public List<Cart> jumunList(String id) throws SQLException {
 		
-	return sqlSession.selectList(ns+"jumunList", userid);
+	return sqlSession.selectList(ns+"jumunList", id);
 
 	}
-	public List<Cart> myList(String userid) throws SQLException {
+	public List<Cart> myList(String id) throws SQLException {
 		
-	return sqlSession.selectList(ns+"myList", userid);
+	return sqlSession.selectList(ns+"myList", id);
 
 	}
 	
 	public int jumunDelete(int num) throws UnsupportedEncodingException, SQLException {
 
+
 	      return sqlSession.update(ns + "jumunDelete", num);
 
 	   } 
+	public String tier(String id) throws UnsupportedEncodingException, SQLException {
+
+        return sqlSession.selectOne(ns + "Tier", id);
+
+     }
 	
-	public String tier(String userid) throws UnsupportedEncodingException, SQLException {
+	public List<Auction> buyList(String id) throws SQLException {
+		
+		return sqlSession.selectList(ns+"buyList", id);
 
-	      return sqlSession.selectOne(ns + "Tier", userid);
-
-	   } 
+		}
+	
 	}
 

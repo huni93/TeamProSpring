@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<script>
-alert("${msg}");location.href="${pageContext.request.contextPath}${url}"
-</script>
+<img src="${pageContext.request.contextPath}/image/board/${param.filename}" />
 </body>
 </html>

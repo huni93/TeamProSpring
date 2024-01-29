@@ -33,7 +33,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+            <a class="navbar-brand ps-3" href="${pageContext.request.contextPath}/admin/main">관리자 페이지</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -65,6 +65,14 @@
                             <a class="nav-link" href="${pageContext.request.contextPath}/admin/Reportlist">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 신고된 게시물
+                            </a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/MemberList">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                회원 관리
+                            </a>
+                             <a class="nav-link" href="${pageContext.request.contextPath}/admin/Question">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                1대1문의
                             </a>
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -163,8 +171,16 @@
                      <td class="content-preview" id="contentPreview_${report.reportpnum}">
           				 <a href="${pageContext.request.contextPath}/admin/reportInfo?reportpnum=${report.reportpnum}&amemid=${report.reportid}" target="_blank">${report.content}</a>
           				  </td>
-                    
-                    <td>${report.regdate}</td>
+          				
+                         <td>${report.regdate}</td>
+  							 <td>
+                        <form action="deleteReportPro" method="post">
+    <input type="hidden" name="reportpnum" value="${report.reportpnum}">
+    <button class="btn btn-danger" type="submit" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</button>
+</form>
+                        </td>
+                 
+          				 
                 </tr>
             </c:forEach>
             </tbody>

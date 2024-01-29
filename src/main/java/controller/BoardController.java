@@ -2,7 +2,6 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.InternalResourceView;
 
@@ -36,7 +34,6 @@ import dao.MemberMybatisDao;
 import model.Comment;
 import model.Amem;
 import model.Auction;
-import model.Cart;
 
 
 @Controller
@@ -49,8 +46,8 @@ public class BoardController  {
 	HttpSession session;
 	HttpServletRequest req;
 	@Autowired
-    CartMybatisDao cd;
-	
+	CartMybatisDao cd;  
+
 	
 	@ModelAttribute
 	protected void service(HttpServletRequest request) throws ServletException, IOException {
@@ -59,6 +56,25 @@ public class BoardController  {
 		this.req=request;
 	}
 	
+	@RequestMapping("searchauction")
+	   public String searchauction(Model model, String pname) throws Exception {
+	      System.out.println("======== searchauction");
+	      System.out.println(pname);
+	      String login = (String) session.getAttribute("id");
+			Amem mem = md.oneMember(login);
+			req.setAttribute("amem", mem);
+			
+			String Tier = cd.tier(login); 
+			req.setAttribute("Tier", Tier);
+	      
+	      List<Auction>  li = bd.searchBoards(pname);
+	      model.addAttribute("li",li);
+	      System.out.println(li);
+	   
+	      
+	      return "member/index";
+	   } 
+	
 	@RequestMapping("boardForm")
 	public String boardForm(String boardid, String pageNum) throws Exception {
 		// TODO Auto-generated method stub
@@ -66,6 +82,8 @@ public class BoardController  {
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
 		
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
 		if (req.getParameter("boardid") != null) { // ? boardid = 3
 			session.setAttribute("boardid",boardid);
 			session.setAttribute("pageNum", "1");
@@ -132,6 +150,9 @@ public class BoardController  {
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
+	
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
 		// board session 처리한다.
 		if (boardid != null) { // ? boardid = 3
 			session.setAttribute("boardid", boardid);
@@ -185,11 +206,7 @@ public class BoardController  {
 		if (end > maxPage) {
 		    end = maxPage;
 		}
-  
-	
-	    
-		String Tier = cd.tier(login);
-		
+
 		req.setAttribute("bottomLine", bottomLine);
 		req.setAttribute("start", start);
 		req.setAttribute("end", end);
@@ -200,7 +217,7 @@ public class BoardController  {
 		req.setAttribute("boardPname", boardPname);
 		req.setAttribute("boardCount", boardCount);
 		req.setAttribute("boardNum", boardNum);
-		req.setAttribute("Tier", Tier);	
+		
 		return "board/products";
 
 	}
@@ -209,19 +226,23 @@ public class BoardController  {
 	public String boardInfo(int num) throws Exception {
 		// TODO Auto-generated method stub
 		
+
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
-				  
-		bd.cntBoard(num);
+	
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
+		bd.cntBoard(num);		
 		Auction board = bd.oneBoard(num);
+		
+		
+		
 		List<Comment> commentLi = bd.commentList(num);
 		int count = commentLi.size();
 		req.setAttribute("commentLi", commentLi);
 		req.setAttribute("board", board); 
 		req.setAttribute("count", count);
-		
-		
 
 		return "board/boardInfo";
 	}
@@ -231,6 +252,11 @@ public class BoardController  {
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
+		
+	
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
+		
 		Auction board = bd.oneBoard(num);
 		req.setAttribute("board", board);
 		return "board/boardUpdateForm";
@@ -238,8 +264,6 @@ public class BoardController  {
 
 	@RequestMapping("buyPro")
 	public String buyPro(int pnum, String buy, String buyid) throws Exception {
-		
-		System.out.println(pnum+","+buy+","+buyid);
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
@@ -249,8 +273,7 @@ public class BoardController  {
 	    board.setPnum(pnum);
 	    board.setBuy(buy);
 	    board.setBuyid(buyid);
-	   
-		
+	    
 	    int result = bd.updateBuy(board);
 
 	    String msg;
@@ -331,10 +354,39 @@ public class BoardController  {
 		return "alert";
 
 	}
+	
 
+@RequestMapping("reservComm")
+   @ResponseBody
+   public String reservComm(@RequestParam("ser") int ser) throws Exception {
+       System.out.println(ser);
+           bd.upcnt(ser);
+       int upcnt = bd.getUpcnt(ser);
+       System.out.println(upcnt);
+       return ""+upcnt;
+   }
+
+	
+	@RequestMapping("cntList")
+	   public String cntList(Model model, String pname) throws Exception {      
+	      System.out.println(pname);
+	      
+	      
+	      List<Auction>  li = bd.cntList(pname);
+	      
+	      model.addAttribute("li",li);
+	      System.out.println(li);
+	          
+	      return "member/index";
+	   } 
 	@RequestMapping("boardDeleteForm")
 	public String boardDeleteForm() throws Exception {
 		// TODO Auto-generated method stub
+		String login = (String) session.getAttribute("id");
+	    Amem mem = md.oneMember(login);
+	    req.setAttribute("amem", mem);
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
 		req.setAttribute("pnum", req.getParameter("num"));
 		return "board/boardDeleteForm";
 	}
@@ -428,30 +480,32 @@ public class BoardController  {
 	       return "alert";
 	   }
 
-
-	@RequestMapping("searchauction")
-	public String searchauction(Model model, String pname) throws Exception {		
-		System.out.println(pname);
-		List<Auction>  li = bd.searchBoards(pname);
-		
-		model.addAttribute("li",li);
-		System.out.println(li);
-	    	
-		return "member/index";
+	@RequestMapping("naver")
+	public String naver() throws Exception {
+		// TODO Auto-generated method stub
+		return "/board/naver";
 	}
+	
+@RequestMapping("buyList")
+	
+	public String buyList() throws Exception {
+		
+		String login = (String) session.getAttribute("id");
+		
+		Amem mem = md.oneMember(login);	
+		req.setAttribute("amem", mem);
+		
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
+		
+        String id = (String) session.getAttribute("id");
+        List<Auction>  li = bd.buyList(id);
 
-	@RequestMapping("cntList")
-	public String cntList(Model model, String pname) throws Exception {		
-		System.out.println(pname);
+        System.out.println(li);
+		req.setAttribute("li", li);
 		
-		
-		List<Auction>  li = bd.cntList(pname);
-		
-		model.addAttribute("li",li);
-		System.out.println(li);
-	    	
-		return "member/index";
-	}
+		return "board/buyList";
+	}	
 
 	
 }

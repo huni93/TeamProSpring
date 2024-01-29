@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -21,9 +22,11 @@ import dao.AdminMybatisDao;
 
 import dao.BoardMybatisDao;
 import dao.MemberMybatisDao;
+import dao.NoticeMybatisDao;
 import model.Amem;
 import model.Auction;
 import model.Comment;
+import model.Notice;
 import model.Report;
 
 
@@ -43,6 +46,8 @@ public class AdminController  {
    MemberMybatisDao md;
    @Autowired
    BoardMybatisDao bd;
+   @Autowired
+	NoticeMybatisDao nc;
    
   
    @RequestMapping("main")
@@ -73,7 +78,32 @@ public class AdminController  {
       
       
    }
+
+@RequestMapping("AnswerForm")
+   public String AnswerForm(@RequestParam("num") String num, Model model) {
+       // name과 subject 값을 사용하는 로직 추가
+       // ...
+      model.addAttribute("num", num);
+       return "admin/AnswerForm";
+   }
    
+   
+   @RequestMapping("AnswerPro")
+   public String AnswerPro(@RequestParam(name = "num", required = true) int num, @RequestParam("answer") String answer) {
+       // num과 answer를 사용하여 DAO를 통해 업데이트 수행
+      
+       int adminnotice = ad.updateAnswer(num, answer);
+       
+
+       String msg = "답변 등록 완료";
+       
+
+       request.setAttribute("msg", msg);
+   
+       return "adminalert";
+   
+   }
+
      
   
    
@@ -156,6 +186,47 @@ public class AdminController  {
        // 뷰 이름 반환
        return "admin/reportInfo";
    }
+   
+   @RequestMapping("deleteReportPro")
+   public String deleteReportPro(int reportpnum) {
+       // DAO에서 deleteReport 호출
+       ad.deleteReport(reportpnum);
+
+       // 삭제 후 어떤 페이지로 이동할지 리턴
+       return "admin/Reportlist";
+   }
+   
+   
+   @RequestMapping("MemberList")
+   public String MemberList(Model model) { 
+       List<Amem> memberList = ad.selectMemberList();
+       model.addAttribute("memberList", memberList);
+       return "admin/MemberList";
+   }
+   
+   @RequestMapping("Question")
+   
+   public String Question(Model model) throws Exception {
+	   Notice notice = new Notice();
+	   //List<Notice> QuestionList = nc.noticeList(pageInt,limit,"3");
+	   List<Notice> QuestionList = nc.selectQuestionList();
+	   
+       model.addAttribute("QuestionList", QuestionList);
+       
+       System.out.println(QuestionList);
+       return "admin/Question";
+	      
+	   }
+	   
+   @RequestMapping("deleteMembers")
+   public String deleteMembers(@RequestParam("selectedMembers") String selectedMembers) {
+          String[] ids = selectedMembers.split(",");
+         ad.deleteMembers(ids);
+         System.out.println(selectedMembers);
+       return "admin/MemberList";
+   }
+
+   
    }
    
  

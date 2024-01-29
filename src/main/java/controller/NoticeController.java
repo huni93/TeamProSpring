@@ -35,9 +35,10 @@ public class NoticeController {
 	HttpServletRequest req;
 	@Autowired
 	NoticeMybatisDao nc;
-    @Autowired
-    CartMybatisDao cd;
-	
+
+	@Autowired
+	CartMybatisDao cd;  
+
 	@ModelAttribute
 	protected void init(HttpServletRequest request) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
@@ -60,7 +61,7 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("noticePro") 
-	public String noticePro(@RequestParam("f") MultipartFile multipartFile, Notice notice) throws Exception {
+	public String noticePro(@RequestParam("f") MultipartFile multipartFile, Notice notice,@RequestParam(name = "isPublic", defaultValue = "N") String ispublic) throws Exception {
 		
 		
 		String path =
@@ -75,6 +76,7 @@ public class NoticeController {
 		
 		notice.setBoardid(boardid);
 		notice.setName(name);
+		 notice.setIsPublic(ispublic);
 		
 		if(!multipartFile.isEmpty()) {
 			File file = new File(path,multipartFile.getOriginalFilename());
@@ -99,6 +101,7 @@ public class NoticeController {
 	@RequestMapping("noticeList") 
 	public String noticeList(String boardid, String pageNum) throws Exception {
 		// TODO Auto-generated method stub
+		
 		
 		//board session 처리한다.		
 		if(boardid!=null) { //? boardid = 3
@@ -157,26 +160,45 @@ public class NoticeController {
 		
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
-		String Tier = cd.tier(login);
 		req.setAttribute("amem", mem);
-		req.setAttribute("Tier", Tier);	
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
 		return "notice/noticeList";
 }
 	
 	@RequestMapping("noticeInfo") 
-	public String noticeInfo(int num) throws Exception {
-		// TODO Auto-generated method stub
-						
-		String login = (String) session.getAttribute("id");
-		Amem mem = md.oneMember(login);
-		req.setAttribute("amem", mem);
-		Notice notice = nc.oneNotice(num);
-		
-		req.setAttribute("notice", notice);	
-	
-		
-		return "notice/noticeInfo";
-	}
+	   public String noticeInfo(int num) throws Exception {
+	      // TODO Auto-generated method stub
+	                  
+	      String login = (String) session.getAttribute("id");
+	      Amem mem = md.oneMember(login);
+	      
+	      req.setAttribute("amem", mem);
+	      Notice notice = nc.oneNotice(num);
+	      
+	        String msg = "";
+	          String url = "";
+	      
+	      
+	      if (notice.getIsPublic().equals("Y")) {
+	      //공개된 글이면 정보 전달
+	      req.setAttribute("notice", notice);   
+	      String Tier = cd.tier(login); 
+	      req.setAttribute("Tier", Tier);
+	      
+	      return "notice/noticeInfo";
+	      } else {
+	       msg = "비공개 설정";
+	       url = "/notice/noticeList";
+	          
+	      }
+	      
+	      req.setAttribute("msg", msg);
+	      req.setAttribute("url", url);
+	      
+	      return "alert";
+	   }
+
 	
 	@RequestMapping("noticeUpdateForm") 
 	public String noticeUpdateForm(int num) throws Exception {
@@ -187,6 +209,8 @@ public class NoticeController {
 	    Amem mem = md.oneMember(login);
 	    req.setAttribute("amem", mem);
 		req.setAttribute("notice", notice);
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
 		return "notice/noticeUpdateForm";
 }
 	
@@ -232,7 +256,12 @@ public class NoticeController {
 }
 	
 	@RequestMapping("noticeDeleteForm") 
-	public String noticeDeleteForm() throws Exception {		
+	public String noticeDeleteForm() throws Exception {	
+		String login = (String) session.getAttribute("id");
+	    Amem mem = md.oneMember(login);
+	    req.setAttribute("amem", mem);
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
 		req.setAttribute("num", req.getParameter("num"));
 		return "notice/noticeDeleteForm";
 }
@@ -262,10 +291,12 @@ public class NoticeController {
 	
 	@RequestMapping("mynotice") 
 	   public String mynotice(String boardid, String pageNum) throws Exception {
+	      // TODO Auto-generated method stub
 	      //board session 처리한다.      
 	            if(boardid!=null) { //? boardid = 3
 	               session.setAttribute("boardid", boardid);
-	                session.setAttribute("pageNum", "1");}           
+	                session.setAttribute("pageNum", "1");
+	            }
 	            boardid = (String) session.getAttribute("boardid");
 	            if(boardid==null) boardid = "1";
 	            String noticeName = "";
@@ -278,7 +309,8 @@ public class NoticeController {
 	               break;
 	            case "3":
 	               noticeName = "1:1문의";
-	               break; }          
+	               break;
+	            }
 	      //page 설정
 	            if(pageNum!=null) { 
 	               session.setAttribute("pageNum", pageNum);}
@@ -292,7 +324,8 @@ public class NoticeController {
 	            System.out.println(noticeCount+"======"+boardid);
 	            int noticeNum = noticeCount -((pageInt-1)*limit);
 	            String login = (String) session.getAttribute("id");
-	            List<Notice> li = nc.mynotice(pageInt,limit,boardid, login);         
+	            List<Notice> li = nc.mynotice(pageInt,limit,boardid, login);
+	            
 	            //pagging
 	            int bottomLine =3;
 	            int start = (pageInt-1)/bottomLine * bottomLine +1; //1,2,3->1 ,,4,5,6->4
@@ -300,8 +333,7 @@ public class NoticeController {
 	            int maxPage = (noticeCount/limit) + (noticeCount % limit ==0?0:1);
 	            if (end > maxPage)
 	               end = maxPage;
-	                      
-	            String Tier = cd.tier(login);
+	                  
 	            req.setAttribute("bottomLine", bottomLine);
 	            req.setAttribute("start", start);
 	            req.setAttribute("end", end);
@@ -312,9 +344,9 @@ public class NoticeController {
 	            req.setAttribute("noticeName", noticeName);
 	            req.setAttribute("noticeCount", noticeCount);
 	            req.setAttribute("noticeNum", noticeNum);
-	           
-	            req.setAttribute("Tier", Tier);
-	        
+	      
+	   
+	       
 	      Amem mem = md.oneMember(login);
 	      req.setAttribute("amem", mem);
 	      

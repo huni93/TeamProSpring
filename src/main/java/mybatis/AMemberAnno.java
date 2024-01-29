@@ -1,9 +1,11 @@
 package mybatis;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -16,7 +18,7 @@ public interface AMemberAnno {
    @Select("select*from amem where id =#{id}")
    Amem oneMember(String id);
 
-   @Update("update amem set name=#{name},tel=#{tel},email=#{email} where id =#{id}")
+   @Update("update amem set name=#{name},tel=#{tel},bank=#{bank},account=#{account},email=#{email},address=#{address} where id =#{id}")
    int updateMember(Amem amem);
 
    @Delete("delete amem where id =#{id}")
@@ -25,6 +27,19 @@ public interface AMemberAnno {
    @Update("update amem set pass =#{pass} where id = #{id}")
    int passMember(Map map);
 
+   @Select("select * from amem")
+   List<Amem> selectMemberList();
+ 
+
+   @Delete("<script> delete from amem where id in " +
+	         "<foreach item='item'  collection='list' open='(' separator=',' close=')'>"
+	           + "             #{item} </foreach></script>")
+	   void deleteMembers(List<String> list);
+
+@Select("select * from amem where name = #{name} and email = #{email}")
+   Amem findMemberByNameAndEmail(Map<String, String> map);
    
+   @Select("select * from amem where id = #{id} and name = #{name} and email = #{email}")
+   Amem findMemberByIdAndNameAndEmail(Map<String, String> map);
 
 }

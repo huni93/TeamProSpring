@@ -1,7 +1,6 @@
 package model;
 
 import java.util.Date;
-import java.util.List;
 
 public class Auction {
 		// TODO Auto-generated method stub
@@ -117,7 +116,6 @@ public class Auction {
 					+ ", readcnt=" + readcnt + ", file1=" + file1 + ", regdate=" + regdate + ", userid=" + userid
 					+ ", buy=" + buy + ", buyid=" + buyid + ", idate=" + idate + "]";
 		}
-		
 		
 		
 		

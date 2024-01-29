@@ -47,7 +47,11 @@ public class NoticeMybatisDao {
       
 		}
 		
-	 
+	 public List<Notice> selectQuestionList() throws UnsupportedEncodingException, SQLException {
+	     
+		    return sqlSession.selectList(NS+"allNotice");
+	 }
+
 
 public int noticeCount(String boardid) throws UnsupportedEncodingException, SQLException {
 		 

@@ -23,11 +23,17 @@
 	type='text/css' media='all' />
 <link rel='stylesheet' href='${pageContext.request.contextPath}/team/css/easy-responsive-shortcodes.css'
 	type='text/css' media='all' />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  
+	
 </head>
 <style>
 body {
 	margin: 0;
 	padding: 0;
+	 background-color: white;
 }
 
 .container {
@@ -58,6 +64,7 @@ body {
                         <li><a href="${pageContext.request.contextPath}/admin/main">관리자페이지</a></li>
                         </c:if>
 							<li><a href="${pageContext.request.contextPath}/member/index">Main</a></li>
+					
 							<li class="menu-item-has-children"><a href="#">board</a>
 								<ul class="sub-menu">
 
@@ -80,7 +87,6 @@ body {
 									<li><a
 										href="${pageContext.request.contextPath}/board/products?boardid=4">기타</a></li>
 								</ul></li>
-										
 
 							<c:if test="${sessionScope.id==null}">
 								<li><a href="../member/loginForm">login</a></li>
@@ -93,7 +99,7 @@ body {
 
 
 
-								<li class="menu-item-has-children"><a href="#">Mypage (${amem.id })님 </a>${Tier}
+								<li class="menu-item-has-children"><a href="#">Mypage </a>
 									<ul class="sub-menu">
 
 										<li><a href="${pageContext.request.contextPath}/member/memberinfo">회원정보</li>
@@ -103,9 +109,13 @@ body {
 										<li><a
 											href="${pageContext.request.contextPath}/jumun/myList">판매등록상품</a></li>
 											<li><a
-											href="${pageContext.request.contextPath}/jumun/buyList">입찰중/입찰완료 상품</a></li>
+											href="${pageContext.request.contextPath}/board/buyList">입찰중/입찰완료 상품</a></li>
 
 									</ul></li>
+									
+									
+									<li class="menu-item-has-children"><a href="#">[${amem.id }]님  회원등급:${Tier}</a></li>
+									
 							</c:if>
 
 							<!-- <ul class="sub-menu">

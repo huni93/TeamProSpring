@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +27,7 @@ import dao.MemberMybatisDao;
 
 import model.Amem;
 import model.Auction;
+import model.EmailSender;
 
 
 
@@ -38,26 +40,29 @@ public class MemberController {
 	MemberMybatisDao md;
 	HttpSession session;
 	HttpServletRequest request;
-	
+	@Autowired
+	CartMybatisDao cd;  
+
 	@Autowired
 	BoardMybatisDao bd;
-	@Autowired
-	CartMybatisDao cd;
 	 
 	@RequestMapping("index") //~~/board/index
 	   public String index(HttpServletRequest req) throws Exception {
 		      // TODO Auto-generated method stub
-	 	String login = (String) session.getAttribute("id");
+		
+		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
 		
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
 		
 		
-	    List<Auction> li = bd.mainList();	
-	    String Tier = cd.tier(login);
+	List<Auction> li = bd.mainList();	
+		
 		
 		request.setAttribute("li", li);
-		req.setAttribute("Tier", Tier);	
+		
 	    return "member/index";
 		}
 	
@@ -76,6 +81,81 @@ public class MemberController {
 		
 		return "member/memberinput";
 	}
+	
+	@RequestMapping("findIdForm")
+	   public String findIdForm() throws Exception {
+	       return "member/findIdForm";
+	   }
+	   
+	   @RequestMapping("findIdPro")
+	   public String findIdPro(String name, String email) throws Exception {
+	       System.out.println("findIdPro 메소드 호출 확인");
+	       Amem foundMember = md.findMemberByNameAndEmail(name, email);
+
+	       String msg;
+	       String url;
+
+	       if (foundMember != null) {
+	           msg = "회원님의 아이디는 " + foundMember.getId() + " 입니다.";
+	           url = "/member/loginForm";
+	       } else {
+	           msg = "일치하는 정보가 없습니다. 다시 확인해 주세요.";
+	           url = "/member/findIdForm";
+	       }
+
+	       request.setAttribute("msg", msg);
+	       request.setAttribute("url", url);
+
+	       return "alert";
+	   }
+	   @RequestMapping("findPasswordForm")
+	   public String findPasswordForm() throws Exception {
+	       return "member/findPasswordForm";
+	   }
+
+	   @RequestMapping("findPasswordPro")
+	    public String findPasswordPro(String id, String name, String email) throws Exception {
+	        Amem foundMember = md.findMemberByIdAndNameAndEmail(id, name, email);
+
+	        String msg;
+	        String url;
+
+	        if (foundMember != null) {
+	            // 랜덤한 6자리 임시 비밀번호 생성
+	            String temporaryPassword = generateRandomPassword(6);
+
+	            // 비밀번호 변경 로직 추가
+	            md.passMember(id, temporaryPassword);
+
+	            // 이메일로 임시 비밀번호 전송
+	            EmailSender.sendTemporaryPassword(email, temporaryPassword);
+
+	            msg = "임시 비밀번호가 발급되었습니다. 로그인 후 비밀번호를 변경해주세요.";
+	            url = "/member/loginForm";
+	        } else {
+	            msg = "일치하는 정보가 없습니다. 다시 확인해 주세요.";
+	            url = "/member/findPasswordForm";
+	        }
+
+	        request.setAttribute("msg", msg);
+	        request.setAttribute("url", url);
+
+	        return "alert";
+	    }
+
+	    private String generateRandomPassword(int length) {
+	        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	        Random random = new Random();
+	        StringBuilder password = new StringBuilder();
+
+	        for (int i = 0; i < length; i++) {
+	            password.append(characters.charAt(random.nextInt(characters.length())));
+	        }
+
+	        return password.toString();
+	    }
+	   
+
 	
 	@RequestMapping("loginForm")
 	public String loginForm() throws Exception {
@@ -98,16 +178,14 @@ public class MemberController {
 	
 	@RequestMapping("memberinfo")
 	public String memberinfo() throws Exception {	
+	
 		
 		
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
-		
-		String Tier = cd.tier(login);
-		
 		request.setAttribute("amem", mem);
+		String Tier = cd.tier(login); 
 		request.setAttribute("Tier", Tier);
-		
 		return "member/memberinfo";
 	}
 	
@@ -167,7 +245,8 @@ public class MemberController {
 		String login =  (String) session.getAttribute("id");
 	
 		Amem mem = md.oneMember(login);
-		
+		String Tier = cd.tier(login); 
+		request.setAttribute("Tier", Tier);
 		request.setAttribute("amem", mem);		
 		
 		return "member/memberUpdateForm";
@@ -182,9 +261,11 @@ public class MemberController {
 		mem.setId(login); //session 저장 logout이면 에러남
 		mem.setPass(request.getParameter("pass"));
 		mem.setName(request.getParameter("name"));
-	
 		mem.setTel(request.getParameter("tel"));
+		mem.setBank(request.getParameter("bank"));
 		mem.setEmail(request.getParameter("email"));
+		mem.setAddress(request.getParameter("address"));
+		mem.setAccount(request.getParameter("account"));
 		
 
 	
@@ -209,7 +290,11 @@ public class MemberController {
 	
 	@RequestMapping("memberDeleteForm")
 	public String memberDeleteForm() throws Exception {		
-		
+		String login = (String) session.getAttribute("id");
+		Amem mem = md.oneMember(login);
+		request.setAttribute("amem", mem);
+		String Tier = cd.tier(login); 
+		request.setAttribute("Tier", Tier);
 		return "member/memberDeleteForm";
 	}
 	
@@ -241,7 +326,11 @@ public class MemberController {
 	
 	@RequestMapping("memberPassForm")
 	public String memberPassForm() throws Exception {		
-		
+		String login = (String) session.getAttribute("id");
+		Amem mem = md.oneMember(login);
+		request.setAttribute("amem", mem);
+		String Tier = cd.tier(login); 
+		request.setAttribute("Tier", Tier);
 		return "member/memberPassForm";
 	}
 	

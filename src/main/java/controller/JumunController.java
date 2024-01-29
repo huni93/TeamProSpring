@@ -23,7 +23,6 @@ import dao.MemberMybatisDao;
 import model.Amem;
 import model.Auction;
 import model.Cart;
-import mybatis.AMemberAnno;
 
 
 @Controller
@@ -38,6 +37,16 @@ public class JumunController {
 
 	@Autowired
 	BoardMybatisDao bd;
+	
+	
+	
+	public JumunController() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+	
 	HttpSession session;
 	HttpServletRequest req;
 	
@@ -54,9 +63,12 @@ public class JumunController {
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
-		  
+		
+      
         String id = (String) session.getAttribute("id");
-            
+	
+
+       
         Cart c = new Cart();
         c.setUserid(id);
         c.setItemid(pnum);       
@@ -74,14 +86,15 @@ public class JumunController {
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
-		
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
 		
         String id = (String) session.getAttribute("id");
 		List<Cart>  li = cd.jumunList(id);
-		String Tier = cd.tier(id);
+
 		System.out.println(li);
 		req.setAttribute("li", li);
-		req.setAttribute("Tier", Tier);
+		
 		return "jumun/jumunList";
 	}
 
@@ -110,34 +123,38 @@ public class JumunController {
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
-				
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
+		
         String id = (String) session.getAttribute("id");
 		List<Cart>  li = cd.myList(id);
-		
-		String Tier = cd.tier(id);
-		
+
 		System.out.println(li);
-		
 		req.setAttribute("li", li);
-		req.setAttribute("Tier", Tier);	
 		
 		return "jumun/myList";
 	}	
 	
-
-	@RequestMapping("buyList") //~~/board/index
-	   public String buyList(HttpServletRequest req) throws Exception {
-		      // TODO Auto-generated method stub
-		String login = (String) session.getAttribute("id");
-		Amem mem = md.oneMember(login);
-		req.setAttribute("amem", mem);
-	List<Auction> li = bd.mainList();	
-	     String Tier = cd.tier(login);
+	@RequestMapping("buyList")
+	
+	public String buyList() throws Exception {
 		
-		req.setAttribute("li", li);
+		String login = (String) session.getAttribute("id");
+		
+		Amem mem = md.oneMember(login);	
+		req.setAttribute("amem", mem);
+		
+		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
-	    return "jumun/buyList";
-		}
+		
+        String id = (String) session.getAttribute("id");
+        List<Auction>  li = cd.buyList(id);
+
+        System.out.println(li);
+		req.setAttribute("li", li);
+		
+		return "jumun/buyList";
+	}	
 	
 	
 }
