@@ -27,7 +27,7 @@
                 <c:forEach var="j" items="${li}">
                     <tr>
                         <td>${j.pnum}</td>
-                        <td><a href="">${j.pname}</a></td>
+                        <td><a href="${pageContext.request.contextPath}/board/boardInfo?num=${j.pnum}">${j.pname}</a></td>
                         <td>${j.regdate}</td>
                         <td>${j.subject}</td>
                         <td>${j.price}</td>                   

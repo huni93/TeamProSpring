@@ -191,8 +191,7 @@ li {
 				</form>
 				
 					
-				<DIV>
-             <a href="${pageContext.request.contextPath}/jumun/buyList">입찰중/입찰완료 상품</a> </DIV>
+			
 
 <script>
 
@@ -311,6 +310,12 @@ function openPurchasePopup() {
 								<th>상세내용</th>
 								<td>${board.content}</td>
 							</tr>
+							<tr>
+								<th>입찰수</th>
+								<td>
+								<a class="btn btn-primary"
+					               href="#">기록</a></td>
+							</tr>  
 							<tr>
 								<c:if test="${sessionScope.id!=null}">
 									<td colspan="2" class="text-right"><a
