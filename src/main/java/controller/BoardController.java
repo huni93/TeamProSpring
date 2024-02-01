@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,8 +33,12 @@ import dao.MemberMybatisDao;
 
 
 import model.Comment;
+import model.Report;
+import model.AddbuyList;
 import model.Amem;
+import model.Apay;
 import model.Auction;
+import model.Cart;
 
 
 @Controller
@@ -55,7 +60,31 @@ public class BoardController  {
 		this.session = request.getSession();
 		this.req=request;
 	}
-	
+	@RequestMapping("buyList")
+	   
+	   public String buyList() throws Exception {
+	      
+	      String login = (String) session.getAttribute("id");
+	      
+	      Amem mem = md.oneMember(login);   
+	      req.setAttribute("amem", mem);
+	      
+	      String Tier = cd.tier(login); 
+	      req.setAttribute("Tier", Tier);
+	      String sum = cd.sum(login);
+	      req.setAttribute("sum", sum);
+	      String sum2 = cd.sum2(login);
+	     req.setAttribute("sum2", sum2);
+	       
+	       
+	        String id = (String) session.getAttribute("id");
+	        List<Auction>  li = bd.buyList(id);
+
+	        System.out.println(li);
+	      req.setAttribute("li", li);
+	      
+	      return "board/buyList";
+	   }  
 	@RequestMapping("searchauction")
 	   public String searchauction(Model model, String pname) throws Exception {
 	      System.out.println("======== searchauction");
@@ -66,6 +95,11 @@ public class BoardController  {
 			
 			String Tier = cd.tier(login); 
 			req.setAttribute("Tier", Tier);
+			String sum = cd.sum(login);
+			 req.setAttribute("sum", sum);
+			 String sum2 = cd.sum2(login);
+			req.setAttribute("sum2", sum2);
+			  
 	      
 	      List<Auction>  li = bd.searchBoards(pname);
 	      model.addAttribute("li",li);
@@ -84,6 +118,11 @@ public class BoardController  {
 		
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 req.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		  
 		if (req.getParameter("boardid") != null) { // ? boardid = 3
 			session.setAttribute("boardid",boardid);
 			session.setAttribute("pageNum", "1");
@@ -153,6 +192,11 @@ public class BoardController  {
 	
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 req.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		 
 		// board session 처리한다.
 		if (boardid != null) { // ? boardid = 3
 			session.setAttribute("boardid", boardid);
@@ -221,9 +265,87 @@ public class BoardController  {
 		return "board/products";
 
 	}
+	@RequestMapping("checkout")
+	public String checkout(int num) throws Exception {
+		// TODO Auto-generated method stub
+
+		String login = (String) session.getAttribute("id");
+		Amem mem = md.oneMember(login);
+		req.setAttribute("amem", mem);
 	
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);	
+		String sum = cd.sum(login);
+		 req.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		
+		  
+			
+		Auction board = bd.oneBoard(num);
+		req.setAttribute("board", board); 
+	
+		
+		return "/board/checkout";
+	}
+	
+
+	
+	
+	@RequestMapping("checkoutpro")
+	public String checkoutpro(Apay apay,int num, String memo1, int sp, String bal) throws Exception {
+		// TODO Auto-generated method stub
+		Auction board = bd.oneBoard(num);
+		req.setAttribute("board", board); 
+		String login = (String) session.getAttribute("id");
+		Amem mem = md.oneMember(login);
+		req.setAttribute("amem", mem);
+		
+		
+		num = bd.apay(apay); 
+		
+		System.out.println(apay);
+		System.out.println(memo1);
+		
+	   		  
+	    req.setAttribute("apay", apay);
+	    req.setAttribute("memo", memo1);
+	    req.setAttribute("sp", sp);
+	    req.setAttribute("bal", bal);
+	    
+	   // apay.setMemo(memo1);
+	   // apay.setSp(sp);
+	   // apay.setBuy(bal);
+	    
+		return "/board/success";
+		
+	
+	}
+	@RequestMapping("success")
+	   public String success(int num) throws Exception {
+	      // TODO Auto-generated method stub
+
+		String login = (String) session.getAttribute("id");
+		Amem mem = md.oneMember(login);
+		req.setAttribute("amem", mem);
+	
+		String Tier = cd.tier(login); 
+		req.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 req.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		
+		  
+		  
+		bd.cntBoard(num);		
+		Auction board = bd.oneBoard(num);
+		req.setAttribute("board", board);
+	      return "/board/success";
+	   }
+
 	@RequestMapping("boardInfo")
-	public String boardInfo(int num) throws Exception {
+	public String boardInfo(int num,Model model) throws Exception {
 		// TODO Auto-generated method stub
 		
 
@@ -233,17 +355,28 @@ public class BoardController  {
 	
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
+			  
 		bd.cntBoard(num);		
 		Auction board = bd.oneBoard(num);
 		
+		List<AddbuyList> AddbuyList  =  bd.List(num);
+		System.out.println(AddbuyList);
 		
+		
+		
+		 int maxbuy = bd.maxbuycnt(num);
+		 System.out.println(maxbuy);
+	     model.addAttribute("maxbuy", maxbuy);
+		
+	     
 		
 		List<Comment> commentLi = bd.commentList(num);
 		int count = commentLi.size();
 		req.setAttribute("commentLi", commentLi);
 		req.setAttribute("board", board); 
 		req.setAttribute("count", count);
-
+		req.setAttribute("ab", AddbuyList);
+	
 		return "board/boardInfo";
 	}
 	
@@ -256,6 +389,11 @@ public class BoardController  {
 	
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 req.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		  
 		
 		Auction board = bd.oneBoard(num);
 		req.setAttribute("board", board);
@@ -263,7 +401,7 @@ public class BoardController  {
 	}
 
 	@RequestMapping("buyPro")
-	public String buyPro(int pnum, String buy, String buyid) throws Exception {
+	public String buyPro(int pnum, String buy, String buyid, String id, Date buydate) throws Exception {
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
@@ -276,6 +414,17 @@ public class BoardController  {
 	    
 	    int result = bd.updateBuy(board);
 
+	    
+	    // -- 기록 test	
+		  AddbuyList ab = new AddbuyList();
+		  ab.setPnum(pnum);
+		  ab.setBuyid(buyid);
+		  ab.setBuy(buy);
+		  ab.setBuydate(buydate);
+		  
+		  bd.addTobuyList(ab);
+		 
+        
 	    String msg;
 	    String url;
 
@@ -387,6 +536,11 @@ public class BoardController  {
 	    req.setAttribute("amem", mem);
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 req.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		 
 		req.setAttribute("pnum", req.getParameter("num"));
 		return "board/boardDeleteForm";
 	}
@@ -402,11 +556,11 @@ public class BoardController  {
 	      String msg = "삭제 불가합니다";
 	      String url = "/board/boardDeleteForm?num=" + pnum;
 	      
-	      if (mem.getPass().equals(pass)) {
+	      if (board.getPass().equals(pass)) {
 	         int count = bd.boardDelete(pnum);
 	         if (count > 0) {
 	            msg = "게시글이 삭제 되었습니다";
-	            url = "/board/products";
+	            url = "/jumun/myList";
 	         }
 
 	      } else {
@@ -480,32 +634,8 @@ public class BoardController  {
 	       return "alert";
 	   }
 
-	@RequestMapping("naver")
-	public String naver() throws Exception {
-		// TODO Auto-generated method stub
-		return "/board/naver";
-	}
 	
-@RequestMapping("buyList")
 	
-	public String buyList() throws Exception {
-		
-		String login = (String) session.getAttribute("id");
-		
-		Amem mem = md.oneMember(login);	
-		req.setAttribute("amem", mem);
-		
-		String Tier = cd.tier(login); 
-		req.setAttribute("Tier", Tier);
-		
-        String id = (String) session.getAttribute("id");
-        List<Auction>  li = bd.buyList(id);
-
-        System.out.println(li);
-		req.setAttribute("li", li);
-		
-		return "board/buyList";
-	}	
-
+	
 	
 }

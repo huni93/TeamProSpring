@@ -2,79 +2,142 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cart">
-	<insert id="addToAproducts" parameterType="cart">
-		INSERT INTO Aproducts (ser, id, pnum)
-		values (Aproduct.nextval, #{id}, #{pnum})
-	</insert>
+<mapper namespace = "cart">
+<insert id="addToAproducts" parameterType="cart">
+    INSERT INTO Aproducts (ser, id, pnum) 
+    values (Aproduct.nextval, #{id}, #{pnum})
+</insert>
 
-	<select id="jumunList" parameterType="map" resultType="Auction">
-		SELECT
-		a.pnum, a.buy, a.idate,a.prompt, a.pname, a.file1, a.subject, a.price,
-		a.readcnt, TO_CHAR(a.regdate, 'yyyy-MM-dd HH24:mi:ss') AS regdate
-		FROM
-		amem m
-		JOIN
-		aproducts ap ON m.id = ap.id
-		JOIN
-		auction a ON ap.pnum = a.pnum
-		WHERE
-		m.id = #{id}
-		ORDER BY
-		a.pnum DESC
-	</select>
+<select id="jumunList" parameterType="map" resultType="Auction">
+SELECT 
+        a.pnum, a.buy, a.idate,a.prompt, a.pname, a.file1, a.subject, a.price, a.readcnt, TO_CHAR(a.regdate, 'yyyy-MM-dd HH24:mi:ss') AS regdate
+    FROM 
+        amem m
+    JOIN 
+        aproducts ap ON m.id = ap.id
+    JOIN 
+        auction a ON ap.pnum = a.pnum
+    WHERE 
+        m.id = #{id}
+    ORDER BY 
+    a.pnum DESC
+</select>
 
-	<select id="myList" parameterType="map" resultType="Auction">
-		SELECT
-		b.userid,
-		b.pnum,
-		b.prompt,
-		b.pname,
-		b.file1,
-		b.subject,
-		b.price,
-		b.readcnt,
-		TO_CHAR(b.regdate, 'yyyy-MM-dd HH24:mi:ss') AS regdate
-		FROM
-		amem a
-		JOIN
-		auction b ON a.id = b.userid
-		WHERE
-		a.id = #{loggedInUserId}
-		ORDER BY
-		b.pnum DESC
-	</select>
+   <select id="myList" parameterType="map" resultType="Auction">
+      SELECT
+            b.userid,
+            b.pnum,
+            b.prompt,
+            b.pname,
+            b.file1,
+            b.subject,
+            b.price,
+            b.readcnt,
+            TO_CHAR(b.regdate, 'yyyy-MM-dd HH24:mi:ss') AS regdate
+        FROM
+            amem a
+        JOIN
+            auction b ON a.id = b.userid
+        WHERE 
+            a.id = #{loggedInUserId}
+        ORDER BY 
+            b.pnum DESC
+    </select>
 
-	<delete id="jumunDelete" parameterType="int">
-		delete from aproducts where pnum = #{pnum}
-	</delete>
+<delete id="jumunDelete"  parameterType="int">
+delete from aproducts where pnum = #{pnum}
+</delete> 
 
-	<select id="Tier" parameterType="string" resultType="String">
-		SELECT Tier FROM
-		(
-		SELECT
-		COUNT(pnum) as total_pnum,
-		CASE
-		WHEN COUNT(pnum) &lt; 3 THEN 'Silver'
-		WHEN COUNT(pnum) BETWEEN 4 AND 6 THEN 'Gold'
-		WHEN COUNT(pnum) BETWEEN 7 AND 10 THEN 'Platinum'
-		ELSE 'Diamond'
-		END AS Tier
-		FROM
-		auction
-		WHERE
-		userid = #{userid}
-		GROUP BY
-		userid
-		)
-	</select>
+<select id="Tier" parameterType="string" resultType="String">
+ SELECT Tier FROM
+    (
+        SELECT
+            SUM(BUY) as total_AMOUNT,
+            CASE
+                WHEN SUM(BUY) &lt; 10000 THEN 'Silver'
+                WHEN SUM(BUY) BETWEEN 50000 AND 100000 THEN 'Gold'
+                WHEN SUM(BUY) BETWEEN 100001 AND 300000 THEN 'Platinum'
+                ELSE 'Diamond'
+            END AS Tier
+        FROM
+            auction
+        WHERE
+            BUYID = #{BUYID}
+        GROUP BY
+           BUYID
+    ) 
+    </select>
+    
+    <!-- point 사용  sum = 누적 마일리지, sum2 = 누적금액, sum3 = 마일리지를 넣고 사용하기 버튼누를시 나오는금액 , sp = 사용마일리지 -->
+    <select id="sum" parameterType="string" resultType="long">
+    select sum(buy*0.05) from apay where id=#{id}
+</select>
+
+<select id="sum2" parameterType="string" resultType="long">
+   select sum(buy) from apay where id=#{id}
+</select>
 
 
-	<select id="buyList" parameterType="string" resultType="Cart">
-		SELECT a.*
-		FROM auction a
-		INNER JOIN amem m ON a.buyid = m.id
-		WHERE a.buyid IS NOT NULL
-		AND m.id = #{loggedInUserId}
-	</select>
+<!-- <update id="point" parameterType="apay">
+   UPDATE apay
+   SET point = point + (
+       SELECT COALESCE(SUM(auction.buy * 0.05), 0) 
+       FROM auction 
+       WHERE auction.buyid = #{id} 
+         AND apay.pnum = auction.pnum
+         AND auction.regdate IS NULL
+   )
+   WHERE EXISTS (
+       SELECT 1
+       FROM auction
+       WHERE auction.buyid = #{id}
+         AND auction.pnum = apay.pnum
+         AND auction.regdate IS NULL
+   )
+</update> -->
+
+
+<!-- <select id="point" parameterType="int" resultType="double">
+    SELECT ROUND(buy * 0.05, 2)
+    FROM apay
+    WHERE pnum = #{pnum}
+</select>
+  
+<select id="updateSP" parameterType="string" resultType="double">
+    SELECT COALESCE(SUM(point), 0)
+    FROM apay
+    WHERE id = #{id}
+</select> -->
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+   
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

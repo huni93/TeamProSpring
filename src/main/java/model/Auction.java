@@ -19,8 +19,15 @@ public class Auction {
 		private String buy;
 		private String buyid;
 		private Date idate;
+		private int point;
 		public int getPnum() {
 			return pnum;
+		}
+		public int getPoint() {
+			return point;
+		}
+		public void setPoint(int point) {
+			this.point = point;
 		}
 		public void setPnum(int pnum) {
 			this.pnum = pnum;
@@ -114,8 +121,9 @@ public class Auction {
 			return "Auction [pnum=" + pnum + ", pname=" + pname + ", price=" + price + ", prompt=" + prompt
 					+ ", subject=" + subject + ", content=" + content + ", pass=" + pass + ", boardid=" + boardid
 					+ ", readcnt=" + readcnt + ", file1=" + file1 + ", regdate=" + regdate + ", userid=" + userid
-					+ ", buy=" + buy + ", buyid=" + buyid + ", idate=" + idate + "]";
+					+ ", buy=" + buy + ", buyid=" + buyid + ", idate=" + idate + ", point=" + point + "]";
 		}
+		
 		
 		
 		

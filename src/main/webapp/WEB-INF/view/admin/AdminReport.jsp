@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,47 +13,11 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/admin/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <style>
-        .content-preview {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .expanded {
-            white-space: normal;
-            overflow: visible;
-            text-overflow: unset;
-        }
-    </style>
-      <script>
-    function checkFile(fileId, fileName) {
-        // fileId와 fileName을 사용하여 서버에 파일 다운로드 요청
-       
-        window.open('${pageContext.request.contextPath}/single/temp.jsp?filename='+fileName, '', 'left=100,top=100,width=320,height=320')
-    }
-    
-    
-    
-</script>
-
-<script>
-    function AnswerForm(num) {
-        // AnswerForm 함수 내에서 팝업을 띄우는 로직을 추가
-        var contextPath = '${pageContext.request.contextPath}';
-        window.open(contextPath + '/admin/AnswerForm?num=' + num ,"_blank", "width=400, height=400");
-    }
-</script>
-
-
-        
-        
-        
-        
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="${pageContext.request.contextPath}/admin/main">관리자 페이지</a>
+            <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -83,17 +46,9 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/Reportlist">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/AdminReport">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 신고된 게시물
-                            </a>
-                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/MemberList">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                회원관리
-                            </a>
-                             <a class="nav-link" href="${pageContext.request.contextPath}/admin/Question">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                1대1 문의
                             </a>
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -166,40 +121,33 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                1대1문의
+                                신고 처리 테이블
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>아이디:</th>
-                                            <th>제목:</th>
-                                            <th>1대1문의내용:</th>
-                                            <th>파일:</th>
-                                            <th>문의날짜:</th>
-                                            
+                                            <th>신고자:${amem.id} </th>
+                                            <th>신고당한사람:</th>
+                                            <th>신고물품번호:</th>
+                                            <th>신고사유:</th>
+                                            <th>신고날짜:</th>
+                                          
                                         </tr>
                                     </thead>
                                
                                     <tbody>
-            <c:forEach var="q" items="${QuestionList}">
-        <tr>
-            <td>${q.name}</td>
-            <td>${q.subject}</td>
-           <td class="content-preview" id="contentPreview_${q.content}">
-           <a href="${pageContext.request.contextPath}/admin/answerinfo?num=${q.num}">${q.content}</a> 
-            <td><a href="#" 
-            onclick="checkFile('${q.id}', '${q.file1}')">${q.file1}</a></td>
-            <td>${q.regdate}</td> 
-            <td>
-     <form action="${pageContext.request.contextPath}/admin/AnswerForm" method="post">
-    <input type="hidden" name="answer" value="${q.num}">
-    <button class="btn btn-danger" type="button" onclick="AnswerForm('${q.num}')">답변</button>
-</form>
-
-</td>
-        </tr>
-    </c:forEach>
+                <c:forEach var="j" items="${li}">
+                    <tr>
+                        <td>${j.reportid}</td>
+		                
+		                <td>${j.reportpnum}</td>
+		                <td>${j.content}</td>
+		                <td>${j.regdate}</td>
+                        
+                        
+                    </tr>
+                </c:forEach>
             </tbody>
                                     
                                     
@@ -226,6 +174,5 @@
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-    
     </body>
 </html>

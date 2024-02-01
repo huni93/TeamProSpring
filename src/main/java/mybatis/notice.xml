@@ -17,6 +17,13 @@ select * from(
          		 where rnum between #{start} and #{end} 
 
 </select>
+<select id = "contentanswer" resultType="notice" parameterType="int">
+
+select * from anotice where boardid = 3 and num=#{num}
+
+
+
+</select>
 <update id = "updateAnswer"  parameterType="map">
 
  UPDATE anotice SET answer = #{answer} WHERE num = #{num}

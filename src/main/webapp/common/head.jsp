@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -114,7 +115,7 @@ body {
 									</ul></li>
 									
 									
-									<li class="menu-item-has-children"><a href="#">[${amem.id }]님  회원등급:${Tier}</a></li>
+									<li class="menu-item-has-children"><a href="#">[${amem.id }]님  회원등급:${Tier}마일리지:${sum} 누적사용금액:${sum2}</a></li>
 									
 							</c:if>
 

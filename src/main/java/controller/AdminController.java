@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -64,7 +66,19 @@ public class AdminController  {
 	  
       
    }
-   
+   @RequestMapping("answerinfo")
+   public String Answerinfo(Model model,@RequestParam int num) throws UnsupportedEncodingException, SQLException {
+       // contentReport 메서드 호출
+      Notice answerinfo = nc.contentanswer(num);
+
+       // 모델에 데이터 추가
+       model.addAttribute("answerinfo", answerinfo);
+
+       // 뷰 이름 반환
+       return "admin/answerinfo";
+   }
+
+
 
    @RequestMapping("AdminReport")
    public String AdminReport() throws Exception {

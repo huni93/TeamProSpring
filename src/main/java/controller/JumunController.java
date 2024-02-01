@@ -88,7 +88,12 @@ public class JumunController {
 		req.setAttribute("amem", mem);
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
-		
+		String sum = cd.sum(login);
+		 req.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		 
+		 
         String id = (String) session.getAttribute("id");
 		List<Cart>  li = cd.jumunList(id);
 
@@ -126,6 +131,13 @@ public class JumunController {
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
 		
+		/*
+		 * String sum = cd.sum(login); req.setAttribute("sum", sum); String sum2 =
+		 * cd.sum2(login); req.setAttribute("sum2", sum2);
+		 */
+		
+		 
+		
         String id = (String) session.getAttribute("id");
 		List<Cart>  li = cd.myList(id);
 
@@ -135,26 +147,27 @@ public class JumunController {
 		return "jumun/myList";
 	}	
 	
-	@RequestMapping("buyList")
-	
-	public String buyList() throws Exception {
-		
+	@RequestMapping("buyList") //~~/board/index
+	   public String buyList(HttpServletRequest req) throws Exception {
+		      // TODO Auto-generated method stub
 		String login = (String) session.getAttribute("id");
-		
-		Amem mem = md.oneMember(login);	
+		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
-		
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 req.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		 
 		
-        String id = (String) session.getAttribute("id");
-        List<Auction>  li = cd.buyList(id);
-
-        System.out.println(li);
+	List<Auction> li = bd.mainList();	
+		
+		
 		req.setAttribute("li", li);
 		
-		return "jumun/buyList";
-	}	
+	    return "jumun/buyList";
+		}
 	
 	
 }

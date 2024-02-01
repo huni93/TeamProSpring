@@ -76,6 +76,14 @@
                 <td>${amem.address}</td>
             </tr>
             <tr>
+                <th>마일리지</th>
+                <td>${sum}</td>
+            </tr>
+            <tr>
+                <th>누적금액</th>
+                <td>${sum2}</td>
+            </tr>
+            <tr>
                 <td colspan="2" class="">
                      <a class="btn btn-primary" href="${pageContext.request.contextPath}/member/memberUpdateForm" style="color:white;">정보수정</a>      
                     <a class="btn btn-primary" href="${pageContext.request.contextPath}/member/memberDeleteForm" style="color:white;">회원탈퇴</a>

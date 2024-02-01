@@ -56,7 +56,13 @@ public class MemberController {
 		
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
-		
+		String sum = cd.sum(login);
+		 req.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		 
+	
+	
 		
 	List<Auction> li = bd.mainList();	
 		
@@ -186,6 +192,11 @@ public class MemberController {
 		request.setAttribute("amem", mem);
 		String Tier = cd.tier(login); 
 		request.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 request.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		request.setAttribute("sum2", sum2);
+		 
 		return "member/memberinfo";
 	}
 	
@@ -223,7 +234,7 @@ public class MemberController {
 	public String memberPro(Amem amem) throws Exception {
 		
 		
-		
+	//apay	
 		
 
 		
@@ -247,6 +258,11 @@ public class MemberController {
 		Amem mem = md.oneMember(login);
 		String Tier = cd.tier(login); 
 		request.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 request.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		request.setAttribute("sum2", sum2);
+		 
 		request.setAttribute("amem", mem);		
 		
 		return "member/memberUpdateForm";
@@ -295,6 +311,11 @@ public class MemberController {
 		request.setAttribute("amem", mem);
 		String Tier = cd.tier(login); 
 		request.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 request.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		request.setAttribute("sum2", sum2);
+		  
 		return "member/memberDeleteForm";
 	}
 	
@@ -331,6 +352,11 @@ public class MemberController {
 		request.setAttribute("amem", mem);
 		String Tier = cd.tier(login); 
 		request.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 request.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		request.setAttribute("sum2", sum2);
+		  
 		return "member/memberPassForm";
 	}
 	

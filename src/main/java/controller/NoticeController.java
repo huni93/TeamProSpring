@@ -1,4 +1,4 @@
-package controller;
+ package controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -163,6 +163,11 @@ public class NoticeController {
 		req.setAttribute("amem", mem);
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 req.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		  
 		return "notice/noticeList";
 }
 	
@@ -185,6 +190,11 @@ public class NoticeController {
 	      req.setAttribute("notice", notice);   
 	      String Tier = cd.tier(login); 
 	      req.setAttribute("Tier", Tier);
+	      String sum = cd.sum(login);
+	      req.setAttribute("sum", sum);
+	      String sum2 = cd.sum2(login);
+	     req.setAttribute("sum2", sum2);
+	       
 	      
 	      return "notice/noticeInfo";
 	      } else {
@@ -211,6 +221,11 @@ public class NoticeController {
 		req.setAttribute("notice", notice);
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 req.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		 
 		return "notice/noticeUpdateForm";
 }
 	
@@ -262,6 +277,11 @@ public class NoticeController {
 	    req.setAttribute("amem", mem);
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		 req.setAttribute("sum", sum);
+		 String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		 
 		req.setAttribute("num", req.getParameter("num"));
 		return "notice/noticeDeleteForm";
 }

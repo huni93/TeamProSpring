@@ -27,7 +27,7 @@ public interface AMemberAnno {
    @Update("update amem set pass =#{pass} where id = #{id}")
    int passMember(Map map);
 
-   @Select("select * from amem") 
+   @Select("select * from amem")
    List<Amem> selectMemberList();
  
 
