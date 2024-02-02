@@ -60,11 +60,11 @@ delete from aproducts where pnum = #{pnum}
                 ELSE 'Diamond'
             END AS Tier
         FROM
-            auction
+            apay
         WHERE
-            BUYID = #{BUYID}
+            BUY = #{BUY}
         GROUP BY
-           BUYID
+           BUY
     ) 
     </select>
     

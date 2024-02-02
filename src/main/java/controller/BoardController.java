@@ -413,7 +413,6 @@ public class BoardController  {
 	    board.setBuyid(buyid);
 	    
 	    int result = bd.updateBuy(board);
-
 	    
 	    // -- 기록 test	
 		  AddbuyList ab = new AddbuyList();
@@ -501,7 +500,6 @@ public class BoardController  {
 		req.setAttribute("msg", msg);
 		req.setAttribute("url", url);
 		return "alert";
-
 	}
 	
 

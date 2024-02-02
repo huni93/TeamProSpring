@@ -69,9 +69,9 @@
                         
                         <td>${j.price}</td>
                 
-                        <td><fmt:formatDate value="${j.regdate}"
-										pattern="yyyy년 MM월 dd일" /></td>
-                         <td><a href="${pageContext.request.contextPath}/board/boardInfo?num=${j.pnum}">보러가기</a>
+                        <td><fmt:formatDate value="${j.idate}"
+                              pattern="yyyy년 MM월 dd일" /></td>
+                         <td><a href="${pageContext.request.contextPath}/board/boardInfo?num=${j.pnum  }">보러가기</a>
                    
             
                     </tr>

@@ -52,7 +52,7 @@ li {
         <td>${n.name}</td>
         <td><a href="noticeInfo?num=${n.num}">${n.subject}</a></td>
         <td><fmt:formatDate value="${n.regdate}"
-										pattern="yyyy년 MM월 dd일 HH시 mm분 ss초" /></td>
+                              pattern="yyyy년 MM월 dd일 HH시 mm분 ss초" /></td>
         <td>${n.readcnt}</td>
         <td>${n.file1}</td>
       </tr>
@@ -71,9 +71,10 @@ li {
   </c:forEach>
  
   <li class="page-item <c:if test="${end>=maxPage}"> disabled  </c:if>"> <a class="page-link" href="${pageContext.request.contextPath}/notice/noticeList?pageNum=${start+bottomLine}">Next</a></li>
-   <c:if test="${amem.adminchk==1}">
-    <li><a class="btn btn-primary" href="noticeForm">게시판입력</a></li>
+  <c:if test="${amem.adminchk==1 || boardid eq '3'}">
+  <li><a class="btn btn-primary" href="noticeForm">게시판입력</a></li>
 </c:if>
+
 
 </ul>
 </div>

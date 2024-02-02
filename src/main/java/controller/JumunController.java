@@ -136,8 +136,6 @@ public class JumunController {
 		 * cd.sum2(login); req.setAttribute("sum2", sum2);
 		 */
 		
-		 
-		
         String id = (String) session.getAttribute("id");
 		List<Cart>  li = cd.myList(id);
 
