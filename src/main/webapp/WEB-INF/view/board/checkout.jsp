@@ -161,7 +161,7 @@
 
 							<tr>
 								<td><span style="font-size: 25px; font-weight: bold;">마일리지 
-										사용</span> 마일리지: <span style="font-size: 15px; font-weight: bold;" id="sum">${sum}</span>
+										사용</span> 마일리지: <span style="font-size: 15px; font-weight: bold;" id="bal2">${sum}</span>
 									<br> <input type="text"  id="sp">
 								<button type="button" onclick="calc()">사용하기</button>
 									<p>
@@ -244,6 +244,7 @@
           paymentMethodWidget.updateAmount(amount - 5000);
         } else {
           paymentMethodWidget.updateAmount(bal);
+           
         }
       });
     
@@ -269,7 +270,7 @@
       });
                  
       function calc() {
-    	  let sum = document.querySelector("#sum").innerHTML
+    	  let sum = document.querySelector("#bal2").innerHTML
           let sp = document.querySelector("#sp").value
           let buy=${board.buy}
           console.log(sum, sp, buy)
@@ -277,9 +278,13 @@
           sp=parseInt(sp)
           
           bal = buy - sp
+          bal2 = sum - sp
           
           paymentMethodWidget.updateAmount(bal);
+         
+          
           document.querySelector("#bal").innerHTML=bal
+          document.querySelector("#bal2").innerHTML=bal2
       }
     </script>
 </body>

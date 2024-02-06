@@ -355,7 +355,10 @@ public class BoardController  {
 	
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
-			  
+		String sum = cd.sum(login);
+	    req.setAttribute("sum", sum);
+	    String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);	  
 		bd.cntBoard(num);		
 		Auction board = bd.oneBoard(num);
 		
