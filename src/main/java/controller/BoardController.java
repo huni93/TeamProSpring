@@ -139,10 +139,10 @@ public class BoardController  {
 			boardPname = "의류";
 			break;
 		case "3":
-			boardPname = "기타";
+			boardPname = "도서";
 			break;
 		case "4":
-			boardPname = "도서";
+			boardPname = "기타";
 			break;
 
 		}
@@ -160,7 +160,7 @@ public class BoardController  {
 
 		String boardid = (String) session.getAttribute("boardid");
 		if (boardid == null)				boardid = "1";
-	    board.setBoardid(boardid);
+	    board.setBoardid(boardid);  
 		
 	    if(!multipartFile.isEmpty()) {
 			File file = new File(path,multipartFile.getOriginalFilename());
@@ -214,10 +214,10 @@ public class BoardController  {
 			boardPname = "의류";
 			break;
 		case "3":
-			boardPname = "기타";
+			boardPname = "도서";
 			break;
 		case "4":
-			boardPname = "도서";
+			boardPname = "기타";
 			break;
 	
 

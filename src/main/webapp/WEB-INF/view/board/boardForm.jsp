@@ -55,6 +55,7 @@ function previewImage(input) {
           <img src="" width="100px" height="120px" id="pic"> 
           <input type="file" accept="image/*" onchange="previewImage(this)" name="f">
         </div>
+        
   <input type="hidden"  name="buy"  value="0">
 				<div class="form-group">
 					<label for="pname">판매상품:</label> <input type="text"
