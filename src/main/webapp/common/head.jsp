@@ -116,7 +116,7 @@ body {
 									
 									
 									<li class="menu-item-has-children"><a href="#">[${amem.id }]님  회원등급:${Tier}마일리지:${sum} 누적사용금액:${sum2}</a></li>
-									
+									<li><a href="http://127.0.0.1:6001/?id=${id}">내 대출 등급 확인하기</a></li>
 							</c:if>
 
 							<!-- <ul class="sub-menu">
