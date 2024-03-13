@@ -1,43 +1,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>로그인</title>
-<!-- Bootstrap CSS -->
-<meta charset="utf-8" />
-<link rel="icon"
-	href="https://static.toss.im/icons/png/4x/icon-toss-logo.png" />
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/tossStyle.css" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>토스페이먼츠 샘플 프로젝트</title>
-<!-- 결제위젯 SDK 추가 -->
+<div id="mypage">
 <script src="https://js.tosspayments.com/v1/payment-widget"></script>
-<style>
-.lo {
-	background: black;
-	color: white;
-	padding: 10px 40px 10px 40px;
+<script>
+    function showBankInfo() {
+        var bankInfo = document.getElementById("bankInfo");
+
+        // 계좌이체를 선택하면 추가적인 창을 나타냄
+        bankInfo.style.display = "block";
+    }
+
+    function hideBankInfo() {
+        var bankInfo = document.getElementById("bankInfo");
+
+        // 다른 결제수단을 선택하면 추가적인 창을 숨김
+        bankInfo.style.display = "none";
+    }
+</script>
+<script>
+function handleMemoChange() {
+    var select = document.getElementById("memoSelect");
+    var input = document.getElementById("customMemoInput");
+    var selectedValue = select.value;
+
+    if (selectedValue === "직접입력") {
+        input.style.display = "block";
+        input.value = "";  // 직접 입력을 위해 input을 비웁니다.
+    } else {
+        input.style.display = "none";
+        input.value = selectedValue;  // select의 값을 input에 설정합니다.
+    }
 }
 
-.input-form {
-	max-width: 700px;
-	margin: 10px auto; /* 상하 여백은 auto로 설정하여 중앙 정렬 */
-	padding: 32px;
-	background: #fff;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	-webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-	box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-	text-align: center;
-	color: black;
+// 서버로 데이터 전송하기 전에 호출되는 함수
+function prepareAndSendData() {
+    var memo = document.getElementById("customMemoInput").value;
+
+    // 서버에 데이터 전송하는 로직
+    // 예: window.location.origin + "${pageContext.request.contextPath}/board/checkoutpro?num=${board.pnum}&pnum=${board.pnum}&memo=" + memo;
+}
+
+</script>
+	<style media="screen">
+.btn_vietnam {
+	width: 100%;
 }
 
 .wrapper {
@@ -56,132 +63,295 @@
 }
 </style>
 
-</head>
-<body>
-	<script>
-		function handleMemoChange() {
-			var memoSelect = document.getElementById("memoSelect");
-			var customMemoInput = document.getElementById("customMemoInput");
 
-			// "직접입력"이 선택되면 입력 필드를 나타냄
-			if (memoSelect.value === "직접입력") {
-				customMemoInput.style.display = "block";
-			} else {
-				// 다른 선택지가 선택되면 입력 필드를 숨김
-				customMemoInput.style.display = "none";
-			}
-		}
-	</script>
-	<script>
-    function showBankInfo() {
-        var bankInfo = document.getElementById("bankInfo");
 
-        // 계좌이체를 선택하면 추가적인 창을 나타냄
-        bankInfo.style.display = "block";
-    }
-
-    function hideBankInfo() {
-        var bankInfo = document.getElementById("bankInfo");
-
-        // 다른 결제수단을 선택하면 추가적인 창을 숨김
-        bankInfo.style.display = "none";
-    }
-</script>
-	<div class="container">
-
-		<div class="input-formhead col-md- mx-auto text-center">
-			<h2 class="mb-3" style="text-align: center">주문/결제하기</h2>
-		</div>
+	<div class="basket_title">
+		<div class="basket_title_cover">예상비용결제(1차결제)</div>
 	</div>
-
-	<div class="container">
-		<div class="input-form-backgroud row">
-			<div class="input-form col-md-12 mx-auto text-center">
-				<form class="validation-form" novalidate action="checkoutpro"
-					method="post">
-					<table class="no-border">
-
-
-
-						<tbody>
-							<tr>
-								<td><span style="font-size: 25px; font-weight: bold;">배송지</span>
-									&nbsp;<br>입찰자 정보<br>
-									
-								<input type="text" name="pnum" value="${board.pnum }">
-								<input type="text" name="name" value="${amem.name}"><br>
-								<input type="text" name="tel" value="${amem.tel }">
-							
-								
-									<input type="text" style="width: 400px; height: 30px;"
-									value="${amem.address }" name="address" /><br>&nbsp; 배송메모 입력<br>
-									
-									<select id="memoSelect" style="width: 400px; height: 30px;"
-									name="memo" onchange="handleMemoChange()">
-										<option value="">선택안함</option>
-										<option value="직접입력">직접입력</option>
-										<option value="문앞에놓아주세요">문 앞에 놓아주세요</option>
-										<option value="부재시연락주세요">부재 시 연락 주세요</option>
-										<option value="배송전미리연락해주세요">배송 전 미리 연락해 주세요</option>
-										<!-- 추가적인 선택지는 필요에 따라 추가할 수 있습니다 -->
-								</select> <!-- 동적으로 나타날 입력 필드 --> <input type="text" id="customMemoInput"
-									style="display: none; width: 400px; height: 100px;" name="memo1"
-									placeholder="배송메모를 입력해주세요"><br>&nbsp;</td>
-							</tr>
-						</tbody>
-
-						<tbody>
-							<tr>
-								<td><span style="font-size: 25px; font-weight: bold;">낙찰상품</span><br>
-									<div style="display: flex; align-items: flex-start;">
-										<a href="boardInfo?num=${board.pnum}"> <img
-											src="${pageContext.request.contextPath}/image/board/${board.file1}"
-											style="width: 200px; height: 200px;" alt="">
-										</a>
-										<div
-											style="margin-left: 80px; margin-top: 10px; font-weight: bold;">
-											<div style="font-size: 30px;">${board.pname}</div>
-											판매자:${board.userid}<br> 상품정보:${board.subject}<br>
-											등록일시:
-											<fmt:formatDate value="${board.idate}"
-												pattern="yyyy년 MM월 dd일 HH시" />
-											<span id="buy"   style="display: none;">${board.buy}</span>
-											<br> <span   
-												style="color: blue; font-weight: bold; font-size: 20px;">
-												<fmt:formatNumber value="${board.buy}" pattern="#,##0" />
-											</span>원
-										</div>
-									</div></td>
-
-							</tr>
-						</tbody>
-
-
-						<tbody>
-
-							<tr>
-								<td><span style="font-size: 25px; font-weight: bold;">마일리지 
-										사용</span> 마일리지: <span style="font-size: 15px; font-weight: bold;" id="bal2">${sum}</span>
-									<br> <input type="text"  id="sp">
-								<button type="button" onclick="calc()">사용하기</button>
-									<p>
-										&nbsp;<br> 총 결제금액:<span
-											style="font-size: 15px; font-weight: bold;"  id="bal">${board.buy}</span></td>
-							</tr>
-
-						</tbody>
-
-
-
-					</table>
-
-				</form>
+	<div class="basket_menu">
+		<div class="basket_notice">
+			<div class="bn_img">
+				<img src="/images/renew220916/notice.png" alt="알림">
+			</div>
+			<div class="bn_txt">
+				상품이 현지의 당사 물류센터에 도착전, 무게와 기타 경비등을 추정하여 결제를 진행합니다.<br> 상품의 실무게
+				측정후 추가 입금액 또는 환불금이 발생할 수 있습니다.
 			</div>
 		</div>
+		<ul>
+			<li><span>1</span> 장바구니</li>
+			<li class="on"><span>2</span> 예상비용결제</li>
+			<li><span>3</span> 주문완료</li>
+			<li><span>4</span> 실비정산</li>
+			<li><span>5</span> 결제완료</li>
+		</ul>
 	</div>
 
 
-	<div class="wrapper">
+	<div class="basket_box">
+		<div class="basket_box_left">
+			<div style="margin-top: 80px;">
+				<form action="https://japaning.co.kr/pay/order_result"
+					name="order_frm" id="order_frm" method="post"
+					accept-charset="utf-8">
+					<div id="order">
+						<ul class="order_title">
+							<li>
+								<table class="order_goods_table_head">
+									<tbody>
+									</tbody>
+									<colgroup>
+										<col width="120px;">
+										<col width="120px;">
+										<col width="">
+										<!-- <col width="90px;" /> -->
+										<col width="120px;">
+										<col width="140px;">
+										<col width="120px;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<td>상품번호</td>
+											<td>등록일자</td>
+											<td>상품정보</td>
+											<!-- <td>단가(세별)</td> -->
+											<td>입찰자</td>
+											<td>상품가</td>
+											<td style="background: #FBFBFB;">진행상태</td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="order_goods_table_body">
+									<tbody>
+									</tbody>
+									<colgroup>
+										<col width="120px;">
+										<col width="120px;">
+										<col width="">
+										<!-- <col width="90px;" /> -->
+										<col width="120px;">
+										<col width="140px;">
+										<col width="120px;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<td><span style="color: #ED564D;">${board.pnum }</span>
+											</td>
+											<td><fmt:formatDate value="${board.idate}"
+													pattern="yyyy년 MM월 dd일 HH시" /></td>
+											<td class="china"><span class="china_bk"> <span
+													class="cbi"> <a href="boardInfo?num=${board.pnum}">
+															<img
+															src="${pageContext.request.contextPath}/image/board/${board.file1}">
+													</a>
+												</span>
+											</span> <span class="china_sh"> <a href="" target="_blank">
+														${board.pname } </a> <!--
+			      								      					--> <span class="in"> 판매자 :
+														${board.userid } </span>
+											</span> <span class="china_nj"> ${board.subject}</span></td>
+											<!-- <td><strong>4,164</strong> 円</td> -->
+											<td>${board.buyid }</td>
+											<td><strong style="color: #ED564D;"><span>
+														<fmt:formatNumber value="${board.buy}" pattern="#,##0" />
+												</span>원</strong></td>
+											<td>결제대기</td>
+										</tr>
+									</tbody>
+								</table>
+							</li>
+
+							<li style="height: 15px;"></li>
+
+							<li>
+								<table class="order_location_table_head">
+									<tbody>
+									</tbody>
+									<colgroup>
+										<col width="50%;">
+										<col width="50%;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<td>주문하신 분</td>
+											<td style="background: #FBFBFB;">결제정보</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<table class="order_location_table_body">
+									<tbody>
+									</tbody>
+									<colgroup>
+										<col width="60%;">
+										<col width="40%;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<td>
+												<table class="order_info_table">
+													<tbody>
+													</tbody>
+													<colgroup>
+														<col width="28%;">
+														<col width="">
+													</colgroup>
+													<tbody>
+														<tr>
+															<th>이름</th>
+															<td><input type="text" class="input_name"
+																maxlength="10" value="소성운" name="realname"></td>
+														</tr>
+														<tr>
+															<th>주소</th>
+															<td><input type="text" class="input_add"
+																name="user_zipcode" id="user_zipcode"
+																readonly="readonly" value="17001"> &nbsp;
+																<button type="button" class="btn_addno cursor_p"
+																	onclick="goPopup('2')">우편번호 찾기</button> <br> <input
+																type="text" class="input_addlong"
+																style="margin-top: 3px;" name="user_address"
+																id="user_address" value="경기도 용인시 기흥구 평촌2로1번길 8-17"
+																readonly="readonly"> <br> <input
+																type="text" class="input_addlong"
+																style="margin-top: 3px;" name="user_address_detail"
+																id="user_address_detail" value="1"> <input
+																type="hidden" name="user_address_en"
+																id="user_address_en"
+																value="8-17 Pyeongchon 2-ro 1beon-gil, Giheung-gu, Yongin-si, Gyeonggi-do"
+																readonly="readonly"> <input type="hidden"
+																name="user_address_detail_en"
+																id="user_address_detail_en" value="1"></td>
+														</tr>
+														<tr>
+															<th>이메일</th>
+															<td><input type="text" class="input_email"
+																value="tjddns1117" name="user_email1" id="user_email1">
+																＠ <input type="text" class="input_email"
+																value="naver.com" name="user_email2" id="user_email2">
+															</td>
+														</tr>
+														<tr>
+															<th>일반전화</th>
+															<td>
+																<div id="select_boxtel" style="margin: 0;">
+																	<label for="color">010</label> <select name="user_tel3"
+																		id="select_boxtel">
+																		<option value="010" selected="selected">010</option>
+
+																	</select>
+																</div> - <input type="text" class="input_tel" value="8461"
+																name="user_tel2" id="user_tel2"> - <input
+																type="text" class="input_tel" value="4827"
+																name="user_tel3" id="user_tel3">
+															</td>
+														</tr>
+														<tr>
+															<th>휴대전화</th>
+															<td>01084614827</td>
+														</tr>
+														<tr>
+															<td colspan="2"
+																style="border-bottom: none; letter-spacing: -1px;">※
+																휴대전화번호는 마이페이지 &gt; 개인정보수정을 통해서만 변경이 가능합니다.</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+
+
+											<td style="padding: 0 120px 30px 120px;">
+												<table class="order_amount_table">
+													<tbody>
+													</tbody>
+													<colgroup>
+														<col width="50%;">
+														<col width="50%;">
+													</colgroup>
+													<tbody>
+														<tr>
+															<td colspan="2" class="oat_title">결제 금액</td>
+														</tr>
+														<tr>
+															<td colspan="2" class="oat_line"></td>
+														</tr>
+														<tr>
+															<td class="oat_order">총 주문금액</td>
+															<td class="oat_orderprice">￦ <strong id="total_won2">63,984</strong></td>
+														</tr>
+														<tr>
+															<td>할인사용</td>
+															<td class="oat_price" style="color: #ED564D;">￦ <span
+																id="use_discount_prt"><b>0</b></span></td>
+														</tr>
+														<!--
+          							<tr>
+          								<td>포인트사용</td>
+          								<td class="oat_price" >￦ <span id="use_point_prt">0</span></td>
+          							</tr>
+          							-->
+														<tr style="display: none;">
+															<td>입찰선납금 사용</td>
+															<td class="oat_price">￦ <span id="use_prepay_prt"><b>0</b></span></td>
+														</tr>
+														<tr>
+															<td style="padding-bottom: 10px;">캐시사용</td>
+															<td class="oat_price">￦ <span id="use_cash_prt"><b>0</b></span></td>
+														</tr>
+														<tr>
+															<td colspan="2" class="oat_line"></td>
+														</tr>
+														<tr>
+															<td class="oat_order2">총 결제금액</td>
+															<td class="oat_orderprice2">￦ <span
+																id="step3_total_price">63,984</span></td>
+														</tr>
+														<tr>
+															<td colspan="2" class="oat_btns" id="credit_ok">
+																<button type="button" class="btn_vietnam cursor_p"
+																	id="buy_btn" onclick="$('#order_frm').submit();">결제하기</button>
+															</td>
+														</tr>
+														<tr>
+															<td colspan="2" class="oat_btns" style="display: none"
+																id="credit_loading">
+																<button type="button" class="btn_cambodia cursor_p"
+																	onclick="alert('결제가 진행중입니다. \n잠시만 기다려주세요.');">결제진행중</button>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</li>
+
+							<li>
+								<table class="order_settle_table_head">
+									<tbody>
+									</tbody>
+									<colgroup>
+										<col width="100%;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<td>결제정보</td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="order_settle_table_body">
+									<tbody>
+									</tbody>
+									<colgroup>
+										<col width="70%;">
+										<col width="30%;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<td><input type="text" class="input_name" value="0"
+												name="use_prepay" style="display: none;">
+											<div class="wrapper">
 		<div class="box_section"
 			style="padding: 40px 30px 50px 30px; margin-top: 30px; margin-bottom: 50px;">
 			<!-- 결제 UI -->
@@ -205,8 +375,32 @@
 					결제하기</button>
 			</div>
 		</div>
+	</div></td>
+											<td style="padding: 0 30px 30px 30px;">
+												<table class="order_amount_table">
+													<tbody>
+													</tbody>
+													<colgroup>
+														<col width="50%;">
+														<col width="50%;">
+													</colgroup>
+													
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</li>
+						</ul>
+					</div>
+
+				</form>
+			</div>
+		</div>
 	</div>
-	<script>
+
+
+<script>
       const button = document.getElementById("payment-button");
       const coupon = document.getElementById("coupon-box");
    
@@ -214,10 +408,7 @@
         window.btoa(Math.random()).slice(0, 20);
       const amount = ${board.buy};
      
-      // ------  결제위젯 초기화 ------
-      // TODO: clientKey는 개발자센터의 결제위젯 연동 키 > 클라이언트 키로 바꾸세요.
-      // TODO: 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요. 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
-      // @docs https://docs.tosspayments.com/reference/widget-sdk#sdk-설치-및-초기화
+
       const widgetClientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
       const customerKey = generateRandomString();
       const paymentWidget = PaymentWidget(widgetClientKey, customerKey); // 회원 결제
@@ -244,7 +435,6 @@
           paymentMethodWidget.updateAmount(amount - 5000);
         } else {
           paymentMethodWidget.updateAmount(bal);
-           
         }
       });
     
@@ -256,11 +446,11 @@
         let memo = document.querySelector("#customMemoInput").value    
         let sp = document.querySelector("#sp").value
        
-   	  	paymentWidget.requestPayment({
+           paymentWidget.requestPayment({
             orderId: generateRandomString(),
             orderName: "${board.pname}",
          
-            successUrl: window.location.origin + "${pageContext.request.contextPath}/board/checkoutpro?num=${board.pnum}&pnum=${board.pnum}&name=${amem.name}&tel=${amem.tel}&address=${amem.address}&id=${amem.id}&memo1="+memo+"&sp="+sp+"&buy="+bal,
+            successUrl: window.location.origin + "${pageContext.request.contextPath}/board/checkoutpro?num=${board.pnum}&pnum=${board.pnum}&name=${amem.name}&tel=${amem.tel}&address=${amem.address}&id=${amem.id}&memo="+memo+"&sp="+sp+"&buy="+bal,
             failUrl: window.location.origin + "${pageContext.request.contextPath}/board/fail",
             customerEmail: "customer123@gmail.com",
             customerName: "김토스",
@@ -270,23 +460,25 @@
       });
                  
       function calc() {
-    	  let sum = document.querySelector("#bal2").innerHTML
-          let sp = document.querySelector("#sp").value
-          let buy=${board.buy}
-          console.log(sum, sp, buy)
-          sum=parseInt(sum)
-          sp=parseInt(sp)
+          let sum = document.querySelector("#bal2").innerHTML
+           let sp = document.querySelector("#sp").value
+           let buy=${board.buy}
+           console.log(sum, sp, buy)
+           sum=parseInt(sum)
+           sp=parseInt(sp)
+           
+           bal = buy - sp
+           bal2 = sum - sp
+           
+           paymentMethodWidget.updateAmount(bal);
           
-          bal = buy - sp
-          bal2 = sum - sp
-          
-          paymentMethodWidget.updateAmount(bal);
-         
-          
-          document.querySelector("#bal").innerHTML=bal
-          document.querySelector("#bal2").innerHTML=bal2
-      }
+           
+           document.querySelector("#bal").innerHTML=bal
+           document.querySelector("#bal2").innerHTML=bal2
+       }
     </script>
-</body>
 
-</html>
+
+
+
+</div>

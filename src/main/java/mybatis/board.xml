@@ -12,19 +12,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		0,#{userid},#{buy},#{buyid},sysdate)
 	</insert>
 
+
+
+
+
 	<update id="updateBuy" parameterType="Auction">
 		update auction set buy=#{buy},buyid=#{buyid} where pnum=#{pnum}
 	</update>
 
+	
+
+
 	<insert id="apay" parameterType="apay">
-	     INSERT INTO apay (name, tel, address, memo, pnum, regdate, buy, sp, id)
+	     INSERT INTO apay (name, tel, address, memo, pnum, regdate, buy, sp,id)
     VALUES (#{name}, #{tel}, #{address}, #{memo}, #{pnum}, sysdate, #{buy}, #{sp},#{id})
 </insert>
+
+
 
 	<insert id="insertBuy" parameterType="Auction">
 		insert abuy set buy=#{buy},buyid=#{buyid} where pnum=#{pnum}
 
 	</insert>
+
+
+
+
+
 
 	<!-- AuctionMapper.xml -->
 	<update id="buyNow" parameterType="map">
@@ -43,7 +57,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getupcnt" parameterType="int" resultType="int">
 		SELECT upcnt FROM Aboardcomment where ser = #{ser}
 	</select>
-	<!-- 조회수 -->
 	<insert id="cntBoard" parameterType="Auction">
 		UPDATE auction
 		SET readcnt = readcnt + 1
@@ -63,7 +76,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where rnum between #{start}
 		and #{end}
 	</select>
-	
 	<select id="boardCount" resultType="int" parameterType="string">
 		select nvl(count(*),0) from auction where boardid = #{boardid}
 	</select>
@@ -77,6 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		pname=#{pname},subject=#{subject},content=#{content},file1=#{file1},price=#{price},prompt=#{prompt}
 		where pnum =#{pnum}
 	</insert>
+
 
 	<delete id="boardDelete" parameterType="int">
 		delete from auction where pnum = #{pnum}
@@ -98,7 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from auction
 		order by
 		pnum desc) a)
-		where rnum between 0 and 10
+		where rnum between 0 and 20
 	</select>
 
 	<delete id="commentDelete" parameterType="int">

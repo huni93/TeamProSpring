@@ -75,55 +75,10 @@ delete from aproducts where pnum = #{pnum}
     WHERE id=#{id}
 </select>
 
+
 <select id="sum2" parameterType="string" resultType="long">
    select sum(buy) from apay where id=#{id}
-</select> 
-
-
-<!-- <update id="point" parameterType="apay">
-   UPDATE apay
-   SET point = point + (
-       SELECT COALESCE(SUM(auction.buy * 0.05), 0) 
-       FROM auction 
-       WHERE auction.buyid = #{id} 
-         AND apay.pnum = auction.pnum
-         AND auction.regdate IS NULL
-   )
-   WHERE EXISTS (
-       SELECT 1
-       FROM auction
-       WHERE auction.buyid = #{id}
-         AND auction.pnum = apay.pnum
-         AND auction.regdate IS NULL
-   )
-</update> -->
-
-
-<!-- <select id="point" parameterType="int" resultType="double">
-    SELECT ROUND(buy * 0.05, 2)
-    FROM apay
-    WHERE pnum = #{pnum}
 </select>
-  
-<select id="updateSP" parameterType="string" resultType="double">
-    SELECT COALESCE(SUM(point), 0)
-    FROM apay
-    WHERE id = #{id}
-</select> -->
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
 
    
 </mapper>

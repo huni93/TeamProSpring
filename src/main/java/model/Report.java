@@ -11,9 +11,15 @@ public class Report {
 	private int pnum;
 	
 	private String reportedid;//신고당한사람
-	
+	private int reportcount;
 	
 	 
+	public int getReportcount() {
+		return reportcount;
+	}
+	public void setReportcount(int reportcount) {
+		this.reportcount = reportcount;
+	}
 	public String getReportid() {
 		return reportid;
 	}
@@ -53,8 +59,9 @@ public class Report {
 	@Override
 	public String toString() {
 		return "Report [reportid=" + reportid + ", reportpnum=" + reportpnum + ", content=" + content + ", regdate="
-				+ regdate + ", pnum=" + pnum + ", reportedid=" + reportedid + "]";
+				+ regdate + ", pnum=" + pnum + ", reportedid=" + reportedid + ", reportcount=" + reportcount + "]";
 	}
+	
 	
 	
 	

@@ -57,12 +57,12 @@ function previewImage(input) {
   
     <div class="form-group">
     <label for="price">입찰희망가격:</label>
-    <input type="text" class="form-control" placeholder="" id="price"  name="price" value=${board.price }>
+    <input type="text" class="form-control" placeholder="" id="price"  name="price" value="${board.price }">
   </div><p>
   
     <div class="form-group">
     <label for="prompt">즉시구매가격:</label>
-    <input type="text" class="form-control" placeholder="" id="prompt"  name="prompt" value=${board.prompt }>
+    <input type="text" class="form-control" placeholder="" id="prompt"  name="prompt" value="${board.prompt }">
   </div><p>
   
   <div class="form-group">

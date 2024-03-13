@@ -14,7 +14,7 @@ import model.Report;
 
 public interface AReportAnno {
 
-    @Insert("INSERT INTO AReport (reportid, reportpnum, content,regdate,reportedid) VALUES (#{reportid}, #{reportpnum},#{content},#{regdate},#{reportid})")
+    @Insert("INSERT INTO AReport (reportid, reportpnum, content,regdate,reportedid) VALUES (#{reportid}, #{reportpnum},#{content},#{regdate},#{reportedid})")
     int insertReport(Report rep);
     
     
@@ -42,6 +42,7 @@ public interface AReportAnno {
     @Delete("DELETE FROM auction WHERE pnum = #{reportpnum}")
     int deleteReport(int reportpnum);
 
-    
+    @Select("SELECT nvl(COUNT(*),0) reportedid  FROM areport where  reportedid = #{value}")
+    int selectReportCount(String reportedid);
 }
     

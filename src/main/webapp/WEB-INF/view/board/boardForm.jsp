@@ -1,22 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<div id="mypage">
 
-<style>
-.input-form {
-	max-width: 650px;
-	margin-top: 80px;
-	margin-bottom: 80px;
-	padding: 32px;
-	background: #fff;
-	border-radius: 10px;
-	box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-}
-</style>
+	<form class="container input-form"
+			action="${pageContext.request.contextPath}/board/boardPro"
+			method="post" enctype="multipart/form-data">
 <script>
 function previewImage(input) {
     var file = input.files[0];
@@ -30,76 +19,103 @@ function previewImage(input) {
   }
 
 </script>
-
-</head>
-<body>
-	<div class="container">
-
-		<form class="container input-form"
-			action="${pageContext.request.contextPath}/board/boardPro"
-			method="post" enctype="multipart/form-data">
-			<div class="form-group">
-				<div class="col-md-3 mb-3">
-
-					<h4 class="text-center">카테고리:&nbsp;${boardPname}</h4>
-					<div class="form-group">
-						<label for="userid">작성자:</label> <input type="text" readonly
-							class="form-control" value="${amem.id }" id="userid"
-							name="userid">
-					</div>
-					<p>&nbsp;
-					<p>
-
-
-						    <label for="id">미리보기</label> 
-          <img src="" width="100px" height="120px" id="pic"> 
-          <input type="file" accept="image/*" onchange="previewImage(this)" name="f">
-        </div>
-        
-  <input type="hidden"  name="buy"  value="0">
-				<div class="form-group">
-					<label for="pname">판매상품:</label> <input type="text"
-						class="form-control" placeholder="Enter name" id="pname"
-						name="pname">
-				</div>
-				<div class="form-group">
-
-					<label for="subject">상품정보:</label> <input type="text"
-						class="form-control" placeholder="Enter info" id="subject"
-						name="subject">
-				</div>
-
-				<div class="form-group">
-					<label for="price">입찰시작가격:</label> <input type="number"
-						class="form-control" placeholder="Enter price" id="price"
-						name="price">
-				</div>
-					<div class="form-group">
-					<label for="prompt">즉시구매가격:</label> <input type="number"
-						class="form-control" placeholder="Enter price" id="prompt"
-						name="prompt">
-				</div>
-
-				<div class="form-group">
-					<label for="pass">비밀번호:</label> <input type="password"
-						class="form-control" placeholder="Enter pass" id="pass"
-						name="pass">
-				</div>
-				<!-- <div class="form-group">
-				<label for="subject">제목:</label> <input type="text"
-					class="form-control" placeholder="Enter subject" id="subject"
-					name="subject">
-			</div> -->
-				<div class="form-group">
-					<label for="content">내용:</label>
-					<textarea class="form-control" rows="5" id="content" name="content"></textarea>
-				</div>
-
-
-				<button class="btn btn-primary btn-lg btn-block" type="submit">작성하기</button>
-		</form>
+<div class="basket_title">
+	<div class="basket_title_cover">
+		상품등록<br>
+		<span style="font-size:13px;color:#777;">
+			<!-- 추가설명란 -->
+		</span>
+		<input type="hidden" name="userid" value="${amem.id }">
 	</div>
-	<script> window.addEventListener('load', () => { const forms = document.getElementsByClassName('validation-form'); Array.prototype.filter.call(forms, (form) => { form.addEventListener('submit', function (event) { if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation(); } form.classList.add('was-validated'); }, false); }); }, false); </script>
+</div>
+<li>
+	<div id="contents">
+		<table class="selfbuy">
+			 <input type="hidden"  name="buy"  value="0">
+			<colgroup>
+				<col width="30%;">
+				<col width="70%;">
+			</colgroup>
+			<tbody><tr>
+				<td><span class="astros">
+				<label for="fileInput">
+    <img src="${pageContext.request.contextPath}/image/integ/20151022_02.png" id="pic" style="cursor: pointer;">
+    <input type="file" accept="image/*" onchange="previewImage(this)" name="f" id="fileInput" style="display: none;">
+</label>
+				
+				</span>
+     
+     
+     
+     </td>
+				<td style="text-align:left;">
+					<table class="callfor_table" style="width : 800px;">
+						<colgroup>
+							<col width="115px">
+							<col width="285px">
+							<col width="115px">
+							<col width="285px">
+						</colgroup>
+						<!--
+						<tr>
+							<th style="border-top:1px solid #000;">상품판매 국가</th>
+							<td colspan="3" style="border-top:1px solid #000;"><span style="margin:0 20px 0 0"><input type="radio" name="loc1" value="jp">일본</span><input type="radio" name="loc1" value="us">미국</td>
+						</tr>
+						-->
+						<input type="hidden" name="loc1" value="jp">
+						<tbody>
+							<tr>
+							<th>&nbsp;&nbsp;상품명</th>
+							<td><input type="text" class="input_kobe" name="pname" id="pname" style="width:220px;"></td>
+							<th>&nbsp;&nbsp;카테고리</th>
+							<td>
+		<select class="form-control" id="boardCategory" name="boardid" style="width: 100px; height:35px">
+            <option value="1" style="text-align: center;">가전</option>
+            <option value="2" style="text-align: center;">의류</option>
+            <option value="3" style="text-align: center;">프라모델</option>
+            <option value="4" style="text-align: center;">골동품</option>
+            <option value="5" style="text-align: center;">악기</option>
+            <option value="6" style="text-align: center;">명품시계</option>
+            <option value="7" style="text-align: center;">악세사리</option>
+            <option value="8" style="text-align: center;">레저</option>
+            
+        </select></td>
+						</tr>
+						<tr>
+							<th>&nbsp;&nbsp;상세정보</th>
+							<td><input type="text" class="input_kobe" name="subject" id="subject" style="width:220px;"></td>
+							<th>&nbsp;&nbsp;비밀번호</th>
+							<td><input type="password" class="input_kobe" name="pass" id="pass" style="width:220px;"></td>
+						</tr>
+						<tr>
+							<th>입찰시작가격</th>
+							<td><input type="text" class="input_kobe" name="price" id="price" style="ime-mode:disabled;width:220px;" onblur="onlynumber_blur(this)" onkeydown="return onlyNumber3(event)" maxlength="20"></td>
+							<th>즉시구매가격</th>
+							<td><input type="text" class="input_kobe" name="prompt" id="prompt" style="ime-mode:disabled;width:220px;" onkeydown="return onlyNumber(event)" maxlength="20"></td>
+							</tr>
+						<tr>
+							<th style="border-bottom:1px solid #E2E2E2;">&nbsp;&nbsp;제품설명</th>
+							<td colspan="3" style="border-bottom:1px solid #E2E2E2;"><textarea class="input_chiba" name="content" id="content" style="width:622px;"></textarea></td>
+						</tr>
 
-</body>
-</html>
+					
+
+					</tbody></table>
+				</td>
+			</tr>
+		</tbody></table>
+	</div>
+	<table>
+
+		<tbody><tr>
+			<td style="border-bottom:none;border-left:none;border-right:none;text-align:center;padding:25px 0 5px 0;">
+			<button type="submit" id="self_send" style="cursor:pointer" class="kenya">등록하기</button>
+			<button type="button" style="cursor:pointer" onclick="location.href='${pageContext.request.contextPath}/board/products'" class="nairobi">취 소</button></td>
+		</tr>
+	</tbody></table>
+</li>
+
+</form>
+<script> window.addEventListener('load', () => { const forms = document.getElementsByClassName('validation-form'); Array.prototype.filter.call(forms, (form) => { form.addEventListener('submit', function (event) { if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation(); } form.classList.add('was-validated'); }, false); }); }, false); </script>
+
+</div>

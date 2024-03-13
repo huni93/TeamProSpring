@@ -1,66 +1,184 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>로그인</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-<style>
-body {
-	min-height: 100vh;
-	background: -webkit-gradient(linear, left bottom, right top, from(#92b5db),
-		to(#1d466c));
-	background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-	background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-	background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-	background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
-}
+<!DOCTYPE html>
+<html>
+    <script>
+        window.onload = function() {
+            var amemId = "${amem.id}";
+            var noticeName = "${notice.name}";
 
-.input-form {
-	max-width: 680px;
-	margin-top: 80px;
-	padding: 32px;
-	background: #fff;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	-webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-	box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
-}
-</style>
-</head>
-<body>
-	<div class="container">
-		<div class="input-form-backgroud row">
-			<div class="input-form col-md-12 mx-auto">
-				<h4 class="mb-3  center">게시물삭제</h4>
-				<form class="validation-form" novalidate action="noticeDeletePro"
-				method="post">
-                     <input type="hidden" name="num" value="${num}">
-					<div class="row">
-					
-						<div class="col-md-6 mb-3">
-							<label for="pass">비밀번호</label> <input type="password"
-								class="form-control" id="pass" placeholder="" value=""
-								name="pass" required>
-							<div class="invalid-feedback">비밀번호을 입력해주세요.</div>
+            if (amemId !== noticeName) {
+                var updateBtn = document.getElementById("updateBtn");
+                var deleteBtn = document.getElementById("deleteBtn");
+
+                updateBtn.style.display = "none";
+                deleteBtn.style.display = "none";
+            }
+        };
+    </script>
+<div class="wrap">
+
+	<div id="mypage">
+
+
+		<div class="center_cover">
+			<ul class="center_menu">
+				<li>
+					<div class="order_title_table">
+						마이페이지
+						<p class="en">MYPAGE</p>
+					</div>
+				</li>
+				<li>
+					<div class="guide_category">
+						<div class="item">
+							<p class="tit">경매내역</p>
+							<p class="txt">
+								<a href="${pageContext.request.contextPath}/board/buyList">입찰
+									중 / 입찰완료 상품</a> <a
+									href="${pageContext.request.contextPath}/jumun/myList">판매등록상품</a>
+								<a href="${pageContext.request.contextPath}/jumun/jumunList">찜한상품</a>
+							</p>
+						</div>
+
+
+						<div class="item">
+							<p class="tit">회원정보</p>
+							<p class="txt">
+								<a href="${pageContext.request.contextPath}/member/tier"
+									title="">나의등급</a> <a
+									href="${pageContext.request.contextPath}/member/memberinfo">회원정보
+									보기 / 수정</a> <a
+									href="${pageContext.request.contextPath}/member/memberDeleteForm">회원탈퇴</a>
+							</p>
+						</div>
+						<div class="item">
+							<p class="tit">고객센터</p>
+							<p class="txt">
+								<a
+									href="${pageContext.request.contextPath}/notice/noticeList?boardid=1">공지사항</a>
+								<a
+									href="${pageContext.request.contextPath}/notice/noticeList?boardid=2">자주묻는질문</a>
+								<a
+									href="${pageContext.request.contextPath}/notice/noticeList?boardid=3">1:1문의</a>
+								<a href="${pageContext.request.contextPath}/notice/mynotice">나의
+									1:1 문의글</a>
+							</p>
 						</div>
 					</div>
+				</li>
+			</ul>
+
+			<ul class="mypage_title">
+				<li class="mypage_info_box">
+					<div class="item">
+						<p class="txt" style="margin-bottom: 5px;">WELCOME</p>
+						<p class="txt">
+							아이디<br> <span class="num" style="font-weight: bold;">${amem.id }</span>
+						</p>
 
 
-					<div class="mb-4"></div>
-					<button class="btn btn-primary btn-lg btn-block" type="submit">삭제</button>
-				</form>
-			</div>
+
+					</div>
+
+					<div class="item">
+
+						<p class="txt" style="margin-top: 18px;">
+							등급<br> <span class="num" style="font-weight: bold;">${Tier}</span>
+
+
+						</p>
+					</div>
+					<div class="item">
+
+						<p class="txt" style="margin-top: 18px;">
+							마일리지<br> <span class="num" style="font-weight: bold;">${sum }원</span>
+
+
+						</p>
+					</div>
+					<div class="item">
+						<p class="txt" style="position: relative;">
+							쿠폰<br> <a href="/mypage/my_coupon"> <span class="num">2</span>
+								<span class="sb">개</span>
+							</a> <a href="/coupon" class="coupon_down">쿠폰다운로드</a>
+						</p>
+						<p class="txt" style="margin-top: 18px; position: relative;">
+							입찰보증금<br> <a href="/mypage/my_auction_ticket"> <span
+								class="num">0</span> <span class="sb">원</span>
+							</a> <a href="/mypage/pay_return" class="refund">환불</a>
+						</p>
+					</div>
+					<div class="item">
+						<p class="txt">충전</p>
+						<p class="cash_img">
+							<a href="/mypage/auction_pay_add"> <img
+								src="${pageContext.request.contextPath}/image/renew220916/cash_img01.png"
+								alt="입찰보증금충전" style="margin-left: 5px;">
+							</a>
+						</p>
+					</div>
+				</li>
+
+				<li>
+					<table class="mypage_table_head">
+						<caption>
+							게시물삭제 <img
+								src="${pageContext.request.contextPath}/image/integ/20150918_10.png">
+							<span class="mth_left"> 게시글 등록 시 입력했던 비밀번호를 입력해주세요 </span>
+						
+							
+						</caption>
+					</table>
+					<form class="validation-form" novalidate action="noticeDeletePro"
+				method="post">
+                     <input type="hidden" name="num" value="${num}">
+				<table class="indiv_table" style="width:30%; margin:auto; margin-top:50px;">
+							<colgroup>
+								<col width="40%">
+								<col width="60%">
+							</colgroup>
+							
+							<tbody>
+							
+								<tr>
+									<th>비밀번호</th>
+									<td style="height: 25px;">	<input type="password" class="form-control" id="pass" placeholder="PASSWORD" value="" name="pass" required>
+						</td>
+								</tr>
+								
+
+								<tr>
+									<td colspan="2" class="austria">
+									
+										<button class="lo" type="submit" style="padding:10px; width:100px; background-color:#DC3224; border:none; color:white;">삭제하기</button>
+											</td>
+								</tr>
+								<!--
+				
+					-->
+							</tbody>
+						</table>
+						</form>
+					
+				</li>
+
+
+
+
+
+
+			</ul>
 		</div>
+
+
 	</div>
+</div>
 	<script> window.addEventListener('load', () => { const forms = document.getElementsByClassName('validation-form'); Array.prototype.filter.call(forms, (form) => { form.addEventListener('submit', function (event) { if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation(); } form.classList.add('was-validated'); }, false); }); }, false); </script>
-</body>
+
+<script>
+	function goBack() {
+		window.history.back();
+	}
+</script>
 </html>

@@ -58,17 +58,13 @@ public class JumunController {
 		this.req=request;
 	}
 	@RequestMapping("jumunAdd") 
-	public String jumunadd(int pnum) throws Exception {
-        
+	public String jumunadd(int pnum) throws Exception {        
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
-		
-      
-        String id = (String) session.getAttribute("id");
-	
 
-       
+		String id = (String) session.getAttribute("id");
+    
         Cart c = new Cart();
         c.setUserid(id);
         c.setItemid(pnum);       
@@ -88,12 +84,7 @@ public class JumunController {
 		req.setAttribute("amem", mem);
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
-		String sum = cd.sum(login);
-		 req.setAttribute("sum", sum);
-		 String sum2 = cd.sum2(login);
-		req.setAttribute("sum2", sum2);
-		 
-		 
+		
         String id = (String) session.getAttribute("id");
 		List<Cart>  li = cd.jumunList(id);
 
@@ -114,8 +105,8 @@ public class JumunController {
  public String jumunDeletePro(int pnum) throws Exception {
      int count = cd.jumunDelete(pnum);
 
-     String msg = (count > 0) ? "게시글이 삭제 되었습니다" : "삭제 불가합니다";
-     String url = (count > 0) ? "/board/products" : "/jumun/jumunDeleteForm?pnum=" + pnum;
+     String msg = (count > 0) ? "찜목록에서 삭제 되었습니다" : "삭제 불가합니다";
+     String url = (count > 0) ? "/jumun/jumunList" : "/jumun/jumunDeleteForm?pnum=" + pnum;
 
      req.setAttribute("msg", msg);
      req.setAttribute("url", url);
@@ -131,13 +122,9 @@ public class JumunController {
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
 		
-		/*
-		 * String sum = cd.sum(login); req.setAttribute("sum", sum); String sum2 =
-		 * cd.sum2(login); req.setAttribute("sum2", sum2);
-		 */
-		
         String id = (String) session.getAttribute("id");
 		List<Cart>  li = cd.myList(id);
+		
 
 		System.out.println(li);
 		req.setAttribute("li", li);
@@ -153,11 +140,6 @@ public class JumunController {
 		req.setAttribute("amem", mem);
 		String Tier = cd.tier(login); 
 		req.setAttribute("Tier", Tier);
-		String sum = cd.sum(login);
-		 req.setAttribute("sum", sum);
-		 String sum2 = cd.sum2(login);
-		req.setAttribute("sum2", sum2);
-		 
 		
 	List<Auction> li = bd.mainList();	
 		

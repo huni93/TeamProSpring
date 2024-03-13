@@ -36,10 +36,17 @@ public interface AMemberAnno {
 	           + "             #{item} </foreach></script>")
 	   void deleteMembers(List<String> list);
 
-@Select("select * from amem where name = #{name} and email = #{email}")
+   @Select("select * from amem where name = #{name} and email = #{email}")
    Amem findMemberByNameAndEmail(Map<String, String> map);
    
    @Select("select * from amem where id = #{id} and name = #{name} and email = #{email}")
    Amem findMemberByIdAndNameAndEmail(Map<String, String> map);
+   
+   
+   @Update("UPDATE amem SET status = 'BANNED', banreason = #{banreason} WHERE id = #{id}")
+   int banmember(@Param("id") String id, @Param("banreason") String banreason);
+   
+   @Update("UPDATE amem SET status = 'ACTIVE', banreason = NULL WHERE id = #{id}")
+   int UnbanMember(String id);
 
 }
