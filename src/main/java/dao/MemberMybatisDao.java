@@ -30,6 +30,12 @@ public class MemberMybatisDao {
 		return sqlSession.getMapper(AMemberAnno.class).insertMember(amem);
 
 	}
+	public int updateMoney(Amem amem) throws SQLException {
+	    
+	    return sqlSession.getMapper(AMemberAnno.class).updateMoney(amem);
+	}
+
+
 
 	
 	public Amem oneMember(String id) throws SQLException {	
@@ -83,3 +89,21 @@ public Amem findMemberByNameAndEmail(String name, String email) throws SQLExcept
 	}
 
 }// class end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

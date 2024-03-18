@@ -42,6 +42,7 @@ padding:10px 40px 10px 40px;
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto text-center"> <!-- text-center 추가 -->
 				<h2 class="mb-3" style="text-align:center">비밀번호변경</h2><p>
+				&nbsp;<br>
 				<form class="validation-form" novalidate action="memberPassPro">
 					<div class="row">
 						
@@ -60,7 +61,7 @@ padding:10px 40px 10px 40px;
 							<input type="password" class="form-control" id="pass" placeholder="PASSWORD" value="" name="chgpass1" required>
 						</div><p>
 						
-					</div><p>
+					</div><p> &nbsp;<br>
 					<div class="mb-1"></div>
 					<button class="lo" type="submit">변경하기</button>
 				</form>

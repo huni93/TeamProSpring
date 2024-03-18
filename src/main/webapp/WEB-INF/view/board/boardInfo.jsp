@@ -86,7 +86,7 @@
 			
 			$(".det_btns a").hide();
 			
-			// 즉시구매된 상품이고 로그인한 사용자가 입찰자와 같은 경우 결제 버튼 표시
+			// 비로그인시 결제버튼 감추기
 			if (boardBuyId === null) {
 				$("#paymentButton").hide();
 			} else {
@@ -315,7 +315,7 @@
 			    }
 			}
 	</script>
-							<script>
+	<script>
 
 
     const paymentButton = document.getElementById("paymentButton");
@@ -348,8 +348,11 @@
 
 
 							<div class="pro_dd_btn_box det_btns">
+							
 								<a class="black" onclick="Popup()" id="auction_send"
 									title="바로입찰" href="javascript:;" style="font-weight: bold;">입찰하기</a>
+									
+									
 								<a class="red" onclick="buyNow()"
 									style="background-color: red; font-weight: bold; border: 0px solid red; color: white;"
 									onclick=";" href="javascript:;" rel="btn_compare"> 즉시구매 </a>

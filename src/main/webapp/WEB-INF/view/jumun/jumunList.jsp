@@ -198,7 +198,7 @@
 												target="_blank"><p id="trans_goods_name_0" class="sana" style="text-align:center;"
 														alt="0">상품명 : ${j.pname}</p></a></td>
 											<td>입찰수</td>
-											<td class="hcr_td_third" id="x1095617422_bids">${maxbuy}</td>
+											<td class="hcr_td_third" id="x1095617422_bids">${j.maxid}</td>
 										</tr>
 										<tr>
 											<td>남은시간</td>

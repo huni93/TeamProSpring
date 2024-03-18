@@ -91,7 +91,7 @@
 						<p class="txt">충전</p>
 						<p class="cash_img">
 							<a href="/mypage/auction_pay_add"> <img
-								src="/images/renew220916/cash_img01.png" alt="입찰보증금충전"
+								src="${pageContext.request.contextPath}/image/renew220916/cash_img01.png" alt="입찰보증금충전"
 								style="margin-left: 5px;">
 							</a>
 						</p>

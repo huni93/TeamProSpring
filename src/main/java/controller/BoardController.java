@@ -253,7 +253,7 @@ public class BoardController {
 			pagePnum = "1";
 		}
 
-		int limit = 15; // 한 페이지당 게시글 갯수
+		int limit = 10; // 한 페이지당 게시글 갯수
 		int pageInt = Integer.parseInt(pagePnum); // 페이지 번호
 		int boardCount = bd.boardCount(boardid); // 전체 게시글 갯수
 

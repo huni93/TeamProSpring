@@ -83,15 +83,15 @@
 							</a> <a href="/coupon" class="coupon_down">쿠폰다운로드</a>
 						</p>
 						<p class="txt" style="margin-top: 18px; position: relative;">
-							입찰보증금<br> <a href="/mypage/my_auction_ticket"> <span
-								class="num">0</span> <span class="sb">원</span>
+							입찰보증금<br> <a href=""> <span
+								class="num"></span>${amem.money}<span class="sb">원</span>
 							</a> <a href="/mypage/pay_return" class="refund">환불</a>
 						</p>
 					</div>
 					<div class="item">
 						<p class="txt">충전</p>
 						<p class="cash_img">
-							<a href="/mypage/auction_pay_add"> <img
+							<a href="${pageContext.request.contextPath}/member/moneyInput"> <img
 								src="${pageContext.request.contextPath}/image/renew220916/cash_img01.png"
 								alt="입찰보증금충전" style="margin-left: 5px;">
 							</a>

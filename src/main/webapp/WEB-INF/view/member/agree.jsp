@@ -547,49 +547,61 @@
 
 <script>
 
+//"전체 동의" 체크박스가 클릭될 때 실행되는 함수입니다.
 $("input[name='all_chk']").click(function(){
-	if( $(this).is(":checked") ){
-		$('input[name=chk_terms]').attr("checked",true);
-		$('input[name=chk_privacy]').attr("checked",true);
-		$('input[name=chk_private]').attr("checked",true);
-	}else{
-		$('input[name=chk_terms]').attr("checked",false);
-		$('input[name=chk_privacy]').attr("checked",false);
-		$('input[name=chk_private]').attr("checked",false);
-	}
+    // 만약 "전체 동의" 체크박스가 체크되어 있다면,
+    if( $(this).is(":checked") ){
+        // 각각의 체크박스(이용약관 동의, 개인정보 수집 이용 동의, 개인정보 처리 동의)를 체크 상태로 만듭니다.
+        $('input[name=chk_terms]').attr("checked",true);
+        $('input[name=chk_privacy]').attr("checked",true);
+        $('input[name=chk_private]').attr("checked",true);
+    } else {
+        // 만약 "전체 동의" 체크박스가 체크되어 있지 않다면, 모든 체크박스의 체크를 해제합니다.
+        $('input[name=chk_terms]').attr("checked",false);
+        $('input[name=chk_privacy]').attr("checked",false);
+        $('input[name=chk_private]').attr("checked",false);
+    }
 });
 
+// '다음 단계로' 버튼이 클릭될 때 실행될 함수입니다.
 function nextstep() {
+    // 폼의 jQuery 객체를 생성합니다.
+    var $form = $('#auth_frm');
+    // 각 체크박스의 jQuery 객체를 생성합니다.
+    var $chk_terms = $('input[name=chk_terms]');
+    var $chk_privacy = $('input[name=chk_privacy]');
+    var $chk_private = $('input[name=chk_private]');
 
-	var $form = $('#auth_frm');
-	var $chk_terms = $('input[name=chk_terms]');
-	var $chk_privacy = $('input[name=chk_privacy]');
-	var $chk_private = $('input[name=chk_private]');
-	if ( ! $chk_terms.is(':checked')) {
-		alert("이용약관에 동의해주세요.");
-		$chk_terms.focus();
-		return false;
-	}
+    // 각 체크박스가 체크되어 있는지 확인합니다.
+    // 체크되어 있지 않다면 경고창을 띄우고, 해당 체크박스로 포커스를 이동시킨 후 함수를 종료합니다.
+    if ( ! $chk_terms.is(':checked')) {
+        alert("이용약관에 동의해주세요.");
+        $chk_terms.focus();
+        return false;
+    }
 
-	if ( ! $chk_privacy.is(':checked')) {
-		alert("개인정보수집이용에 동의해주세요.");
-		$chk_privacy.focus();
-		return false;
-	}
-	if ( ! $chk_private.is(':checked')) {
-		alert("개인정보 처리에 동의해주세요.");
-		$chk_private.focus();
-		return false;
-	}
-	//document.location.href='/auth/step2'
+    if ( ! $chk_privacy.is(':checked')) {
+        alert("개인정보수집이용에 동의해주세요.");
+        $chk_privacy.focus();
+        return false;
+    }
+    if ( ! $chk_private.is(':checked')) {
+        alert("개인정보 처리에 동의해주세요.");
+        $chk_private.focus();
+        return false;
+    }
 
-	$form.submit();
-
+    // 모든 검사를 통과했다면, 폼을 제출합니다.
+   
+    $form.submit();
 }
 
+// 페이지가 로딩될 때 실행됩니다.
 $(function(){
-	var offset = $(".mypage_title").offset();
-	$('html, body').animate({scrollTop : offset.top}, 200);
+    // "mypage_title" 클래스를 가진 요소의 위치를 가져옵니다.
+    var offset = $(".mypage_title").offset();
+    // 페이지를 스크롤하여 해당 위치로 이동합니다. 애니메이션 효과는 200ms 지속됩니다.
+    $('html, body').animate({scrollTop : offset.top}, 200);
 });
 
 </script>

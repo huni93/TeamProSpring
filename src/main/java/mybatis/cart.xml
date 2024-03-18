@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="jumunList" parameterType="map" resultType="Auction">
 SELECT 
         a.pnum, a.buy, a.idate,a.prompt, a.pname, a.file1, a.subject, a.price, a.readcnt, TO_CHAR(a.regdate, 'yyyy-MM-dd HH24:mi:ss') AS regdate
+        ,(select nvl(count(pnum),0)  from abuylist where pnum= a.pnum)  maxid
     FROM 
         amem m
     JOIN 
@@ -33,7 +34,8 @@ SELECT
             b.subject,
             b.price,
             b.readcnt,
-            TO_CHAR(b.regdate, 'yyyy-MM-dd HH24:mi:ss') AS regdate
+            TO_CHAR(b.regdate, 'yyyy-MM-dd HH24:mi:ss') AS regdate,
+            (select nvl(count(pnum),0)  from abuylist where pnum= b.pnum)  maxid
         FROM
             amem a
         JOIN
@@ -68,7 +70,7 @@ delete from aproducts where pnum = #{pnum}
     ) 
     </select>
     
-    <!-- point 사용  sum = 누적 마일리지, sum2 = 누적금액, sum3 = 마일리지를 넣고 사용하기 버튼누를시 나오는금액 , sp = 사용마일리지 -->
+    <!-- point 사용  sum = 누적 마일리지, sum2 = 누적금액,sp = 사용마일리지 -->
 <select id="sum" parameterType="string" resultType="long">
     SELECT SUM((buy * 0.05) - sp) 
     FROM apay 

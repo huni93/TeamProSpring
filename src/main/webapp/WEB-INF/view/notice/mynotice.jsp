@@ -149,17 +149,7 @@
 				
 				</tbody></table>
 			</li>&nbsp;<br>
-					 <c:if test="${amem.adminchk==1 || boardid eq '3'}">
-  <li><a class="" href="noticeForm" style="  display: inline-block;
-    padding: 10px 20px;
-    background-color: #DC3224;
-    color: #fff;
-    text-decoration: none;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;">글쓰기</a></li>
-
-</c:if>
+					
 			
 					
 					

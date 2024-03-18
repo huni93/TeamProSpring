@@ -111,7 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from auction
 		order by
 		pnum desc) a)
-		where rnum between 0 and 20
+		where rnum between 0 and 10
 	</select>
 
 	<delete id="commentDelete" parameterType="int">

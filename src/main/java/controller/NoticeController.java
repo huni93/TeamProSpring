@@ -319,6 +319,10 @@ public class NoticeController {
 		req.setAttribute("amem", mem);
 		String Tier = cd.tier(login);
 		req.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		req.setAttribute("sum", sum);
+		String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
 		return "notice/noticeList";
 	}
 	
@@ -381,8 +385,16 @@ public class NoticeController {
 		req.setAttribute("noticeCount", noticeCount);
 		req.setAttribute("noticeNum", noticeNum);
 
+		
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
+		String Tier = cd.tier(login);
+		req.setAttribute("Tier", Tier);
+		String sum = cd.sum(login);
+		req.setAttribute("sum", sum);
+		String sum2 = cd.sum2(login);
+		req.setAttribute("sum2", sum2);
+		
 
 		return "notice/mynotice";
 	}

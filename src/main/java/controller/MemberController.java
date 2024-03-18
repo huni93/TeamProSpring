@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
@@ -280,8 +281,45 @@ public class MemberController {
 		     request.setAttribute("sum", sum);
 		     String sum2 = cd.sum2(login);
 		    request.setAttribute("sum2", sum2);
+		    
+		    
 		return "member/memberinfo";
 	}
+	@RequestMapping("moneyInput")
+	public String moneyInput(String money) throws Exception {
+		   String login = (String) session.getAttribute("id");
+		    Amem mem = md.oneMember(login);
+		    request.setAttribute("amem", mem);
+		    
+		    String Tier = cd.tier(login); 
+		    request.setAttribute("Tier", Tier);
+		    String sum = cd.sum(login);
+		     request.setAttribute("sum", sum);
+		     String sum2 = cd.sum2(login);
+		    request.setAttribute("sum2", sum2);
+		
+		return "member/moneyInput";
+	}
+	
+	@RequestMapping("moneyInputPro")
+	public String moneyInputPro( String money) throws Exception {	
+		 String login = (String) session.getAttribute("id");
+		 Amem mem = md.oneMember(login);
+		 request.setAttribute("amem", mem);
+	 
+		  Amem amem = new Amem();
+	        amem.setId(login);
+	        amem.setMoney(money);
+	    md.updateMoney(amem);
+
+	    System.out.println(money);
+	    
+	    request.setAttribute("money", money);
+	    
+	    return "redirect:/member/memberinfo"; // JSP 파일 이름 혹은 View 이름
+	    }
+	
+	
 	
 	@RequestMapping("loginPro")
 	   public String loginPro(String id, String pass) throws Exception {
@@ -289,7 +327,6 @@ public class MemberController {
 	      Amem mem = md.oneMember(id);
 	      session.setAttribute("mem", mem);
 	     
-
 	      String msg = "아이디를 확인하세요";
 	      String url = "/member/loginForm";
 	      if(mem != null ) { //id 존재할때
@@ -305,8 +342,7 @@ public class MemberController {
 	            }} else {
 	            msg = "비밀번호를 확인하세요";
 	         }
-	      }
-	      
+	      }	      
 	      request.setAttribute("msg", msg);
 	      request.setAttribute("url", url);
 	      
@@ -348,6 +384,7 @@ public class MemberController {
 		return "member/memberUpdateForm";
 	}
 	
+	
 	@RequestMapping("memberUpdatePro")
 	public String memberUpdatePro(Amem mem) throws Exception {
 		
@@ -367,7 +404,7 @@ public class MemberController {
 	
 		Amem memdb = md.oneMember(login);  //db에서 넘어온자료
 
-		String msg = "수정 되지 않았습니다.";
+		String msg = " ";
 		String url ="/member/memberUpdateForm";
 		if(memdb!=null) {
 			if(memdb.getPass().equals(mem.getPass())) {  //수정 ok
@@ -414,7 +451,7 @@ public class MemberController {
 		    request.setAttribute("sum2", sum2);
 	
 	Amem memdb = md.oneMember(login);
-	String msg = "탈퇴되지 않았습니다.";
+	String msg = " ";
 	String url ="/member/memberDeleteForm";
 
 	if(memdb!=null) {
@@ -454,7 +491,7 @@ public class MemberController {
 	String login =  (String) session.getAttribute("id");	
 	Amem memdb = md.oneMember(login);
 
-	String msg = "비밀번호 수정을 실패 했습니다.";
+	String msg = " ";
 	String url ="/member/memberPassForm";
 
 	if(memdb!=null) {

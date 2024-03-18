@@ -1,18 +1,7 @@
 package model;
 
 public class Amem {
-/*
- * create table kicmember (
-id varchar(20) primary key,
-pass varchar(20),
-name varchar(20),
-gender number(1),
-tel varchar(20),
-email varchar(50),
-picture varchar(200));
- * 
- */
-	
+
 	private String id;
 	private String nickname;
 	private String pass;
@@ -26,35 +15,10 @@ picture varchar(200));
 	private String adminchk;
 	private String banreason;
 	private String status;
-	
-	
-	public String getBanreason() {
-		return banreason;
-	}
-	public void setBanreason(String banreason) {
-		this.banreason = banreason;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
+	private String money;
 	public String getId() {
 		return id;
 	}
-	public String getAdminchk() {
-		return adminchk;
-	}
-	public void setAdminchk(String adminchk) {
-	       if (!"1".equals(adminchk)) {
-	           // adminchk가 "1"이 아닌 경우 기본값 설정
-	           this.adminchk = "0"; // 또는 다른 적절한 기본값 설정
-	       } else {
-	           // adminchk가 "1"인 경우 그대로 설정
-	           this.adminchk = adminchk;
-	       }
-	   }
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -112,13 +76,38 @@ picture varchar(200));
 	public void setNumberid(String numberid) {
 		this.numberid = numberid;
 	}
+	public String getAdminchk() {
+		return adminchk;
+	}
+	public void setAdminchk(String adminchk) {
+		this.adminchk = adminchk;
+	}
+	public String getBanreason() {
+		return banreason;
+	}
+	public void setBanreason(String banreason) {
+		this.banreason = banreason;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getMoney() {
+		return money;
+	}
+	public void setMoney(String money) {
+		this.money = money;
+	}
 	@Override
 	public String toString() {
 		return "Amem [id=" + id + ", nickname=" + nickname + ", pass=" + pass + ", name=" + name + ", tel=" + tel
 				+ ", email=" + email + ", address=" + address + ", bank=" + bank + ", account=" + account
 				+ ", numberid=" + numberid + ", adminchk=" + adminchk + ", banreason=" + banreason + ", status="
-				+ status + "]";
+				+ status + ", money=" + money + "]";
 	}
+	
 	
 	
 

@@ -275,7 +275,7 @@ li:hover {
 											style="width: 200px; height: 200px; margin-top: 20px;"></a>
 									</div> &nbsp;<br>
 									<div
-										style="font-size: 20px; color: black; font-weight: bold; text-align: center;">&nbsp;${b.pname }</div>
+										style="font-size: 20px; color: black; font-weight: bold; text-align: center;">&nbsp;${b.pname }</div>&nbsp;<br>
 
 									<div style="font-size: 15px; color: black;">
 										&nbsp;&nbsp;입찰시작가: <span style="font-weight:bold;">

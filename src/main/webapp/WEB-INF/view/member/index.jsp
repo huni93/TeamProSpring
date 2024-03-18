@@ -54,8 +54,8 @@ margin-bottom:700px;
 						<a href="" target="_self" data-b_type="slider" data-b_loc="1"
 						data-b_sloc="24">
 							<div class="main_roll_text">
-								<div class="main_roll_tit">유명브랜드 골프클럽</div>
-								<div class="main_roll_txt">BRAND GOLF CLUB</div>
+								<div class="main_roll_tit">당신의 음악생활을 도와드리는</div>
+								<div class="main_roll_txt">MUSICAL INSTRUMENTS</div>
 							</div>
 							<div class="main_roll_img">
 								<img src="${pageContext.request.contextPath}/image/art.png"
@@ -72,8 +72,8 @@ margin-bottom:700px;
 						target="_self" data-b_type="slider" data-b_loc="1"
 						data-b_sloc="24">
 							<div class="main_roll_text">
-								<div class="main_roll_tit">세상에서 가장 핫한 피규어</div>
-								<div class="main_roll_txt">WORLD HOTTEST FIGURES</div>
+								<div class="main_roll_tit">스타일리쉬 감성 가전제품</div>
+								<div class="main_roll_txt">STYLISH APPLIANCES</div>
 							</div>
 							<div class="main_roll_img">
 								<img src="${pageContext.request.contextPath}/image/ell.png"
@@ -104,8 +104,8 @@ margin-bottom:700px;
 						target="_self" data-b_type="slider" data-b_loc="1"
 						data-b_sloc="24">
 							<div class="main_roll_text">
-								<div class="main_roll_tit">스타일리쉬 감성 캠핑기어</div>
-								<div class="main_roll_txt">STYLISH CAMPING GEAR</div>
+								<div class="main_roll_tit">골동품 고서화 엔티크</div>
+								<div class="main_roll_txt">ENTIQUE CURIOUS GOODS</div>
 							</div>
 							<div class="main_roll_img">
 								<img src="${pageContext.request.contextPath}/image/goods.png"
@@ -120,8 +120,8 @@ margin-bottom:700px;
 						target="_self" data-b_type="slider" data-b_loc="1"
 						data-b_sloc="24">
 							<div class="main_roll_text">
-								<div class="main_roll_tit">매니아 강추! 브랜드 낚시용품</div>
-								<div class="main_roll_txt">FISHING GEAR SHIMANO / DAIWA</div>
+								<div class="main_roll_tit">유명브랜드 신발</div>
+								<div class="main_roll_txt">BRAND SHOES</div>
 							</div>
 							<div class="main_roll_img">
 								<img src="${pageContext.request.contextPath}/image/shoes.png"
@@ -136,8 +136,8 @@ margin-bottom:700px;
 						target="_self" data-b_type="slider" data-b_loc="1"
 						data-b_sloc="24">
 							<div class="main_roll_text">
-								<div class="main_roll_tit">스타일리쉬 감성 캠핑기어</div>
-								<div class="main_roll_txt">STYLISH CAMPING GEAR</div>
+							<div class="main_roll_tit">당신의 음악생활을 도와드리는</div>
+								<div class="main_roll_txt">MUSICAL INSTRUMENTS</div>
 							</div>
 							<div class="main_roll_img">
 								<img src="${pageContext.request.contextPath}/image/art.png"
@@ -151,8 +151,8 @@ margin-bottom:700px;
 						target="_self" data-b_type="slider" data-b_loc="1"
 						data-b_sloc="24">
 							<div class="main_roll_text">
-								<div class="main_roll_tit">스타일리쉬 감성 캠핑기어</div>
-								<div class="main_roll_txt">STYLISH CAMPING GEAR</div>
+								<div class="main_roll_tit">스타일리쉬 감성 가전제품</div>
+								<div class="main_roll_txt">STYLISH APPLIANCES</div>
 							</div>
 							<div class="main_roll_img">
 								<img src="${pageContext.request.contextPath}/image/ell.png"
@@ -167,8 +167,8 @@ margin-bottom:700px;
 						target="_self" data-b_type="slider" data-b_loc="1"
 						data-b_sloc="24">
 							<div class="main_roll_text">
-								<div class="main_roll_tit">스타일리쉬 감성 캠핑기어</div>
-								<div class="main_roll_txt">STYLISH CAMPING GEAR</div>
+							<div class="main_roll_tit">정교함의 극치! 프라모델</div>
+								<div class="main_roll_txt">HIGH END QUALITY PLAMODEL</div>
 							</div>
 							<div class="main_roll_img">
 								<img src="${pageContext.request.contextPath}/image/pramodel.png"
@@ -181,8 +181,8 @@ margin-bottom:700px;
 						target="_self" data-b_type="slider" data-b_loc="1"
 						data-b_sloc="24">
 							<div class="main_roll_text">
-								<div class="main_roll_tit">매니아 강추! 브랜드 낚시용품</div>
-								<div class="main_roll_txt">FISHING GEAR SHIMANO / DAIWA</div>
+									<div class="main_roll_tit">골동품 고서화 엔티크</div>
+								<div class="main_roll_txt">ENTIQUE CURIOUS GOODS</div>
 							</div>
 							<div class="main_roll_img">
 								<img src="${pageContext.request.contextPath}/image/goods.png"
@@ -195,8 +195,8 @@ margin-bottom:700px;
 						target="_self" data-b_type="slider" data-b_loc="1"
 						data-b_sloc="24">
 							<div class="main_roll_text">
-								<div class="main_roll_tit">당신의 음악생활을 도와드리는</div>
-								<div class="main_roll_txt">MUSICAL INSTRUMENTS</div>
+									<div class="main_roll_tit">유명브랜드 신발</div>
+								<div class="main_roll_txt">BRAND SHOOES</div>
 							</div>
 							<div class="main_roll_img">
 								<img src="${pageContext.request.contextPath}/image/shoes.png"
@@ -238,22 +238,22 @@ margin-bottom:700px;
 						href="${pageContext.request.contextPath}/board/products?boardid=1"
 						target="_self" data-b_type="img" data-b_idx="712">
 							<div class="msul_img">
-								<img src="${pageContext.request.contextPath}/image/lens.png"
+								<img src="${pageContext.request.contextPath}/image/ele.png"
 									alt="악기">
 							</div>
 							<div class="msul_text">
-								<div class="msul_txt">가슴속 깊은곳 연주자의 꿈</div>
+								<div class="msul_txt">생활을 풍요롭게 하는 기술의 선물</div>
 								<div class="msul_tit">가전</div>
 							</div>
 					</a></li>
 					<li><a href="${pageContext.request.contextPath}/board/products?boardid=2"
 						target="_self" data-b_type="img" data-b_idx="713">
 							<div class="msul_img">
-								<img src="${pageContext.request.contextPath}/image/lens.png"
+								<img src="${pageContext.request.contextPath}/image/cloths.png"
 									alt="악기" alt="J-POP">
 							</div>
 							<div class="msul_text">
-								<div class="msul_txt">소프트팝의 영향을 받아 감미로운</div>
+								<div class="msul_txt">개성을 표현하는 캔버스</div>
 								<div class="msul_tit">의류</div>
 							</div>
 					</a></li>
@@ -261,11 +261,11 @@ margin-bottom:700px;
 						href="${pageContext.request.contextPath}/board/products?boardid=3"
 						target="_self" data-b_type="img" data-b_idx="714">
 							<div class="msul_img">
-								<img src="${pageContext.request.contextPath}/image/lens.png"
+								<img src="${pageContext.request.contextPath}/image/pra.png"
 									alt="악기" alt="카메라 렌즈">
 							</div>
 							<div class="msul_text">
-								<div class="msul_txt">뛰어난 색표현과 고해상도 이미지 실현</div>
+								<div class="msul_txt">손끝에서 탄생하는 무한한 상상력</div>
 								<div class="msul_tit">프라모델</div>
 							</div>
 					</a></li>
@@ -273,7 +273,7 @@ margin-bottom:700px;
 						href="${pageContext.request.contextPath}/board/products?boardid=4"
 						target="_self" data-b_type="img" data-b_idx="715">
 							<div class="msul_img">
-								<img src="${pageContext.request.contextPath}/image/lens.png"
+								<img src="${pageContext.request.contextPath}/image/entique.png"
 									alt="악기" alt="명품 시계">
 							</div>
 							<div class="msul_text">
@@ -284,11 +284,11 @@ margin-bottom:700px;
 					<li><a href="${pageContext.request.contextPath}/board/products?boardid=5"
 						target="_self" data-b_type="img" data-b_idx="716">
 							<div class="msul_img">
-								<img src="${pageContext.request.contextPath}/image/lens.png"
+								<img src="${pageContext.request.contextPath}/image/music.png"
 									alt="악기" alt="PS 5">
 							</div>
 							<div class="msul_text">
-								<div class="msul_txt">최고의 게임, 최고의 일상</div>
+								<div class="msul_txt">가슴속 깊은곳 연주자의 꿈</div>
 								<div class="msul_tit">악기</div>
 							</div>
 					</a></li>
@@ -296,11 +296,11 @@ margin-bottom:700px;
 						href="${pageContext.request.contextPath}/board/products?boardid=6"
 						target="_self" data-b_type="img" data-b_idx="717">
 							<div class="msul_img">
-								<img src="${pageContext.request.contextPath}/image/lens.png"
+								<img src="${pageContext.request.contextPath}/image/watch.png"
 									alt="악기" alt="닌텐도 스위치">
 							</div>
 							<div class="msul_text">
-								<div class="msul_txt">별의 커비 / 마리오 / 젤다의 전설</div>
+								<div class="msul_txt">시간을 초월하는 우아함의 상징</div>
 								<div class="msul_tit">명품 시계</div>
 							</div>
 					</a></li>
@@ -308,11 +308,11 @@ margin-bottom:700px;
 						href="${pageContext.request.contextPath}/board/products?boardid=7"
 						target="_self" data-b_type="img" data-b_idx="718">
 							<div class="msul_img">
-								<img src="${pageContext.request.contextPath}/image/lens.png"
+								<img src="${pageContext.request.contextPath}/image/ring.png"
 									alt="악기" alt="애니 DVD">
 							</div>
 							<div class="msul_text">
-								<div class="msul_txt">최애의 아이, 귀칼, 샬롯의 거미줄</div>
+								<div class="msul_txt">작은 디테일에서 발견하는 자신만의 스토리</div>
 								<div class="msul_tit">악세사리</div>
 							</div>
 					</a></li>
@@ -320,22 +320,22 @@ margin-bottom:700px;
 						href="${pageContext.request.contextPath}/board/products?boardid=8"
 						target="_self" data-b_type="img" data-b_idx="719">
 							<div class="msul_img">
-								<img src="${pageContext.request.contextPath}/image/lens.png"
+								<img src="${pageContext.request.contextPath}/image/fishing.png"
 									alt="악기" alt="펜더 기타">
 							</div>
 							<div class="msul_text">
-								<div class="msul_txt">오랜 경력의 장인들이 핸드메이드로 만드는</div>
+								<div class="msul_txt">일상을 벗어나 자유를 만끽하는 순간</div>
 								<div class="msul_tit">레저</div>
 							</div>
 					</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/board/allList"
-						target="_self" data-b_type="img" data-b_idx="720">
+						target="_self" data-b_type="img" data-b_idx="720" ">
 							<div class="msul_img">
-								<img src="/banner/d07d6fa8e146ef7a72c8312d920ad928.png"
+								<img src="${pageContext.request.contextPath}/image/banner.png"
 									alt="레고 월드">
 							</div>
-							<div class="msul_text">
+							<div class="msul_text" style="background-color:rgba(166, 166, 166, 0.8); ">
 								<div class="msul_tit">실시간 경매</div>
 								<div class="msul_txt">
 									흥미로운 상품을<br>찾아 보세요!
