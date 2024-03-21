@@ -87,7 +87,7 @@
 						</p>
 						<p class="txt" style="margin-top: 18px; position: relative;">
 							입찰보증금<br> <a href="/mypage/my_auction_ticket"> <span
-								class="num">0</span> <span class="sb">원</span>
+								class="num">${amem.money }</span> <span class="sb">원</span>
 							</a> <a href="/mypage/pay_return" class="refund">환불</a>
 						</p>
 					</div>
@@ -106,7 +106,7 @@
 
 					<table class="mypage_table_head">
 						<caption>
-							입찰목록 <img
+							찜 목록 <img
 								src="${pageContext.request.contextPath}/image/integ/20150918_10.png">
 							<span class="mth_left" style="width: 70%; line-height: 30px;">
 								총 <strong>0</strong> 건의 자료가 조회되었습니다.

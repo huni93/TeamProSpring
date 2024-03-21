@@ -69,6 +69,10 @@ public class BoardMybatisDao {
 	public int updateBuy(Auction board) throws UnsupportedEncodingException, SQLException {
 		return sqlSession.update(ns + "updateBuy", board);
 	}
+	
+	public int updateEnd(Auction auction) throws UnsupportedEncodingException, SQLException {
+	    return sqlSession.update(ns + "end", auction);
+	}
 
 	public int cntBoard(int pnum) {
 		return sqlSession.update(ns + "cntBoard", pnum);

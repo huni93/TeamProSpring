@@ -281,12 +281,10 @@ public class MemberController {
 		     request.setAttribute("sum", sum);
 		     String sum2 = cd.sum2(login);
 		    request.setAttribute("sum2", sum2);
-		    
-		    
 		return "member/memberinfo";
 	}
 	@RequestMapping("moneyInput")
-	public String moneyInput(String money) throws Exception {
+	public String moneyInput() throws Exception {
 		   String login = (String) session.getAttribute("id");
 		    Amem mem = md.oneMember(login);
 		    request.setAttribute("amem", mem);
@@ -301,22 +299,32 @@ public class MemberController {
 		return "member/moneyInput";
 	}
 	
-	@RequestMapping("moneyInputPro")
-	public String moneyInputPro( String money) throws Exception {	
-		 String login = (String) session.getAttribute("id");
-		 Amem mem = md.oneMember(login);
-		 request.setAttribute("amem", mem);
-	 
-		  Amem amem = new Amem();
+	  @RequestMapping("moneyInputPro")
+	    public String moneyInputPro(String money, HttpServletRequest request, HttpSession session) throws Exception {
+	        String login = (String) session.getAttribute("id");
+	        Amem mem = md.oneMember(login);
+	        request.setAttribute("amem", mem);
+
+	        Amem amem = new Amem();
 	        amem.setId(login);
 	        amem.setMoney(money);
-	    md.updateMoney(amem);
 
-	    System.out.println(money);
-	    
-	    request.setAttribute("money", money);
-	    
-	    return "redirect:/member/memberinfo"; // JSP 파일 이름 혹은 View 이름
+	        // 예시: updateMoney 메소드가 boolean 값을 반환하도록 구현되었다고 가정
+	        int updateSuccess = md.updateMoney(amem);
+
+	        String msg = "충전에 실패하였습니다.";
+	        String url = "/member/moneyInput";
+	        
+	        if(amem!=null) {
+	            msg = "충전 되었습니다.";
+	            url = "/member/memberinfo";
+	        }
+
+	        request.setAttribute("msg", msg);
+	        request.setAttribute("url", url);
+	        
+	        // "alert.jsp" 페이지로 포워드. 이 페이지에서는 msg와 url을 사용하여 알림을 표시하고, 지정된 URL로 리다이렉션
+	        return "alert";
 	    }
 	
 	

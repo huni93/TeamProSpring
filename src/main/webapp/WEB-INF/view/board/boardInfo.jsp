@@ -58,68 +58,58 @@
 }
 </style>
 <script>
+    function updateRemainingTime(regdate) {
+        var loggedInUserId = "${amem.id}";
+        var boardBuyId = "${board.buyid}";
+        var boardEndValue = "${board.end}"; // 서버에서 받은 board.end 값
 
-	// Ajax 호출하여 남은 시간 업데이트
-	function updateRemainingTime(regdate) {
-		var loggedInUserId = "${amem.id}";
-		var boardBuyId = "${board.buyid}";
+        // 즉시구매된 상품이거나 board.end 값이 "1"이면 결제하기 버튼 숨김
+        if (!regdate || boardEndValue === "1") {
+            $("#remainingTime").html("즉시구매 된 상품입니다.");
+            $(".det_btns a").hide(); // 입찰 및 즉시구매 버튼 숨기기
 
-		if (!regdate) {
-			$("#remainingTime").html("즉시구매 된 상품입니다.");
-			$(".det_btns a").hide(); // 입찰 및 즉시구매 버튼 숨기기
+            // 즉시구매된 상품이고 로그인한 사용자가 입찰자와 같은 경우 결제 버튼 표시
+            if (boardEndValue !== "1" && loggedInUserId === boardBuyId) {
+                $("#paymentButton").show();
+            } else {
+                $("#paymentButton").hide();
+            }
+            return;
+        }
+        var currentTime = new Date().getTime();
+        var expirationTime = new Date(regdate).getTime() + (7 * 24 * 60 * 60 * 1000);
 
-			// 즉시구매된 상품이고 로그인한 사용자가 입찰자와 같은 경우 결제 버튼 표시
-			if (loggedInUserId === boardBuyId) {
-				$("#paymentButton").show();
-			} else {
-				$("#paymentButton").hide();
-			}
-			return;
-		}
-		var currentTime = new Date().getTime();
-		var expirationTime = new Date(regdate).getTime()
-				+ (7 * 24 * 60 * 60 * 1000);
+        var remainingTime = expirationTime - currentTime;
+        if (remainingTime <= 0) {
+            $("#remainingTime").text("시간이 만료된 상품입니다.");
+            
+            $(".det_btns a").hide();
+            
+            // 비로그인시 결제버튼 감추기
+            $("#paymentButton").hide();
+            return;
+        }
+        
+        // 남은 시간 표시 및 버튼 숨김 로직
+        $(".cart button").show();
+        var days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
-		var remainingTime = expirationTime - currentTime;
-		if (remainingTime <= 0) {
-			$("#remainingTime").text("시간이 만료된 상품입니다.");
-			
-			$(".det_btns a").hide();
-			
-			// 비로그인시 결제버튼 감추기
-			if (boardBuyId === null) {
-				$("#paymentButton").hide();
-			} else {
-				$("#paymentButton").hide();
-			}
-			return;
-		}
-		$(".cart button").show();
-		var days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-		var hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24))
-				/ (1000 * 60 * 60));
-		var minutes = Math.floor((remainingTime % (1000 * 60 * 60))
-				/ (1000 * 60));
-		var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+        $("#remainingTime").text(days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초");
+        $("#paymentButton").hide(); // 남은 시간이 표시되는 경우 결제 버튼 감추기
+    }
 
-		$("#remainingTime").text(
-				days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초");
-		// 남은 시간이 표시되는 경우 결제 버튼 감추기
-		$("#paymentButton").hide();
-	}
+    $(document).ready(function() {
+        updateRemainingTime("${board.regdate}");
+    });
 
-	// 페이지 로드 후 초기 업데이트
-	$(document).ready(function() {
-		updateRemainingTime("${board.regdate}");
-	});
-
-	// 일정 간격으로 업데이트
-	setInterval(function() {
-		updateRemainingTime("${board.regdate}");
-	}, 1000); // 1초마다 업데이트
-	
-	
+    setInterval(function() {
+        updateRemainingTime("${board.regdate}");
+    }, 1000); // 1초마다 업데이트
 </script>
+
 <script>
 	window.onload = function() {
 		// 시작 시간을 파싱합니다. 예시: "2023-03-01T12:00:00"
@@ -315,19 +305,6 @@
 			    }
 			}
 	</script>
-	<script>
-
-
-    const paymentButton = document.getElementById("paymentButton");
-    const boardBuyId = "${board.buyid}";
-    const loggedInUserId = "${amem.id}";
-
-    if (boardBuyId === loggedInUserId) {
-      paymentButton.style.display = "block";
-    }
-  });
-
-</script>
 
 
 							<div class="pro_dd_btn_box det_btns"></div>
@@ -359,11 +336,15 @@
 							</div>
 
 
+
+
 							<!-- 기존의 <button> 태그를 사용하지 않고 <a> 태그만 사용 -->
 							<a
 								href="${pageContext.request.contextPath}/board/checkout?num=${board.pnum}"
 								id="paymentButton"
-								style="text-align: center; font-size: 15px; margin-left: 240px; height: 20px; width: 200px; display: inline-block; background-color: red; color: white; text-decoration: none; padding: 10px 20px; font-weight: bold; border-radius: 5px;">결제하기</a>
+								style="text-align: center; font-size: 15px; margin-left: 240px; height: 20px; width: 
+								200px; display: inline-block; background-color: red; color: white; text-decoration:
+								 none; padding: 10px 20px; font-weight: bold; border-radius: 5px;">결제하기</a>
 
 
 							<div class="pro_dd_btn_txt">입찰 및 낙찰시에는 취소가 되지 않으니 상품 문의 시에는

@@ -153,6 +153,10 @@
 							<tr>
 								<td>${notice.content}</td>
 							</tr>
+							<tr>
+							    <td>${notice.answer}</td>
+							</tr>
+							 
 
 						</tbody>
 

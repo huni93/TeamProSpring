@@ -385,10 +385,16 @@ public class BoardController {
 	}
 
 	@RequestMapping("checkoutpro")
-	   public String checkoutpro(Apay apay,int num, String memo, int sp, String bal) throws Exception {
+	   public String checkoutpro(Apay apay,int num, String memo,String tel,int sp,String bal,String end) throws Exception {
 	      // TODO Auto-generated method stub
 	      Auction board = bd.oneBoard(num);
 	      req.setAttribute("board", board); 
+	 
+	      Auction auction = new Auction();
+	      auction.setPnum(num); // 컨트롤러에서 받은 num을 pnum으로 설정
+	      auction.setEnd(end); // 컨트롤러에서 받은 end 값을 설정
+	      bd.updateEnd(auction); // 수정된 DAO 메서드 호출
+	      
 	      String login = (String) session.getAttribute("id");
 	      Amem mem = md.oneMember(login);
 	      req.setAttribute("amem", mem);
@@ -398,19 +404,18 @@ public class BoardController {
 	      req.setAttribute("sum2", sum2);
 	      
 	      num = bd.apay(apay); 
-	      
+	      System.out.println(end);
+	   
 	      System.out.println(apay);
 	      System.out.println(memo);
-	      
-	              
+	      System.out.println(sp);
+	      req.setAttribute("sp", sp); 
+	      req.setAttribute("bal", bal); 
+	      req.setAttribute("tel", tel);       
 	       req.setAttribute("apay", apay);
 	       req.setAttribute("memo", memo);
-	       req.setAttribute("sp", sp);
-	       req.setAttribute("bal", bal);
 	       
-	      // apay.setMemo(memo1);
-	      // apay.setSp(sp);
-	      // apay.setBuy(bal);
+	  
 	       
 	      return "/board/success";
 	      

@@ -86,7 +86,7 @@
 						</p>
 						<p class="txt" style="margin-top: 18px; position: relative;">
 							입찰보증금<br> <a href="/mypage/my_auction_ticket"> <span
-								class="num">0</span> <span class="sb">원</span>
+								class="num">${amem.money}</span> <span class="sb">원</span>
 							</a> <a href="/mypage/pay_return" class="refund">환불</a>
 						</p>
 					</div>
@@ -104,7 +104,7 @@
 				<li>
 				<table class="mypage_table_head">
 					<caption>
-						${noticeName}
+						나의 1:1 문의글
 						<img src="${pageContext.request.contextPath}/image/integ/20150918_10.png">
 						<p>KIC AUCTION의 최신소식과 공지를 알려드립니다.</p>
 					</caption>

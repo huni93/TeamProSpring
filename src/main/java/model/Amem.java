@@ -16,6 +16,7 @@ public class Amem {
 	private String banreason;
 	private String status;
 	private String money;
+	private String mile;
 	public String getId() {
 		return id;
 	}
@@ -100,14 +101,19 @@ public class Amem {
 	public void setMoney(String money) {
 		this.money = money;
 	}
+	public String getMile() {
+		return mile;
+	}
+	public void setMile(String mile) {
+		this.mile = mile;
+	}
 	@Override
 	public String toString() {
 		return "Amem [id=" + id + ", nickname=" + nickname + ", pass=" + pass + ", name=" + name + ", tel=" + tel
 				+ ", email=" + email + ", address=" + address + ", bank=" + bank + ", account=" + account
 				+ ", numberid=" + numberid + ", adminchk=" + adminchk + ", banreason=" + banreason + ", status="
-				+ status + ", money=" + money + "]";
+				+ status + ", money=" + money + ", mile=" + mile + "]";
 	}
-	
 	
 	
 

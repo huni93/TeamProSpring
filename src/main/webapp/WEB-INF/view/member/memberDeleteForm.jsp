@@ -83,7 +83,7 @@
 						</p>
 						<p class="txt" style="margin-top: 18px; position: relative;">
 							입찰보증금<br> <a href="/mypage/my_auction_ticket"> <span
-								class="num">0</span> <span class="sb">원</span>
+								class="num">${amem.money }</span> <span class="sb">원</span>
 							</a> <a href="/mypage/pay_return" class="refund">환불</a>
 						</p>
 					</div>

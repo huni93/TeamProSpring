@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <div class="wrap">
@@ -71,21 +72,21 @@
 					<div class="item">
 					
 						<p class="txt" style="margin-top: 18px;">
-							마일리지<br>  <span class="num" style="font-weight:bold;">${sum }원</span>
+							마일리지<br>  <span class="num" style="font-weight:bold;"><fmt:formatNumber value="${amem.mile}" pattern="#,##0" />원</span>
 
 						
 						</p>
 					</div>
 					<div class="item">
 						<p class="txt" style="position: relative;">
-							쿠폰<br> <a href="/mypage/my_coupon"> <span class="num">2</span>
-								<span class="sb">개</span>
-							</a> <a href="/coupon" class="coupon_down">쿠폰다운로드</a>
+							누적구매금액<br> <a href="/mypage/my_coupon"> <span class="num" style="font-weight:bold;"><fmt:formatNumber value="${sum2}" pattern="#,##0" /></span>
+								<span class="sb" style="font-size:18px; font-weight: bold;">원</span>
+							</a>
 						</p>
 						<p class="txt" style="margin-top: 18px; position: relative;">
 							입찰보증금<br> <a href=""> <span
-								class="num"></span>${amem.money}<span class="sb">원</span>
-							</a> <a href="/mypage/pay_return" class="refund">환불</a>
+								class="num" style="font-weight:bold;"><fmt:formatNumber value="${amem.money}" pattern="#,##0" /></span><span class="sb" style="font-size:18px; font-weight: bold;">원</span>
+							</a> 
 						</p>
 					</div>
 					<div class="item">
