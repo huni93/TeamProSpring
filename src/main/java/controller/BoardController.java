@@ -85,6 +85,7 @@ public class BoardController {
      return "board/allList";
     }
 	 
+
 	
 	@RequestMapping("searchauction")
 	public String searchauction(Model model, String pname) throws Exception {
@@ -387,9 +388,11 @@ public class BoardController {
 	@RequestMapping("checkoutpro")
 	   public String checkoutpro(Apay apay,int num, String memo,String tel,int sp,String bal,String end) throws Exception {
 	      // TODO Auto-generated method stub
-	      Auction board = bd.oneBoard(num);
+	
+		
+		Auction board = bd.oneBoard(num);
 	      req.setAttribute("board", board); 
-	 
+	  
 	      Auction auction = new Auction();
 	      auction.setPnum(num); // 컨트롤러에서 받은 num을 pnum으로 설정
 	      auction.setEnd(end); // 컨트롤러에서 받은 end 값을 설정
@@ -402,19 +405,16 @@ public class BoardController {
 	       req.setAttribute("sum", sum);
 	       String sum2 = cd.sum2(login);
 	      req.setAttribute("sum2", sum2);
+			String Tier = cd.tier(login);
+			req.setAttribute("Tier", Tier);
 	      
-	      num = bd.apay(apay); 
-	      System.out.println(end);
-	   
-	      System.out.println(apay);
-	      System.out.println(memo);
-	      System.out.println(sp);
+			num = bd.apay(apay); 
 	      req.setAttribute("sp", sp); 
 	      req.setAttribute("bal", bal); 
 	      req.setAttribute("tel", tel);       
 	       req.setAttribute("apay", apay);
 	       req.setAttribute("memo", memo);
-	       
+	 	  
 	  
 	       
 	      return "/board/success";

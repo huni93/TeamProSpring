@@ -107,7 +107,7 @@
 
                <table class="mypage_table_head">
                   <caption>
-                     판매등록상품 <img
+                     구매완료상품 <img
                         src="${pageContext.request.contextPath}/image/integ/20150918_10.png">
                      <span class="mth_left" style="width: 70%; line-height: 30px;">
                         총 <strong>0</strong> 건의 자료가 조회되었습니다.
@@ -145,7 +145,7 @@
                            <col width="69">
                            <col width="182">
                            <col width="53">
-                           <col width="124">
+                       
                            <col width="60">
                         </colgroup>
                         <tbody>
@@ -154,7 +154,7 @@
                                  type="checkbox" class="upper_img_chkbox_head"
                                  id="table-checkbox" name="check_all">상품정보</td>
                               <td colspan="2">경매현황</td>
-                              <td>관리</td>
+                       
                            </tr>
                         </tbody>
                      </table>
@@ -163,7 +163,7 @@
                            <col width="69">
                            <col width="182">
                            <col width="53">
-                           <col width="124">
+                     
                            <col width="60">
                         </colgroup>
                         <tbody>
@@ -181,26 +181,17 @@
                                  <td class="hcr_td_first"
                                     alt=""
                                     title="yhauc" id="" qty="1" style="text-align:center;">물품번호 : ${j.pnum}</td>
-                                 <td>현재가 ${j.buy }</td>
-                                 <td class="hcr_td_third" id="x1095617422_current_prices"><fmt:formatNumber value="${j.buy}"
-                           pattern="#,##0" /> 원</td>
-                                 <td rowspan="3">
-                                    <div class="tdposition_renew" style="position: relative;">
-                                       <a
-                              class="btn btn-primary" 
-                              href="${pageContext.request.contextPath}/board/boardUpdateForm?num=${j.pnum}">수정 / </a>
-                              <a class="btn btn-primary"
-                              href="${pageContext.request.contextPath}/board/boardDeleteForm?num=${j.pnum}">삭제</a>
-                                    </div>
-                                 </td>
+                                 <td>구매자</td>
+                                 <td class="hcr_td_third" id="x1095617422_current_prices">${j.buyid}</td>
+                      
                               </tr>
                               <tr>
                                  <td rowspan="2" class="hcr_td_second"><a
                                     href=""
                                     target="_blank"><p id="trans_goods_name_0" class="sana" style="text-align:center;"
                                           alt="0">상품명 : ${j.pname}</p></a></td>
-                                 <td>입찰수</td>
-                                 <td class="hcr_td_third" id="x1095617422_bids">${j.maxid}</td>
+                                 <td>제품가격</td>
+                                 <td class="hcr_td_third" id="x1095617422_bids"><fmt:formatNumber value="${j.buy}" pattern="#,##0" /> 원</td>
                               </tr>
                               <tr>
                                  <td>남은시간</td>

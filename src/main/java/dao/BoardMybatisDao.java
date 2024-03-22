@@ -24,7 +24,6 @@ import model.Auction;
 import model.Cart;
 import model.Comment;
 
-
 @Repository
 public class BoardMybatisDao {
 
@@ -40,21 +39,26 @@ public class BoardMybatisDao {
 	public int buyNow(Map<String, Object> params) throws UnsupportedEncodingException, SQLException {
 		return sqlSession.update(ns + "buyNow", params);
 	}
-	 public List<Auction> buyList(String id) throws SQLException {
-	      
-	      return sqlSession.selectList(ns+"buyList", id);
 
-	      }
+	public List<Auction> buyList(String id) throws SQLException {
+
+		return sqlSession.selectList(ns + "buyList", id);
+
+	}
+
 	public List<Auction> searchBoards(String pname) throws UnsupportedEncodingException, SQLException {
 		return sqlSession.selectList(ns + "searchBoards", pname);
 	}
-	 public List<Auction> cntList(String pname) throws UnsupportedEncodingException, SQLException {
-         if (pname.equals("priced")) { pname = "price desc";
-     }
-         if (pname.equals("readcnt")) { pname = "readcnt desc";
-        }
-        return sqlSession.selectList(ns + "cntList", pname);
-     }
+
+	public List<Auction> cntList(String pname) throws UnsupportedEncodingException, SQLException {
+		if (pname.equals("priced")) {
+			pname = "price desc";
+		}
+		if (pname.equals("readcnt")) {
+			pname = "readcnt desc";
+		}
+		return sqlSession.selectList(ns + "cntList", pname);
+	}
 
 	public int upcnt(int pnum) {
 
@@ -69,9 +73,9 @@ public class BoardMybatisDao {
 	public int updateBuy(Auction board) throws UnsupportedEncodingException, SQLException {
 		return sqlSession.update(ns + "updateBuy", board);
 	}
-	
+
 	public int updateEnd(Auction auction) throws UnsupportedEncodingException, SQLException {
-	    return sqlSession.update(ns + "end", auction);
+		return sqlSession.update(ns + "end", auction);
 	}
 
 	public int cntBoard(int pnum) {
@@ -88,15 +92,25 @@ public class BoardMybatisDao {
 		return sqlSession.selectList(ns + "boardList", map);
 	}
 
+	
+
 	public int boardCount(String boardid) throws UnsupportedEncodingException, SQLException {
 		return sqlSession.selectOne(ns + "boardCount", boardid);
 	}
+	
+	
+	
+	
 
 	public Auction oneBoard(int num) throws UnsupportedEncodingException, SQLException {
 
 		return sqlSession.selectOne(ns + "oneBoard", num);
 	}
 
+	
+	
+	
+	
 	public int updateBoard(Auction board) throws UnsupportedEncodingException, SQLException {
 
 		return sqlSession.update(ns + "updateBoard", board);
@@ -137,6 +151,12 @@ public class BoardMybatisDao {
 		return sqlSession.selectList(ns + "mainList");
 	}
 
+	public List<Auction> endListByLoginId(String loginId) throws UnsupportedEncodingException, SQLException {
+		Map<String, Object> params = new HashMap<>();
+		params.put("loginId", loginId);
+		return sqlSession.selectList(ns + "endListByLoginId", params);
+	}
+
 	public int commentDelete(int ser) throws UnsupportedEncodingException, SQLException {
 		return sqlSession.update(ns + "commentDelete", ser);
 	}
@@ -144,28 +164,24 @@ public class BoardMybatisDao {
 	public Comment oneComment(int ser) throws UnsupportedEncodingException, SQLException {
 		return sqlSession.selectOne(ns + "oneComment", ser);
 	}
-	
-	
-	 public int apay(Apay apay) throws SQLException {
-		  
-	     return sqlSession.insert(ns+"apay", apay); }
-	 
-	
-	
-	  public int addTobuyList(AddbuyList addbuyList) throws SQLException {
-	  
-	     return sqlSession.insert(ns+"addTobuyList", addbuyList); }
-	 
 
-	
-	  public List<AddbuyList> List(int pnum) throws UnsupportedEncodingException, SQLException {
+	public int apay(Apay apay) throws SQLException {
 
-			return sqlSession.selectList(ns + "List", pnum);
-		}
-	  
-	  public int maxbuycnt(int pnum) {
-			return sqlSession.selectOne(ns + "maxbuycnt", pnum);
-		}
+		return sqlSession.insert(ns + "apay", apay);
+	}
 
-	
+	public int addTobuyList(AddbuyList addbuyList) throws SQLException {
+
+		return sqlSession.insert(ns + "addTobuyList", addbuyList);
+	}
+
+	public List<AddbuyList> List(int pnum) throws UnsupportedEncodingException, SQLException {
+
+		return sqlSession.selectList(ns + "List", pnum);
+	}
+
+	public int maxbuycnt(int pnum) {
+		return sqlSession.selectOne(ns + "maxbuycnt", pnum);
+	}
+
 }

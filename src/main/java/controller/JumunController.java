@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,6 +22,7 @@ import dao.BoardMybatisDao;
 import dao.CartMybatisDao;
 import dao.MemberMybatisDao;
 import model.Amem;
+import model.Apay;
 import model.Auction;
 import model.Cart;
 
@@ -76,6 +78,27 @@ public class JumunController {
       return "alert";
       
    }
+// JumunController.java
+@RequestMapping("endList")
+public String endList(HttpServletRequest request, Model model) throws Exception {
+	String login = (String) session.getAttribute("id");
+	Amem mem = md.oneMember(login);
+	req.setAttribute("amem", mem);
+	String Tier = cd.tier(login);
+	req.setAttribute("Tier", Tier);
+	String sum = cd.sum(login);
+	req.setAttribute("sum", sum);
+	String sum2 = cd.sum2(login);
+	req.setAttribute("sum2", sum2);
+	
+	
+	String loginId = (String) request.getSession().getAttribute("id");
+    List<Auction> li = bd.endListByLoginId(loginId);
+    model.addAttribute("li", li);
+    return "jumun/endList";
+}
+
+	 
    
    @RequestMapping("jumunList")
    public String jumunList() throws Exception {

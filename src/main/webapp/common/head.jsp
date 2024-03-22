@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE HTML>
 <html>
 
@@ -302,7 +302,7 @@ body, #mypage ul li {
 								<li><a
 									href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
 								<li class="menu-item-has-children"><a href="#">[${amem.id }]님
-										회원등급:${Tier} 마일리지:${sum }</a></li>
+										회원등급:${Tier} 마일리지:<fmt:formatNumber value="${amem.mile}" pattern="#,##0" /></a></li>
 
 
 							</c:if>
