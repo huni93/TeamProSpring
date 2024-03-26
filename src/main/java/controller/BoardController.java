@@ -322,10 +322,6 @@ public class BoardController {
 	     req.setAttribute("sum", sum);
 	     String sum2 = cd.sum2(login);
 	    req.setAttribute("sum2", sum2);
-	    
-	    
-	 
-	 
 	
 		String id = (String) session.getAttribute("id");
 		List<Auction> li = bd.buyList(id);
@@ -644,27 +640,14 @@ public class BoardController {
 		String login = (String) session.getAttribute("id");
 		Amem mem = md.oneMember(login);
 		req.setAttribute("amem", mem);
-
 		Comment comment = bd.oneComment(ser);
 		String msg = "삭제 불가합니다";
-		String url = "/board/commentDeleteForm?ser=" + ser;
-
-		if (mem.getPass().equals(pass)) {
+		int boardNum = comment.getNum();
+		String url = "/board/boardInfo?num=" + boardNum;	
 			int count = bd.commentDelete(ser);
-			System.out.println("Comment Delete Result: " + count);
-			System.out.println("Login ID: " + login);
-			System.out.println("User Password: " + mem.getPass());
-			System.out.println("Entered Password: " + pass);
 			if (count > 0) {
-				msg = "댓글이 삭제 되었습니다";
-				int boardNum = comment.getNum();
-				url = "/board/boardInfo?num=" + boardNum;
+				msg = "댓글이 삭제 되었습니다";				
 			}
-		} else {
-			msg = "비밀번호 확인하세요";
-		}
-
-		// 수정 시작
 		req.setAttribute("msg", msg);
 		req.setAttribute("url", url);
 		req.setAttribute("comment", comment); // comment 정보를 모델에 추가

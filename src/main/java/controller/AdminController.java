@@ -211,15 +211,11 @@ public class AdminController {
 	@RequestMapping("banmember")
 	public String banmember(@RequestParam("id") String id, @RequestParam("banreason") String banreason) {
 		ad.banMember(id, banreason);
-
 		return "redirect:/admin/MemberList";
 	}
-
 	@RequestMapping("Unbanmember")
 	public String UnbanMember(@RequestParam("id") String id) {
-
 		ad.UnbanMember(id);
-
 		return "redirect:/admin/MemberList";
 	}
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <script src="https://js.tosspayments.com/v1/payment-widget"></script>
@@ -66,6 +67,7 @@ function prepareAndSendData() {
 									중 / 입찰완료 상품</a> <a
 									href="${pageContext.request.contextPath}/jumun/myList">판매등록상품</a>
 								<a href="${pageContext.request.contextPath}/jumun/jumunList">찜한상품</a>
+										<a href="${pageContext.request.contextPath}/jumun/endList">구매완료상품</a>
 							</p>
 						</div>
 
@@ -215,14 +217,13 @@ function prepareAndSendData() {
 								width:200px; margin-left: 250px;
 								font-size:18px;" >충전하기</button>
 						</div>
-					</div> <script>
+					</div> 
+<script>
     const button = document.getElementById("payment-button");
     const coupon = document.getElementById("coupon-box");
     const inputAmount = document.getElementById("pass"); // 금액 입력 필드
-
     const generateRandomString = () =>
       window.btoa(Math.random()).slice(0, 20);
-
     // 결제위젯 초기화
     const widgetClientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
     const customerKey = generateRandomString();
@@ -234,24 +235,20 @@ function prepareAndSendData() {
       { value: parseInt(inputAmount.value) || 0 }, // 사용자 입력 값으로 초기 금액 설정
       { variantKey: "DEFAULT" }
     );
-
     // 쿠폰 체크박스 변경 시 금액 업데이트
     coupon.addEventListener("change", function () {
       updatePaymentAmount();
     });
-
     // 금액 입력 필드 변경 시 금액 업데이트
     inputAmount.addEventListener("input", function () {
       updatePaymentAmount();
     });
-
     // '결제하기' 버튼 클릭 시 로직
     button.addEventListener("click", function () {
       const amount = parseInt(inputAmount.value) || 0; // 입력 필드에서 금액을 읽어옴
       if (coupon.checked) {
         amount -= 5000; // 쿠폰 적용 시
       }
-
       // 결제 요청
       paymentWidget.requestPayment({
         orderId: generateRandomString(),
@@ -264,7 +261,6 @@ function prepareAndSendData() {
         customerMobilePhone: "01012341234",
       });
     });
-
     // 금액 업데이트 함수
     function updatePaymentAmount() {
       let amount = parseInt(inputAmount.value) || 0; // 입력 필드에서 금액을 읽어옴

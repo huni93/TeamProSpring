@@ -311,7 +311,7 @@ public class MemberController {
 
 	        // 예시: updateMoney 메소드가 boolean 값을 반환하도록 구현되었다고 가정
 	        int updateSuccess = md.updateMoney(amem);
-
+	        request.setAttribute("updateSuccess", updateSuccess);
 	        String msg = "충전에 실패하였습니다.";
 	        String url = "/member/moneyInput";
 	        

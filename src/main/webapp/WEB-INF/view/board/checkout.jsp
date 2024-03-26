@@ -70,12 +70,12 @@
 
 
 	<div class="basket_title">
-		<div class="basket_title_cover">예상비용결제(1차결제)</div>
+		<div class="basket_title_cover">배송정보입력</div>
 	</div>
 	<div class="basket_menu">
 		<div class="basket_notice">
 			<div class="bn_img">
-				<img src="/images/renew220916/notice.png" alt="알림">
+				<img src="${pageContext.request.contextPath}/image/renew220916/notice.png" alt="알림">
 			</div>
 			<div class="bn_txt">
 				상품이 현지의 당사 물류센터에 도착전, 무게와 기타 경비등을 추정하여 결제를 진행합니다.<br> 상품의 실무게
@@ -83,11 +83,9 @@
 			</div>
 		</div>
 		<ul>
-			<li><span>1</span> 장바구니</li>
-			<li class="on"><span>2</span> 예상비용결제</li>
-			<li><span>3</span> 주문완료</li>
-			<li><span>4</span> 실비정산</li>
-			<li><span>5</span> 결제완료</li>
+			<li class="on"><span>1</span> 배송정보입력</li>
+			<li ><span>2</span> 주문완료</li>
+			
 		</ul>
 	</div>
 

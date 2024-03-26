@@ -23,6 +23,7 @@
 								<a href="${pageContext.request.contextPath}/board/buyList">입찰 중 / 입찰완료
 									상품</a> <a href="${pageContext.request.contextPath}/jumun/myList">판매등록상품</a>
 								<a href="${pageContext.request.contextPath}/jumun/jumunList">찜한상품</a>
+										<a href="${pageContext.request.contextPath}/jumun/endList">구매완료상품</a>
 							</p>
 						</div>
 						

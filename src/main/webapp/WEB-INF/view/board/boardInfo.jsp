@@ -623,7 +623,7 @@ function reserv(ser, index) {
 									</button>
 							</span> <span class="de_in_text"> ${c.content} </span>
 							<form
-								action="${pageContext.request.contextPath}/board/commentDeleteForm"
+								action="commentDeletePro"
 								method="post">
 								<input type="hidden" name="ser" value="${c.ser}">
 								<button type="submit" style="background-color:#DC3224; color:white; border:none; height:30px;">삭제</button>
